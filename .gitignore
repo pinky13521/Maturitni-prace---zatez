@@ -1,0 +1,24 @@
+# KiCad dočasné a záložní soubory
+*.kicad_prl
+*.bak
+*-bak
+*.kicad_pcb-bak
+*.kicad_sch-bak
+_autosave-*
+#*#
+*.tmp
+fp-info-cache
+*-backups/
+*.zip
+
+
+# ESP32 a platformy (PlatformIO / Arduino)
+.pio/
+.vscode/
+build/
+*.bin
+*.elf
+*.hex
+
+# macOS systémové soubory
+.DS_Store
