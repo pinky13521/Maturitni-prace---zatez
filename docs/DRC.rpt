@@ -1,0 +1,185 @@
+** Drc report for /Users/ondrejpinkas/Library/Mobile Documents/com~apple~CloudDocs/Škola/elektronicka zatez/elektronicka zatez-backups/elektronicka zatez-2026-10-08_173542/hardware/elektronicka zatez.kicad_pcb **
+** Created on 2026-11-02 11:44:42 **
+
+** Found 24 DRC violations **
+[track_dangling]: Spoj má nespojený konec
+    Local override; Severity: warning
+    @(111,7650 mm, 40,6450 mm): Spoj [/3V3+] na F.Cu, délka 0,0071 mm
+[track_dangling]: Spoj má nespojený konec
+    Local override; Severity: warning
+    @(111,7600 mm, 66,0400 mm): Spoj [/ENC_SW] na F.Cu, délka 0,0071 mm
+[track_dangling]: Spoj má nespojený konec
+    Local override; Severity: warning
+    @(111,7600 mm, 63,5000 mm): Spoj [/ENC_DT] na F.Cu, délka 0,0071 mm
+[track_dangling]: Spoj má nespojený konec
+    Local override; Severity: warning
+    @(111,7600 mm, 60,9600 mm): Spoj [/ENC_CLK] na F.Cu, délka 0,0071 mm
+[track_dangling]: Spoj má nespojený konec
+    Local override; Severity: warning
+    @(137,1550 mm, 71,1250 mm): Spoj [/ONE_WIRE] na F.Cu, délka 0,0100 mm
+[copper_edge_clearance]: Porušení izolační mezery okraje desky
+    Rule: board setup constraints edge; Severity: error
+    @(78,7400 mm, 30,4800 mm): Obdélník na Edge.Cuts
+    @(139,3050 mm, 76,2050 mm): Spoj [/5V+] na F.Cu, délka 35,5600 mm
+[copper_edge_clearance]: Porušení izolační mezery okraje desky
+    Rule: board setup constraints edge; Severity: error
+    @(78,7400 mm, 30,4800 mm): Obdélník na Edge.Cuts
+    @(137,1650 mm, 40,6450 mm): Spoj [/5V+] na F.Cu, délka 2,1400 mm
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Rule: board setup constraints silk; Severity: warning
+    @(78,7400 mm, 30,4800 mm): Obdélník na Edge.Cuts
+    @(93,2180 mm, 30,5980 mm): Reference 'REF**'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Rule: board setup constraints silk; Severity: warning
+    @(78,7400 mm, 30,4800 mm): Obdélník na Edge.Cuts
+    @(135,6360 mm, 30,3440 mm): Reference 'REF**'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Rule: board setup constraints silk; Severity: warning
+    @(78,7400 mm, 30,4800 mm): Obdélník na Edge.Cuts
+    @(142,2450 mm, 40,6450 mm): Reference 'J_ESP_R1'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Rule: board setup constraints silk; Severity: warning
+    @(104,1400 mm, 109,0500 mm): Reference 'R_g1'
+    @(104,1400 mm, 111,7600 mm): Průchozí díra plošek 1 [Net-(Q1-Pad1)] na Q1
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(109,7280 mm, 108,8140 mm): Reference 'U_temp1'
+    @(106,7600 mm, 114,2110 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(109,7280 mm, 108,8140 mm): Reference 'U_temp1'
+    @(106,7600 mm, 108,9400 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(104,1400 mm, 109,0500 mm): Reference 'R_g1'
+    @(106,7600 mm, 108,9400 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(123,3500 mm, 93,9500 mm): Čára na F.Silkscreen
+    @(125,9500 mm, 88,9000 mm): Reference '5V_stepdown1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(125,9500 mm, 88,9000 mm): Reference '5V_stepdown1'
+    @(127,0000 mm, 86,1900 mm): Reference 'R_temp1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(125,9500 mm, 88,9000 mm): Reference '5V_stepdown1'
+    @(123,7300 mm, 85,1900 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(124,2500 mm, 88,9000 mm): Reference 'J_encoder1'
+    @(123,7300 mm, 85,1900 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(124,2500 mm, 88,9000 mm): Reference 'J_encoder1'
+    @(127,0000 mm, 86,1900 mm): Reference 'R_temp1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(124,2500 mm, 88,9000 mm): Reference 'J_encoder1'
+    @(123,7300 mm, 82,4500 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(90,0700 mm, 97,2500 mm): Čára na F.Silkscreen
+    @(90,0800 mm, 99,0600 mm): Reference 'J_in1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(89,0700 mm, 93,9800 mm): Reference 'R_f1'
+    @(89,0810 mm, 93,9200 mm): Čára na F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(91,4400 mm, 68,3500 mm): Reference 'J_DAC1'
+    @(94,1500 mm, 66,0400 mm): Reference 'R_div2'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; Severity: warning
+    @(89,4400 mm, 63,5000 mm): Reference 'R_shunt1'
+    @(90,1100 mm, 44,4500 mm): Čára na F.Silkscreen
+
+** Found 21 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91,4400 mm, 66,0400 mm): Průchozí díra plošek 10 [GND] na J_ADC1
+    @(91,4400 mm, 63,5000 mm): Průchozí díra plošek 9 [GND] na J_ADC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(111,7600 mm, 96,6000 mm): Průchozí díra plošek 2 [GND] na C_vcc1
+    @(111,6800 mm, 93,9800 mm): Průchozí díra plošek 2 [GND] na C_in1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(135,9000 mm, 88,9000 mm): Průchozí díra plošek 4 [GND] na 5V_stepdown1
+    @(130,8200 mm, 88,9000 mm): Průchozí díra plošek 2 [GND] na 5V_stepdown1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(116,8650 mm, 99,0600 mm): Průchozí díra plošek 1 [GND] na J_fan1
+    @(111,7600 mm, 96,6000 mm): Průchozí díra plošek 2 [GND] na C_vcc1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(96,5200 mm, 71,1200 mm): Průchozí díra plošek 1 [GND] na R_div2
+    @(91,4400 mm, 73,6600 mm): Průchozí díra plošek 2 [GND] na J_DAC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91,4400 mm, 66,0400 mm): Průchozí díra plošek 10 [GND] na J_ADC1
+    @(96,5200 mm, 71,1200 mm): Průchozí díra plošek 1 [GND] na R_div2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91,4400 mm, 45,7200 mm): Průchozí díra plošek 2 [GND] na J_ADC1
+    @(91,4400 mm, 53,3400 mm): Průchozí díra plošek 5 [GND] na J_ADC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(102,8600 mm, 93,9800 mm): Průchozí díra plošek 4 [GND] na U1
+    @(111,6800 mm, 93,9800 mm): Průchozí díra plošek 2 [GND] na C_in1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(121,9200 mm, 88,9000 mm): Průchozí díra plošek 1 [GND] na J_encoder1
+    @(130,8200 mm, 88,9000 mm): Průchozí díra plošek 2 [GND] na 5V_stepdown1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91,4400 mm, 73,6600 mm): Průchozí díra plošek 2 [GND] na J_DAC1
+    @(91,4400 mm, 83,8200 mm): Průchozí díra plošek 6 [GND] na J_DAC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91,4400 mm, 63,5000 mm): Průchozí díra plošek 9 [GND] na J_ADC1
+    @(91,4400 mm, 53,3400 mm): Průchozí díra plošek 5 [GND] na J_ADC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(130,4600 mm, 99,0600 mm): Průchozí díra plošek 2 [GND] na DC_12_in1
+    @(130,8200 mm, 88,9000 mm): Průchozí díra plošek 2 [GND] na 5V_stepdown1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(121,9200 mm, 88,9000 mm): Průchozí díra plošek 1 [GND] na J_encoder1
+    @(116,8650 mm, 99,0600 mm): Průchozí díra plošek 1 [GND] na J_fan1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(91,4400 mm, 45,7200 mm): Průchozí díra plošek 2 [GND] na J_ADC1
+    @(83,8200 mm, 35,5600 mm): Průchozí díra plošek 1 [GND] na R_shunt1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(83,8200 mm, 96,5200 mm): Průchozí díra plošek 1 [GND] na J_in1
+    @(91,4400 mm, 83,8200 mm): Průchozí díra plošek 6 [GND] na J_DAC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(102,8600 mm, 93,9800 mm): Průchozí díra plošek 4 [GND] na U1
+    @(91,4400 mm, 83,8200 mm): Průchozí díra plošek 6 [GND] na J_DAC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(102,8800 mm, 35,5350 mm): Průchozí díra plošek 1 [GND] na J_display1
+    @(91,4400 mm, 45,7200 mm): Průchozí díra plošek 2 [GND] na J_ADC1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(111,7650 mm, 73,6650 mm): Průchozí díra plošek 14 [GND] na J_ESP_L1
+    @(96,5200 mm, 71,1200 mm): Průchozí díra plošek 1 [GND] na R_div2
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(108,4580 mm, 112,3740 mm): Průchozí díra plošek 1 [GND] na U_temp1
+    @(116,8650 mm, 99,0600 mm): Průchozí díra plošek 1 [GND] na J_fan1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(137,1650 mm, 43,1850 mm): Průchozí díra plošek 2 [GND] na J_ESP_R1
+    @(102,8800 mm, 35,5350 mm): Průchozí díra plošek 1 [GND] na J_display1
+[unconnected_items]: Missing connection between items
+    Local override; Severity: error
+    @(102,7405 mm, 69,7205 mm): Spoj [/3V3+] na F.Cu, délka 1,7202 mm
+    @(91,4400 mm, 43,1800 mm): Spoj [/3V3+] na F.Cu, délka 5,3740 mm
+
+** Found 0 Footprint errors **
+
+** End of Report **

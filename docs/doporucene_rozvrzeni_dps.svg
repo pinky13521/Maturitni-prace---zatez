@@ -1,0 +1,332 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <defs>
+    <!-- Filtry pro stíny a hloubku -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    <filter id="card-shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Značky pro šipky -->
+    <marker id="arrow-power" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#ef4444"/>
+    </marker>
+    <marker id="arrow-i2c" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#06b6d4"/>
+    </marker>
+    <marker id="arrow-analog" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#8b5cf6"/>
+    </marker>
+    <marker id="arrow-power12" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- Pozadí celého plátna -->
+  <rect width="1600" height="1200" fill="#0f172a"/>
+
+  <!-- ========================================================================= -->
+  <!-- ZÁHLAVÍ A TITULEK -->
+  <!-- ========================================================================= -->
+  <rect x="40" y="30" width="1520" height="100" rx="12" fill="#1e293b" filter="url(#shadow)"/>
+  <text x="70" y="72" font-size="28" font-weight="bold" fill="#f8fafc">DOPORUČENÉ ROZVRŽENÍ DPS (COMPONENT PLACEMENT MAP)</text>
+  <text x="70" y="104" font-size="16" fill="#94a3b8">Elektronická zátěž 30V / 5A • Architektura do 4 zón pro čisté routování bez křížení • Autor: Ondřej Pinkas</text>
+  <rect x="1350" y="55" width="180" height="50" rx="8" fill="#3b82f6" opacity="0.2"/>
+  <rect x="1350" y="55" width="180" height="50" rx="8" fill="none" stroke="#3b82f6" stroke-width="2"/>
+  <text x="1440" y="86" font-size="15" font-weight="bold" fill="#60a5fa" text-anchor="middle">ROZMĚR: ~95×85 mm</text>
+
+  <!-- ========================================================================= -->
+  <!-- HLAVNÍ PLOCHA DESKY (PCB OUTLINE) -->
+  <!-- ========================================================================= -->
+  <!-- Vnější chladič symbolizovaný dole -->
+  <rect x="80" y="1030" width="1000" height="130" rx="8" fill="#334155" stroke="#64748b" stroke-width="2"/>
+  <text x="580" y="1075" font-size="22" font-weight="bold" fill="#e2e8f0" text-anchor="middle">❄️ VELKÝ PC CPU CHLADIČ S VENTILÁTOREM (ZADNÍ STĚNA)</text>
+  <text x="580" y="1105" font-size="15" fill="#94a3b8" text-anchor="middle">Hliníková základna / žebrování pro odvod až 60–100 W ztrátového tepla</text>
+  <!-- Šipky chlazení -->
+  <line x1="280" y1="1025" x2="280" y2="1000" stroke="#38bdf8" stroke-width="4" stroke-dasharray="6,4"/>
+  <line x1="380" y1="1025" x2="380" y2="1000" stroke="#38bdf8" stroke-width="4" stroke-dasharray="6,4"/>
+
+  <!-- Tělo desky plošných spojů -->
+  <rect x="80" y="160" width="1000" height="840" rx="16" fill="#132338" stroke="#3b82f6" stroke-width="3" filter="url(#shadow)"/>
+  <!-- Montážní otvory M3 v rozích -->
+  <circle cx="115" cy="195" r="14" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <circle cx="115" cy="195" r="7" fill="#cbd5e1"/>
+  <circle cx="1045" cy="195" r="14" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <circle cx="1045" cy="195" r="7" fill="#cbd5e1"/>
+  <circle cx="115" cy="965" r="14" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <circle cx="115" cy="965" r="7" fill="#cbd5e1"/>
+  <circle cx="1045" cy="965" r="14" fill="#0f172a" stroke="#64748b" stroke-width="2"/>
+  <circle cx="1045" cy="965" r="7" fill="#cbd5e1"/>
+
+  <!-- Označení hran desky -->
+  <text x="580" y="185" font-size="14" font-weight="bold" fill="#64748b" text-anchor="middle">▲ SMĚR K PŘEDNÍMU OVLÁDACÍMU PANELU KRABIČKY ▲</text>
+
+  <!-- ========================================================================= -->
+  <!-- ZÓNA 1: SILOVÁ ČÁST A REGULACE (VLEVO DOLE) -->
+  <!-- ========================================================================= -->
+  <rect x="110" y="480" width="540" height="500" rx="12" fill="#ef4444" fill-opacity="0.08" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,4"/>
+  <rect x="125" y="495" width="230" height="30" rx="6" fill="#ef4444"/>
+  <text x="240" y="516" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">ZÓNA 1: SILOVÁ ZÁTĚŽ (5 A)</text>
+
+  <!-- Svorkovnice J_in1 (Vstupní svorky zátěže 0-30V) -->
+  <g transform="translate(140, 680)">
+    <rect width="100" height="140" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="50" y="28" font-size="14" font-weight="bold" fill="#f8fafc" text-anchor="middle">J_in1</text>
+    <text x="50" y="46" font-size="11" fill="#94a3b8" text-anchor="middle">Svorkovnice</text>
+    <!-- Svorka 2 (+) -->
+    <circle cx="50" cy="75" r="14" fill="#334155" stroke="#ef4444" stroke-width="2"/>
+    <text x="50" y="80" font-size="13" font-weight="bold" fill="#ef4444" text-anchor="middle">+ IN</text>
+    <!-- Svorka 1 (-) -->
+    <circle cx="50" cy="115" r="14" fill="#334155" stroke="#38bdf8" stroke-width="2"/>
+    <text x="50" y="120" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">- GND</text>
+  </g>
+
+  <!-- MOSFET Q1 (IRFP250N na spodní hraně) -->
+  <g transform="translate(290, 840)">
+    <rect width="130" height="135" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="3" filter="url(#card-shadow)"/>
+    <rect x="10" y="105" width="110" height="25" rx="4" fill="#475569"/>
+    <text x="65" y="122" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">CHLADICÍ PLOCHA</text>
+    <text x="65" y="30" font-size="16" font-weight="bold" fill="#ef4444" text-anchor="middle">Q1: IRFP250N</text>
+    <text x="65" y="50" font-size="12" fill="#94a3b8" text-anchor="middle">TO-247 (Power MOS)</text>
+    <!-- Piny G, D, S -->
+    <circle cx="30" cy="78" r="8" fill="#8b5cf6"/><text x="30" y="82" font-size="10" font-weight="bold" fill="#fff" text-anchor="middle">G</text>
+    <circle cx="65" cy="78" r="10" fill="#ef4444"/><text x="65" y="82" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">D</text>
+    <circle cx="100" cy="78" r="10" fill="#f97316"/><text x="100" y="82" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">S</text>
+    <text x="65" y="100" font-size="10" fill="#94a3b8" text-anchor="middle">1=G  2=D  3=S</text>
+  </g>
+
+  <!-- Bočník R_shunt1 (10W keramika 48x9.5 mm) -->
+  <g transform="translate(260, 560)">
+    <rect width="210" height="60" rx="6" fill="#f8fafc" stroke="#f97316" stroke-width="3" filter="url(#card-shadow)"/>
+    <!-- Pájecí vývody -->
+    <circle cx="15" cy="30" r="8" fill="#38bdf8" stroke="#0284c7" stroke-width="2"/>
+    <circle cx="195" cy="30" r="8" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+    <text x="105" y="28" font-size="15" font-weight="bold" fill="#0f172a" text-anchor="middle">R_shunt1: 0.1R / 10W</text>
+    <text x="105" y="48" font-size="12" fill="#475569" text-anchor="middle">Keramický cement (48×9.5 mm)</text>
+    <text x="15" y="50" font-size="10" font-weight="bold" fill="#0284c7" text-anchor="middle">GND</text>
+    <text x="195" y="50" font-size="10" font-weight="bold" fill="#ea580c" text-anchor="middle">IMON</text>
+  </g>
+
+  <!-- SILOVÉ SPOJE 5A (Červená / oranžová široká stopa) -->
+  <!-- J_in1 (+) na Drain Q1 -->
+  <path d="M 190 755 L 230 755 L 230 870 L 355 870 L 355 910" fill="none" stroke="#ef4444" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+  <!-- Source Q1 na Pin 2 R_shunt1 -->
+  <path d="M 390 910 L 390 710 L 455 710 L 455 595" fill="none" stroke="#f97316" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arrow-power)"/>
+  <!-- Pin 1 R_shunt1 zpět na J_in1 (-) GND -->
+  <path d="M 275 590 L 190 590 L 190 795" fill="none" stroke="#38bdf8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Nápis u silové smyčky -->
+  <rect x="235" y="770" width="145" height="26" rx="4" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="307" y="788" font-size="12" font-weight="bold" fill="#ef4444" text-anchor="middle">⚡ SILOVÁ SMYČKA 5A</text>
+
+  <!-- Operační zesilovač U1 (LM358) a bižuterie -->
+  <g transform="translate(490, 720)">
+    <rect width="135" height="150" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="67" y="26" font-size="14" font-weight="bold" fill="#a78bfa" text-anchor="middle">U1: LM358</text>
+    <text x="67" y="42" font-size="11" fill="#94a3b8" text-anchor="middle">DIP-8 (Analog Loop)</text>
+    <!-- DIP-8 nožičky -->
+    <circle cx="20" cy="65" r="5" fill="#8b5cf6"/><text x="32" y="69" font-size="9" fill="#e2e8f0">1 Out</text>
+    <circle cx="20" cy="85" r="5" fill="#8b5cf6"/><text x="32" y="89" font-size="9" fill="#e2e8f0">2 In-</text>
+    <circle cx="20" cy="105" r="5" fill="#8b5cf6"/><text x="32" y="109" font-size="9" fill="#e2e8f0">3 In+</text>
+    <circle cx="20" cy="125" r="5" fill="#38bdf8"/><text x="32" y="129" font-size="9" fill="#38bdf8">4 GND</text>
+    <circle cx="115" cy="125" r="5" fill="#f59e0b"/><text x="103" y="129" font-size="9" fill="#f59e0b" text-anchor="end">8 12V</text>
+    <circle cx="115" cy="105" r="5" fill="#64748b"/>
+    <circle cx="115" cy="85" r="5" fill="#64748b"/>
+    <circle cx="115" cy="65" r="5" fill="#64748b"/>
+  </g>
+  <!-- Součástky okolo OZ (R_g1, R_f1, C_f1, C_in1, R_in1) -->
+  <rect x="430" y="885" width="50" height="22" rx="4" fill="#334155" stroke="#8b5cf6"/><text x="455" y="900" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">R_g1 100R</text>
+  <rect x="490" y="675" width="50" height="22" rx="4" fill="#334155" stroke="#8b5cf6"/><text x="515" y="690" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">R_f1 1k</text>
+  <rect x="555" y="675" width="50" height="22" rx="4" fill="#334155" stroke="#8b5cf6"/><text x="580" y="690" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">C_f1 1nF</text>
+  <rect x="485" y="890" width="60" height="22" rx="4" fill="#334155" stroke="#8b5cf6"/><text x="515" y="905" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">C_in1 100nF</text>
+  <rect x="555" y="890" width="55" height="22" rx="4" fill="#334155" stroke="#8b5cf6"/><text x="582" y="905" font-size="10" font-weight="bold" fill="#e2e8f0" text-anchor="middle">R_in1 10k</text>
+  <!-- Dělič R_div1, R_div2 -->
+  <rect x="140" y="630" width="90" height="22" rx="4" fill="#334155" stroke="#06b6d4"/><text x="185" y="645" font-size="10" font-weight="bold" fill="#38bdf8" text-anchor="middle">Dělič 100k : 10k</text>
+
+  <!-- ========================================================================= -->
+  <!-- ZÓNA 2: NAPÁJENÍ A CHLAZENÍ (VPRAVO DOLE) -->
+  <!-- ========================================================================= -->
+  <rect x="680" y="690" width="370" height="290" rx="12" fill="#f59e0b" fill-opacity="0.08" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,4"/>
+  <rect x="695" y="705" width="220" height="30" rx="6" fill="#f59e0b"/>
+  <text x="805" y="726" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">ZÓNA 2: NAPÁJENÍ (12V &amp; 5V)</text>
+
+  <!-- Jack 12V (DC_12_in1) -->
+  <g transform="translate(900, 840)">
+    <rect width="120" height="110" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="60" y="28" font-size="13" font-weight="bold" fill="#fcd34d" text-anchor="middle">DC_12_in1</text>
+    <text x="60" y="46" font-size="11" fill="#94a3b8" text-anchor="middle">Napájecí Jack</text>
+    <rect x="35" y="60" width="50" height="35" rx="4" fill="#334155"/>
+    <circle cx="60" cy="77" r="8" fill="#f59e0b"/><text x="60" y="81" font-size="10" font-weight="bold" fill="#000" text-anchor="middle">12V</text>
+  </g>
+
+  <!-- Konektor pro ventilátor J_fan1 (4-pin PWM) -->
+  <g transform="translate(710, 840)">
+    <rect width="150" height="110" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="75" y="28" font-size="13" font-weight="bold" fill="#fcd34d" text-anchor="middle">J_fan1 (Ventilátor)</text>
+    <text x="75" y="46" font-size="11" fill="#94a3b8" text-anchor="middle">4-pin PC PWM konektor</text>
+    <!-- 4 Piny -->
+    <circle cx="30" cy="80" r="7" fill="#38bdf8"/><text x="30" y="70" font-size="9" fill="#94a3b8" text-anchor="middle">GND</text>
+    <circle cx="60" cy="80" r="7" fill="#f59e0b"/><text x="60" y="70" font-size="9" fill="#94a3b8" text-anchor="middle">12V</text>
+    <circle cx="90" cy="80" r="7" fill="#64748b"/><text x="90" y="70" font-size="9" fill="#94a3b8" text-anchor="middle">TACH</text>
+    <circle cx="120" cy="80" r="7" fill="#10b981"/><text x="120" y="70" font-size="9" fill="#10b981" text-anchor="middle">PWM</text>
+  </g>
+
+  <!-- Step-down měnič 5V_stepdown1 -->
+  <g transform="translate(710, 755)">
+    <rect width="180" height="65" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="90" y="25" font-size="13" font-weight="bold" fill="#fcd34d" text-anchor="middle">5V_stepdown1</text>
+    <text x="90" y="45" font-size="11" fill="#94a3b8" text-anchor="middle">Mini DC-DC (12V -&gt; 5V)</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ZÓNA 3: PŘEVODNÍKY A ESP32 (STŘED A VPRAVO NAHOŘE) -->
+  <!-- ========================================================================= -->
+  <rect x="110" y="220" width="940" height="240" rx="12" fill="#3b82f6" fill-opacity="0.08" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6,4"/>
+  <rect x="125" y="235" width="270" height="30" rx="6" fill="#3b82f6"/>
+  <text x="260" y="256" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">ZÓNA 3: PŘEVODNÍKY A ESP32</text>
+
+  <!-- Modul D/A převodníku J_DAC1 (MCP4725) -->
+  <g transform="translate(140, 290)">
+    <rect width="160" height="140" rx="8" fill="#1e293b" stroke="#8b5cf6" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="80" y="30" font-size="15" font-weight="bold" fill="#c084fc" text-anchor="middle">J_DAC1</text>
+    <text x="80" y="50" font-size="12" fill="#94a3b8" text-anchor="middle">MCP4725 (12-bit DAC)</text>
+    <rect x="15" y="65" width="130" height="26" rx="4" fill="#8b5cf6" fill-opacity="0.2"/>
+    <text x="80" y="82" font-size="12" font-weight="bold" fill="#a78bfa" text-anchor="middle">V_DAC -&gt; Pin 3 U1</text>
+    <text x="80" y="115" font-size="11" fill="#06b6d4" text-anchor="middle">I2C: SDA / SCL / 3V3 / GND</text>
+  </g>
+
+  <!-- Modul A/D převodníku J_ADC1 (ADS1115) -->
+  <g transform="translate(330, 290)">
+    <rect width="180" height="140" rx="8" fill="#1e293b" stroke="#06b6d4" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="90" y="30" font-size="15" font-weight="bold" fill="#38bdf8" text-anchor="middle">J_ADC1</text>
+    <text x="90" y="50" font-size="12" fill="#94a3b8" text-anchor="middle">ADS1115 (16-bit ADC)</text>
+    <rect x="15" y="65" width="150" height="26" rx="4" fill="#06b6d4" fill-opacity="0.2"/>
+    <text x="90" y="82" font-size="12" font-weight="bold" fill="#38bdf8" text-anchor="middle">A0=VMON | A1=IMON</text>
+    <text x="90" y="115" font-size="11" fill="#06b6d4" text-anchor="middle">I2C: SDA / SCL / 3V3 / GND</text>
+  </g>
+
+  <!-- ESP32 DevKit V1 (J_ESP_L1 a J_ESP_R1) -->
+  <g transform="translate(560, 280)">
+    <rect width="250" height="160" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="2.5" filter="url(#card-shadow)"/>
+    <!-- Anténa ESP32 -->
+    <rect x="210" y="35" width="30" height="90" rx="4" fill="#ca8a04"/>
+    <text x="120" y="32" font-size="16" font-weight="bold" fill="#60a5fa" text-anchor="middle">ESP32 DevKit V1</text>
+    <text x="120" y="52" font-size="12" fill="#94a3b8" text-anchor="middle">J_ESP_L1 &amp; J_ESP_R1</text>
+    <rect x="20" y="65" width="180" height="48" rx="6" fill="#0f172a"/>
+    <text x="110" y="85" font-size="11" fill="#38bdf8" text-anchor="middle">Plocha POD ESP32:</text>
+    <text x="110" y="103" font-size="11" font-weight="bold" fill="#e2e8f0" text-anchor="middle">Prostor pro ležaté rezistory!</text>
+    <text x="110" y="135" font-size="11" fill="#94a3b8" text-anchor="middle">D2=SCL | TX2=SDA | D18=PWM</text>
+  </g>
+
+  <!-- Pull-up rezistory I2C a čidlo teploty -->
+  <g transform="translate(850, 290)">
+    <rect width="180" height="140" rx="8" fill="#1e293b" stroke="#64748b" stroke-width="1.5" filter="url(#card-shadow)"/>
+    <text x="90" y="28" font-size="13" font-weight="bold" fill="#cbd5e1" text-anchor="middle">Čidlo &amp; Pull-upy</text>
+    <rect x="15" y="45" width="150" height="24" rx="4" fill="#334155"/><text x="90" y="61" font-size="11" fill="#e2e8f0" text-anchor="middle">R_sda1 &amp; R_scl1 (4.7k)</text>
+    <rect x="15" y="78" width="150" height="24" rx="4" fill="#334155"/><text x="90" y="94" font-size="11" fill="#e2e8f0" text-anchor="middle">U_temp1 (DS18B20)</text>
+    <text x="90" y="122" font-size="10" fill="#94a3b8" text-anchor="middle">Kablíkem na chladič CPU</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- ZÓNA 4: PŘEDNÍ PANEL (NA HOŘEJŠÍM OKRAJI DESKY) -->
+  <!-- ========================================================================= -->
+  <!-- J_display1 (OLED 128x64) -->
+  <g transform="translate(200, 175)">
+    <rect width="180" height="55" rx="6" fill="#10b981" stroke="#059669" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="90" y="24" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">J_display1 (OLED)</text>
+    <text x="90" y="44" font-size="11" fill="#d1fae5" text-anchor="middle">1=GND 2=3V3 3=SCL 4=SDA</text>
+  </g>
+
+  <!-- J_encoder1 (Rotační enkodér) -->
+  <g transform="translate(620, 175)">
+    <rect width="210" height="55" rx="6" fill="#10b981" stroke="#059669" stroke-width="2" filter="url(#card-shadow)"/>
+    <text x="105" y="24" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">J_encoder1 (Enkodér)</text>
+    <text x="105" y="44" font-size="11" fill="#d1fae5" text-anchor="middle">GND / 3V3 / SW / DT / CLK</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- HLAVNÍ SIGNÁLOVÉ MAGISTRÁLY (I2C a ANALOG) -->
+  <!-- ========================================================================= -->
+  <!-- I2C Magistrála bez křížení (Azurová linka) -->
+  <path d="M 560 360 L 510 360 L 300 360 L 250 360 L 250 230" fill="none" stroke="#06b6d4" stroke-width="4" stroke-dasharray="8,4" marker-end="url(#arrow-i2c)"/>
+  <rect x="360" y="348" width="120" height="24" rx="4" fill="#0f172a" stroke="#06b6d4" stroke-width="1.5"/>
+  <text x="420" y="364" font-size="11" font-weight="bold" fill="#06b6d4" text-anchor="middle">I2C (SDA / SCL)</text>
+
+  <!-- V_DAC trasa z MCP4725 do OZ U1 -->
+  <path d="M 220 430 L 220 460 L 460 460 L 460 740 L 490 740" fill="none" stroke="#8b5cf6" stroke-width="4" marker-end="url(#arrow-analog)"/>
+  <rect x="290" y="448" width="135" height="24" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="357" y="464" font-size="11" font-weight="bold" fill="#a78bfa" text-anchor="middle">V_DAC (0..0.5V reference)</text>
+
+  <!-- VMON a IMON měření do ADS1115 -->
+  <path d="M 455 560 L 455 470 L 420 470 L 420 430" fill="none" stroke="#06b6d4" stroke-width="3" marker-end="url(#arrow-i2c)"/>
+  <text x="445" y="515" font-size="11" font-weight="bold" fill="#38bdf8">IMON</text>
+
+  <!-- 12V Napájení z Jacku do StepDown a Fan -->
+  <path d="M 900 890 L 860 890" fill="none" stroke="#f59e0b" stroke-width="4" marker-end="url(#arrow-power12)"/>
+  <path d="M 940 840 L 940 785 L 890 785" fill="none" stroke="#f59e0b" stroke-width="4" marker-end="url(#arrow-power12)"/>
+  <!-- 5V ze StepDown do ESP32 VIN -->
+  <path d="M 710 775 L 670 775 L 670 440" fill="none" stroke="#ef4444" stroke-width="4" marker-end="url(#arrow-power)"/>
+  <text x="645" y="600" font-size="11" font-weight="bold" fill="#ef4444" transform="rotate(-90 645 600)">5V NAPÁJENÍ DO ESP32</text>
+
+  <!-- ========================================================================= -->
+  <!-- PRAVÁ LIŠTA: LEGENDA A PRAVIDLA ROUTOVÁNÍ -->
+  <!-- ========================================================================= -->
+  <g transform="translate(1110, 160)">
+    <rect width="450" height="840" rx="16" fill="#1e293b" stroke="#334155" stroke-width="2" filter="url(#shadow)"/>
+    <text x="30" y="45" font-size="20" font-weight="bold" fill="#f8fafc">PRAVIDLA ÚSPĚŠNÉHO NÁVRHU</text>
+    <line x1="30" y1="60" x2="420" y2="60" stroke="#334155" stroke-width="2"/>
+
+    <!-- Bod 1: Zónování -->
+    <circle cx="45" cy="95" r="15" fill="#ef4444"/>
+    <text x="45" y="101" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">1</text>
+    <text x="75" y="93" font-size="15" font-weight="bold" fill="#f8fafc">Silová smyčka co nejkratší!</text>
+    <text x="75" y="113" font-size="13" fill="#94a3b8">Q1, bočník a svorkovnice musí být těsně</text>
+    <text x="75" y="130" font-size="13" fill="#94a3b8">u sebe. Proud 5A netahat přes desku.</text>
+
+    <!-- Bod 2: Klávesa V -->
+    <circle cx="45" cy="175" r="15" fill="#3b82f6"/>
+    <text x="45" y="181" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">2</text>
+    <text x="75" y="173" font-size="15" font-weight="bold" fill="#f8fafc">Křížení řeš klávesou "V" (Via)</text>
+    <text x="75" y="193" font-size="13" fill="#94a3b8">Když se potkají 2 spoje, stiskni V,</text>
+    <text x="75" y="210" font-size="13" fill="#94a3b8">proskoč na B.Cu (modrá), podjeď a vrať se.</text>
+
+    <!-- Bod 3: Zemní polygon -->
+    <circle cx="45" cy="255" r="15" fill="#10b981"/>
+    <text x="45" y="261" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">3</text>
+    <text x="75" y="253" font-size="15" font-weight="bold" fill="#f8fafc">Země (GND) neroutuj ručně!</text>
+    <text x="75" y="273" font-size="13" fill="#94a3b8">Celou spodní stranu B.Cu na závěr zalij</text>
+    <text x="75" y="290" font-size="13" fill="#94a3b8">měděným polygonem GND (Filled Zone).</text>
+
+    <!-- Bod 4: I2C v jedné linii -->
+    <circle cx="45" cy="335" r="15" fill="#06b6d4"/>
+    <text x="45" y="341" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+    <text x="75" y="333" font-size="15" font-weight="bold" fill="#f8fafc">I2C sběrnice jako přímá linka</text>
+    <text x="75" y="353" font-size="13" fill="#94a3b8">Moduly seřaď do řady: ESP32 -&gt; ADC</text>
+    <text x="75" y="370" font-size="13" fill="#94a3b8">-&gt; DAC -&gt; OLED. Žádné křížení SDA/SCL.</text>
+
+    <!-- Bod 5: Šířky spojů -->
+    <circle cx="45" cy="415" r="15" fill="#f59e0b"/>
+    <text x="45" y="421" font-size="14" font-weight="bold" fill="#ffffff" text-anchor="middle">5</text>
+    <text x="75" y="413" font-size="15" font-weight="bold" fill="#f8fafc">Doporučené šířky tras</text>
+    <text x="75" y="433" font-size="13" fill="#f87171">• Silová větev (5A): 2.5 až 3.0 mm</text>
+    <text x="75" y="450" font-size="13" fill="#fbbf24">• Napájení (12V, 5V, 3V3): 0.6 až 0.8 mm</text>
+    <text x="75" y="467" font-size="13" fill="#38bdf8">• Signály a I2C: 0.25 až 0.30 mm</text>
+
+    <!-- Box s Kelvinovým zapojením -->
+    <rect x="25" y="505" width="400" height="150" rx="10" fill="#0f172a" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="45" y="535" font-size="15" font-weight="bold" fill="#a78bfa">KELVINOVO SNÍMÁNÍ BOČNÍKU</text>
+    <text x="45" y="560" font-size="12" fill="#cbd5e1">Silový proud 5A přiveď na bočník silnou</text>
+    <text x="45" y="578" font-size="12" fill="#cbd5e1">trasou. Měřicí signály do OZ (Rf1) a ADC</text>
+    <text x="45" y="596" font-size="12" fill="#cbd5e1">vytáhni tenkými cestičkami PŘÍMO z vnitřku</text>
+    <text x="45" y="614" font-size="12" fill="#cbd5e1">pájecích plošek bočníku!</text>
+    <text x="45" y="638" font-size="11" font-weight="bold" fill="#34d399">✓ Eliminuje parazitní úbytek napětí na DPS</text>
+
+    <!-- Spodní shrnutí -->
+    <rect x="25" y="680" width="400" height="135" rx="10" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="45" y="710" font-size="14" font-weight="bold" fill="#60a5fa">VÝSLEDEK TOHOTO ROZVRŽENÍ:</text>
+    <text x="45" y="735" font-size="13" fill="#e2e8f0">• Kompaktní rozměr desky (~95 × 85 mm)</text>
+    <text x="45" y="757" font-size="13" fill="#e2e8f0">• Minimální počet prokovů (cca 5 až 10 ks)</text>
+    <text x="45" y="779" font-size="13" fill="#e2e8f0">• Vysoká odolnost proti rušení a šumu</text>
+    <text x="45" y="801" font-size="13" fill="#e2e8f0">• Tranzistor přímo na chladiči na kraji</text>
+  </g>
+</svg>
