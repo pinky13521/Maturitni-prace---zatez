@@ -526,47 +526,48 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
   <div class="frame">
     <!-- Havarijní výstraha -->
     <div id="alarmBar" class="alarm-banner">
-      <span id="alarmReason">SYS_ALARM: TRIP OCCURRED</span>
-      <button class="btn-reset" onclick="ackAlarm()">[ ACK / RESET ]</button>
+      <span id="alarmReason" data-i18n="alarm_default">SYSTÉMOVÝ ALARM: VYBAVENÍ OCHRANY</span>
+      <button class="btn-reset" onclick="ackAlarm()" data-i18n="btn_ack">[ POTVRDIT / RESET ]</button>
     </div>
 
     <!-- Hlavní lišta -->
     <div class="header-bar">
       <div class="header-left">
-        <div class="header-title">DC ELECTRONIC LOAD // 30V 5A</div>
-        <div class="header-sub">DIGITAL REGULATION &bull; 50 HZ LOOP</div>
+        <div class="header-title" data-i18n="header_title">DC ELEKTRONICKÁ ZÁTĚŽ // 30V 5A</div>
+        <div class="header-sub" data-i18n="header_sub">DIGITÁLNÍ REGULACE &bull; 50 HZ SMYČKA</div>
       </div>
       <div class="header-right">
-        <span id="linkStatus" class="link-indicator link-ok">● LIVE</span>
+        <span id="linkStatus" class="link-indicator link-ok">● ŽIVĚ</span>
+        <button id="langBtn" class="fs-btn" onclick="toggleLanguage()" title="Přepnout jazyk / Toggle language">[ EN ]</button>
         <button id="fsBtn" class="fs-btn" onclick="toggleFullscreen()" title="Fullscreen">[ ⛶ FULL ]</button>
-        <span id="stateAnn" class="annunciator ann-off">[ OFF ]</span>
+        <span id="stateAnn" class="annunciator ann-off">[ VYP ]</span>
       </div>
     </div>
 
     <!-- 4 digitální měřáky -->
     <div class="readouts">
       <div class="readout-cell">
-        <div class="cell-tag">VOLTAGE <span class="cell-unit">MAX 32V</span></div>
+        <div class="cell-tag"><span data-i18n="lbl_v">NAPĚTÍ</span> <span class="cell-unit" data-i18n="lbl_v_max">MAX 32V</span></div>
         <div class="cell-num"><span id="valV">00.00</span></div>
-        <div class="cell-unit">VOLTS DC</div>
+        <div class="cell-unit" data-i18n="unit_v">VOLTY DC</div>
       </div>
 
       <div class="readout-cell">
-        <div class="cell-tag">CURRENT <span class="cell-unit">MAX 5.2A</span></div>
+        <div class="cell-tag"><span data-i18n="lbl_i">PROUD</span> <span class="cell-unit" data-i18n="lbl_i_max">MAX 5.2A</span></div>
         <div class="cell-num"><span id="valI">0.000</span></div>
-        <div class="cell-unit">AMPERES</div>
+        <div class="cell-unit" data-i18n="unit_i">AMPÉRY</div>
       </div>
 
       <div class="readout-cell">
-        <div class="cell-tag">POWER <span class="cell-unit">MAX 65W</span></div>
+        <div class="cell-tag"><span data-i18n="lbl_p">VÝKON</span> <span class="cell-unit" data-i18n="lbl_p_max">MAX 65W</span></div>
         <div class="cell-num"><span id="valP">00.0</span></div>
-        <div class="cell-unit">WATTS</div>
+        <div class="cell-unit" data-i18n="unit_p">WATTY</div>
       </div>
 
       <div class="readout-cell">
-        <div class="cell-tag">THERMAL <span class="cell-unit">OTP 75C</span></div>
+        <div class="cell-tag"><span data-i18n="lbl_t">TEPLOTA</span> <span class="cell-unit" data-i18n="lbl_t_max">OTP 75°C</span></div>
         <div class="cell-num"><span id="valT">25.0</span></div>
-        <div class="cell-unit">&deg;C // FAN <span id="valFan">20</span>%</div>
+        <div class="cell-unit">&deg;C // <span data-i18n="lbl_fan">VENT.</span> <span id="valFan">20</span>%</div>
       </div>
     </div>
 
@@ -579,16 +580,16 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           <button class="mode-btn" id="m2" onclick="selectMode(2)">CR</button>
           <button class="mode-btn" id="m3" onclick="selectMode(3)">BATT</button>
         </div>
-        <button id="pwrBtn" class="power-btn" onclick="togglePower()">OUTPUT: OFF</button>
+        <button id="pwrBtn" class="power-btn" onclick="togglePower()">VÝSTUP: VYP</button>
       </div>
 
       <!-- Nastavení žádané hodnoty (posuvník + číslo + přepínač LIN/LOG) -->
       <div class="slider-wrap">
         <div class="slider-legend">
           <div style="display:flex; align-items:center; gap:8px;">
-            <span id="lblSp" style="color:var(--text-muted);">CURRENT SETPOINT:</span>
+            <span id="lblSp" style="color:var(--text-muted);">ŽÁDANÝ PROUD:</span>
             <div class="scale-selector">
-              <span class="scale-label">CURVE:</span>
+              <span class="scale-label" data-i18n="lbl_curve">PRŮBĚH:</span>
               <button class="scale-btn active" id="btnSliderLin" onclick="setSliderCurve('lin')">LIN</button>
               <button class="scale-btn" id="btnSliderLog" onclick="setSliderCurve('log')">LOG</button>
             </div>
@@ -599,7 +600,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
                    onkeydown="if(event.key==='Enter'){submitNumericInput();this.blur();}"
                    onchange="submitNumericInput()">
             <span id="unitSp" style="color:var(--text-muted); font-size:11px; font-weight:700;">A</span>
-            <button class="sp-set-btn" onclick="submitNumericInput()">SET</button>
+            <button class="sp-set-btn" id="spSetBtn" onclick="submitNumericInput()" data-i18n="btn_set">NASTAV</button>
           </div>
         </div>
         <input type="range" id="spSlider" min="0" max="1000" step="1" value="96"
@@ -610,13 +611,13 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 
       <!-- Rychlé předvolby -->
       <div class="presets-row">
-        <span class="preset-label">PRESETS:</span>
+        <span class="preset-label" data-i18n="lbl_presets">PŘEDVOLBY:</span>
         <div id="presetsBox" style="display:contents;"></div>
       </div>
 
       <!-- Statistiky kapacity pro režim baterie (BATT) -->
       <div id="battRow" style="display:none; font-size:11px; color:var(--text-dim); border-top:1px solid var(--border); padding-top:10px;">
-        DISCHARGED: <strong id="valMah" style="color:var(--text);">0</strong> mAh &bull; <strong id="valWh" style="color:var(--text);">0.00</strong> Wh &bull; CUTOFF: <strong id="valCut" style="color:var(--text);">3.00</strong> V
+        <span data-i18n="lbl_discharged">VYBITO:</span> <strong id="valMah" style="color:var(--text);">0</strong> mAh &bull; <strong id="valWh" style="color:var(--text);">0.00</strong> Wh &bull; <span data-i18n="lbl_cutoff">MEZNÍ NAPĚTÍ:</span> <strong id="valCut" style="color:var(--text);">3.00</strong> V
       </div>
     </div>
 
@@ -624,11 +625,11 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     <div class="graph-panel">
       <div class="graph-header">
         <div style="display:flex; align-items:center; gap:8px;">
-          <span>GRATICULE REALTIME LOG [ 50 PTS ]</span>
-          <span style="color:var(--text-dim);">&bull; U [WHT] &bull; I [GRY]</span>
+          <span data-i18n="lbl_graph">OSCILOSKOPICKÝ ZÁZNAM [ 50 BODŮ ]</span>
+          <span style="color:var(--text-dim);" data-i18n="lbl_graph_sub">&bull; U [BÍLÁ] &bull; I [ŠEDÁ]</span>
         </div>
         <div class="scale-selector">
-          <span class="scale-label">Y-SCALE:</span>
+          <span class="scale-label" data-i18n="lbl_yscale">MĚŘÍTKO Y:</span>
           <button class="scale-btn active" id="btnScaleLin" onclick="setPlotScale('lin')">LIN</button>
           <button class="scale-btn" id="btnScaleLog" onclick="setPlotScale('log')">LOG</button>
         </div>
@@ -647,8 +648,123 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     let sliderCurve = 'lin';  // 'lin' nebo 'log'
     let currentSetpointVal = 0.500;
     let tOut = null;
+    let currentLang = localStorage.getItem('load_lang') || 'cs';
     const history = [];
     const LIMIT = 50;
+
+    const I18N = {
+      cs: {
+        lang_btn: '[ EN ]',
+        header_title: 'DC ELEKTRONICKÁ ZÁTĚŽ // 30V 5A',
+        header_sub: 'DIGITÁLNÍ REGULACE • 50 HZ SMYČKA',
+        live: '● ŽIVĚ',
+        offline: '○ ODPOJENO',
+        full_enter: '[ ⛶ FULL ]',
+        full_exit: '[ ✕ ZAVŘÍT ]',
+        lbl_v: 'NAPĚTÍ',
+        lbl_v_max: 'MAX 32V',
+        unit_v: 'VOLTY DC',
+        lbl_i: 'PROUD',
+        lbl_i_max: 'MAX 5.2A',
+        unit_i: 'AMPÉRY',
+        lbl_p: 'VÝKON',
+        lbl_p_max: 'MAX 65W',
+        unit_p: 'WATTY',
+        lbl_t: 'TEPLOTA',
+        lbl_t_max: 'OTP 75°C',
+        lbl_fan: 'VENT.',
+        pwr_off: 'VÝSTUP: VYP',
+        pwr_active: 'VÝSTUP: AKTIVNÍ',
+        pwr_tripped: 'VÝSTUP: VYBAVENO',
+        ann_off: '[ VYP ]',
+        ann_on: '[ ZAP ]',
+        ann_alarm: '[ ALARM ]',
+        lbl_sp_cc: 'ŽÁDANÝ PROUD:',
+        lbl_sp_cp: 'ŽÁDANÝ VÝKON:',
+        lbl_sp_cr: 'ŽÁDANÝ ODPOR:',
+        lbl_curve: 'PRŮBĚH:',
+        btn_set: 'NASTAV',
+        lbl_presets: 'PŘEDVOLBY:',
+        lbl_discharged: 'VYBITO:',
+        lbl_cutoff: 'MEZNÍ NAPĚTÍ:',
+        lbl_graph: 'OSCILOSKOPICKÝ ZÁZNAM [ 50 BODŮ ]',
+        lbl_graph_sub: '• U [BÍLÁ] • I [ŠEDÁ]',
+        lbl_yscale: 'MĚŘÍTKO Y:',
+        btn_ack: '[ POTVRDIT / RESET ]',
+        alarm_default: 'SYSTÉMOVÝ ALARM: VYBAVENÍ OCHRANY',
+        alarm_trip: 'OCHRANA: '
+      },
+      en: {
+        lang_btn: '[ CZ ]',
+        header_title: 'DC ELECTRONIC LOAD // 30V 5A',
+        header_sub: 'DIGITAL REGULATION • 50 HZ LOOP',
+        live: '● LIVE',
+        offline: '○ OFFLINE',
+        full_enter: '[ ⛶ FULL ]',
+        full_exit: '[ ✕ EXIT ]',
+        lbl_v: 'VOLTAGE',
+        lbl_v_max: 'MAX 32V',
+        unit_v: 'VOLTS DC',
+        lbl_i: 'CURRENT',
+        lbl_i_max: 'MAX 5.2A',
+        unit_i: 'AMPERES',
+        lbl_p: 'POWER',
+        lbl_p_max: 'MAX 65W',
+        unit_p: 'WATTS',
+        lbl_t: 'THERMAL',
+        lbl_t_max: 'OTP 75C',
+        lbl_fan: 'FAN',
+        pwr_off: 'OUTPUT: OFF',
+        pwr_active: 'OUTPUT: ACTIVE',
+        pwr_tripped: 'OUTPUT: TRIPPED',
+        ann_off: '[ OFF ]',
+        ann_on: '[ ON ]',
+        ann_alarm: '[ ALARM ]',
+        lbl_sp_cc: 'CURRENT SETPOINT:',
+        lbl_sp_cp: 'POWER SETPOINT:',
+        lbl_sp_cr: 'RESISTANCE SETPOINT:',
+        lbl_curve: 'CURVE:',
+        btn_set: 'SET',
+        lbl_presets: 'PRESETS:',
+        lbl_discharged: 'DISCHARGED:',
+        lbl_cutoff: 'CUTOFF:',
+        lbl_graph: 'GRATICULE REALTIME LOG [ 50 PTS ]',
+        lbl_graph_sub: '• U [WHT] • I [GRY]',
+        lbl_yscale: 'Y-SCALE:',
+        btn_ack: '[ ACK / RESET ]',
+        alarm_default: 'SYS_ALARM: TRIP OCCURRED',
+        alarm_trip: 'TRIP: '
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = (currentLang === 'cs') ? 'en' : 'cs';
+      localStorage.setItem('load_lang', currentLang);
+      applyLanguage();
+    }
+
+    function applyLanguage() {
+      const t = I18N[currentLang] || I18N.cs;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (t[k] !== undefined) el.innerText = t[k];
+      });
+      const langBtn = document.getElementById('langBtn');
+      if (langBtn) langBtn.innerText = t.lang_btn;
+      const fsBtn = document.getElementById('fsBtn');
+      if (fsBtn) {
+        fsBtn.innerText = document.fullscreenElement ? t.full_exit : t.full_enter;
+      }
+      syncModeConfig(mode);
+      if (isAlarm) {
+        const ann = document.getElementById('stateAnn');
+        if (ann) ann.innerText = t.ann_alarm;
+        const btn = document.getElementById('pwrBtn');
+        if (btn) btn.innerText = t.pwr_tripped;
+      } else {
+        setOutputVisuals(isOutput);
+      }
+    }
 
     const cv = document.getElementById('cv');
     const ctx = cv.getContext('2d');
@@ -675,8 +791,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 
     document.addEventListener('fullscreenchange', () => {
       const btn = document.getElementById('fsBtn');
+      const t = I18N[currentLang] || I18N.cs;
       if (btn) {
-        btn.innerText = document.fullscreenElement ? '[ ✕ EXIT ]' : '[ ⛶ FULL ]';
+        btn.innerText = document.fullscreenElement ? t.full_exit : t.full_enter;
       }
       setTimeout(resize, 150);
     });
@@ -874,19 +991,20 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     function setOutputVisuals(active) {
+      const t = I18N[currentLang] || I18N.cs;
       const ann = document.getElementById('stateAnn');
       const btn = document.getElementById('pwrBtn');
       if (isAlarm) return;
       if (active) {
         ann.className = 'annunciator ann-on';
-        ann.innerText = '[ ON ]';
+        ann.innerText = t.ann_on;
         btn.className = 'power-btn engaged';
-        btn.innerText = 'OUTPUT: ACTIVE';
+        btn.innerText = t.pwr_active;
       } else {
         ann.className = 'annunciator ann-off';
-        ann.innerText = '[ OFF ]';
+        ann.innerText = t.ann_off;
         btn.className = 'power-btn';
-        btn.innerText = 'OUTPUT: OFF';
+        btn.innerText = t.pwr_off;
       }
     }
 
@@ -962,17 +1080,18 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       document.querySelectorAll('.mode-btn').forEach((b, idx) => b.classList.toggle('active', idx === m));
       document.getElementById('battRow').style.display = (m === 3) ? 'block' : 'none';
 
+      const t = I18N[currentLang] || I18N.cs;
       const inp = document.getElementById('spInput');
       if (m === 0 || m === 3) {
-        document.getElementById('lblSp').innerText = 'CURRENT SETPOINT:';
+        document.getElementById('lblSp').innerText = t.lbl_sp_cc;
         document.getElementById('unitSp').innerText = 'A';
         inp.min = 0; inp.max = 5.2; inp.step = 0.025;
       } else if (m === 1) {
-        document.getElementById('lblSp').innerText = 'POWER SETPOINT:';
+        document.getElementById('lblSp').innerText = t.lbl_sp_cp;
         document.getElementById('unitSp').innerText = 'W';
         inp.min = 0; inp.max = 65; inp.step = 0.5;
       } else if (m === 2) {
-        document.getElementById('lblSp').innerText = 'RESISTANCE SETPOINT:';
+        document.getElementById('lblSp').innerText = t.lbl_sp_cr;
         document.getElementById('unitSp').innerText = 'Ω';
         inp.min = 0.5; inp.max = 500; inp.step = 0.5;
         // V režimu odporu (CR) nastavíme křivku posuvníku výchoze na LOG (0.5 až 500 Ω pokrývá 3 dekády)
@@ -984,14 +1103,15 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     function setLinkStatus(ok) {
+      const t = I18N[currentLang] || I18N.cs;
       const el = document.getElementById('linkStatus');
       if (!el) return;
       if (ok) {
         el.className = 'link-indicator link-ok';
-        el.innerText = '● LIVE';
+        el.innerText = t.live;
       } else {
         el.className = 'link-indicator link-err';
-        el.innerText = '○ OFFLINE';
+        el.innerText = t.offline;
       }
     }
 
@@ -1029,12 +1149,13 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       const bar = document.getElementById('alarmBar');
 
       if (isAlarm) {
+        const t = I18N[currentLang] || I18N.cs;
         ann.className = 'annunciator ann-alarm';
-        ann.innerText = '[ ALARM ]';
+        ann.innerText = t.ann_alarm;
         bar.style.display = 'flex';
-        document.getElementById('alarmReason').innerText = 'TRIP: ' + d.alarmText;
+        document.getElementById('alarmReason').innerText = t.alarm_trip + d.alarmText;
         btn.className = 'power-btn';
-        btn.innerText = 'OUTPUT: TRIPPED';
+        btn.innerText = t.pwr_tripped;
       } else {
         bar.style.display = 'none';
         setOutputVisuals(isOutput);
@@ -1063,9 +1184,10 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       }
     }
 
-    setInterval(poll, 300);
+    applyLanguage();
     renderPresets();
     poll();
+    setInterval(poll, 300);
 
     async function selectMode(m) {
       syncModeConfig(m);
