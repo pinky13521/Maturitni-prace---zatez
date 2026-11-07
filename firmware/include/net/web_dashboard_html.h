@@ -768,11 +768,24 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 
     const cv = document.getElementById('cv');
     const ctx = cv.getContext('2d');
+    let dpr = window.devicePixelRatio || 1;
+    let cssW = 900;
+    let cssH = 190;
 
     function resize() {
-      const containerW = cv.parentElement.clientWidth;
-      cv.width = containerW > 36 ? containerW - 36 : containerW;
-      cv.height = window.innerWidth < 680 ? 160 : 190;
+      dpr = window.devicePixelRatio || 1;
+      const rect = cv.getBoundingClientRect();
+      cssW = rect.width;
+      if (!cssW || cssW < 50) {
+        const parentW = cv.parentElement ? cv.parentElement.clientWidth : 0;
+        const pad = window.innerWidth < 680 ? 24 : 36;
+        cssW = Math.max(200, parentW - pad);
+      }
+      cssH = window.innerWidth < 680 ? 160 : 190;
+
+      // Přizpůsobení fyzického rozlišení bitmapy pro HiDPI / Retina displeje
+      cv.width = Math.round(cssW * dpr);
+      cv.height = Math.round(cssH * dpr);
       renderPlot();
     }
     window.addEventListener('resize', resize);
@@ -843,12 +856,13 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 
     /* --- VYKRESLOVÁNÍ GRAFU (LIN / LOG) --- */
     function renderPlot() {
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      const w = cv.width;
-      const h = cv.height;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, cssW, cssH);
+      const w = cssW;
+      const h = cssH;
 
-      const pL = 34;      // Levý okraj pro napětí (U)
-      const pR = w - 38;  // Pravý okraj pro proud (I)
+      const pL = 38;      // Levý okraj pro napětí (U)
+      const pR = w - 42;  // Pravý okraj pro proud (I)
       const pT = 12;      // Horní okraj
       const pB = h - 16;  // Dolní okraj
       const plotW = pR - pL;
@@ -859,7 +873,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       ctx.lineWidth = 1;
       ctx.strokeRect(pL, pT, plotW, plotH);
 
-      ctx.font = '10px monospace';
+      ctx.font = '600 11px ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace';
       ctx.textBaseline = 'middle';
 
       if (plotScale === 'lin') {
@@ -873,15 +887,15 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           }
           // Levá osa U (0, 8, 16, 24, 32 V)
           const vVal = (i / divs) * 32.0;
-          ctx.fillStyle = '#e0e0e0';
+          ctx.fillStyle = '#ffffff';
           ctx.textAlign = 'right';
-          ctx.fillText(vVal.toFixed(0) + 'V', pL - 5, y);
+          ctx.fillText(vVal.toFixed(0) + 'V', pL - 6, y);
 
           // Pravá osa I (0, 1.3, 2.6, 3.9, 5.2 A)
           const iVal = (i / divs) * 5.2;
-          ctx.fillStyle = '#b0b0b0';
+          ctx.fillStyle = '#cccccc';
           ctx.textAlign = 'left';
-          ctx.fillText(iVal.toFixed(1) + 'A', pR + 5, y);
+          ctx.fillText(iVal.toFixed(1) + 'A', pR + 6, y);
         }
       } else {
         // Logaritmický rastr s dekádami (LOG DECADES)
@@ -906,9 +920,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           ctx.beginPath(); ctx.moveTo(pL, y); ctx.lineTo(pR, y); ctx.stroke();
 
           if (t.label) {
-            ctx.fillStyle = '#e0e0e0';
+            ctx.fillStyle = '#ffffff';
             ctx.textAlign = 'right';
-            ctx.fillText(t.label, pL - 5, y);
+            ctx.fillText(t.label, pL - 6, y);
           }
         });
 
@@ -926,9 +940,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         iTicks.forEach(t => {
           const norm = (Math.log10(t.val) - logImin) / (logImax - logImin);
           const y = pB - norm * plotH;
-          ctx.fillStyle = '#b0b0b0';
+          ctx.fillStyle = '#cccccc';
           ctx.textAlign = 'left';
-          ctx.fillText(t.label, pR + 5, y);
+          ctx.fillText(t.label, pR + 6, y);
         });
       }
 
