@@ -464,6 +464,105 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       background: #020202;
     }
 
+    /* --- EXPORTNÍ LIŠTA A ZÁZNAM DAT --- */
+    .export-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .export-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .export-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .rec-btn {
+      background: #141414;
+      color: #eeeeee;
+      border: 1px solid #444444;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border-radius: 0;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .rec-btn:hover {
+      background: #222222;
+      border-color: #777777;
+    }
+    .rec-btn.recording {
+      background: #2a0000;
+      border-color: #ff3333;
+      color: #ff5555;
+    }
+
+    .rec-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #666666;
+      display: inline-block;
+    }
+    .rec-btn.recording .rec-dot {
+      background: #ff3333;
+      box-shadow: 0 0 6px #ff3333;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    .rec-status {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .exp-btn {
+      background: #0d0d0d;
+      color: #b0b0b0;
+      border: 1px solid #383838;
+      padding: 5px 10px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      border-radius: 0;
+      transition: background 0.1s, color 0.1s, border-color 0.1s;
+    }
+    .exp-btn:hover {
+      background: #1c1c1c;
+      color: #ffffff;
+      border-color: #666666;
+    }
+    .exp-btn:active {
+      transform: scale(0.98);
+    }
+    .exp-clear:hover {
+      color: #ff5555;
+      border-color: #aa2222;
+    }
+
     /* --- ALARMOVÝ PÁS (SAFETY TRIP) --- */
     .alarm-banner {
       display: none;
@@ -518,6 +617,10 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       .preset-btn { padding: 8px 2px; text-align: center; font-size: 10px; }
       .graph-panel { padding: 12px; }
       canvas { height: 160px; }
+      .export-bar { flex-direction: column; align-items: stretch; gap: 8px; }
+      .export-left { justify-content: space-between; }
+      .export-right { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+      .exp-btn { text-align: center; padding: 8px 4px; }
     }
   </style>
 </head>
@@ -621,7 +724,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       </div>
     </div>
 
-    <!-- Osciloskopický graticule log s přepínačem LIN/LOG stupnice -->
+    <!-- Osciloskopický graticule log s přepínačem LIN/LOG stupnice a exportem -->
     <div class="graph-panel">
       <div class="graph-header">
         <div style="display:flex; align-items:center; gap:8px;">
@@ -635,6 +738,22 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         </div>
       </div>
       <canvas id="cv"></canvas>
+
+      <!-- Panel záznamu měření a exportu dat (Excel CSV, JSON, PNG graf) -->
+      <div class="export-bar">
+        <div class="export-left">
+          <button id="btnRec" class="rec-btn" onclick="toggleRecording()">
+            <span class="rec-dot"></span> <span id="lblRecBtn" data-i18n="rec_start">ZÁZNAM</span>
+          </button>
+          <span id="recStatus" class="rec-status" data-i18n="rec_idle">ZÁZNAM: NEAKTIVNÍ</span>
+        </div>
+        <div class="export-right">
+          <button class="exp-btn" onclick="exportCSV()" title="Exportovat data do Excelu (.csv)" data-i18n="btn_csv">📥 CSV / EXCEL</button>
+          <button class="exp-btn" onclick="exportJSON()" title="Exportovat surová data (.json)" data-i18n="btn_json">📥 JSON</button>
+          <button class="exp-btn" onclick="exportPNG()" title="Uložit snímek grafu jako obrázek (.png)" data-i18n="btn_png">📷 PNG GRAF</button>
+          <button class="exp-btn exp-clear" onclick="clearLogData()" title="Smazat zaznamenaná data" data-i18n="btn_clear">✕ SMAZAT</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -649,6 +768,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     let currentSetpointVal = 0.500;
     let tOut = null;
     let currentLang = localStorage.getItem('load_lang') || 'cs';
+    let isRecording = false;
+    let recordStartTime = null;
+    const logData = [];
     const history = [];
     const LIMIT = 50;
 
@@ -692,7 +814,20 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         lbl_yscale: 'MĚŘÍTKO Y:',
         btn_ack: '[ POTVRDIT / RESET ]',
         alarm_default: 'SYSTÉMOVÝ ALARM: VYBAVENÍ OCHRANY',
-        alarm_trip: 'OCHRANA: '
+        alarm_trip: 'OCHRANA: ',
+        rec_start: 'ZÁZNAM',
+        rec_stop: 'STOP',
+        rec_idle: 'ZÁZNAM: NEAKTIVNÍ',
+        rec_active: 'ZÁZNAM: ',
+        rec_pts: ' vzorků',
+        rec_saved: 'ULOŽENO: ',
+        csv_header: 'Čas [s];Čas;Režim;Napětí [V];Proud [A];Výkon [W];Teplota [°C];Ventilátor [%];Kapacita [mAh];Energie [Wh]',
+        btn_csv: '📥 CSV / EXCEL',
+        btn_json: '📥 JSON',
+        btn_png: '📷 PNG GRAF',
+        btn_clear: '✕ SMAZAT',
+        no_data: 'Žádná data k exportu! Nejdříve spusťte zátěž nebo zapněte ZÁZNAM.',
+        confirm_clear: 'Opravdu chcete smazat všechna zaznamenaná data měření?'
       },
       en: {
         lang_btn: '[ CZ ]',
@@ -733,7 +868,20 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         lbl_yscale: 'Y-SCALE:',
         btn_ack: '[ ACK / RESET ]',
         alarm_default: 'SYS_ALARM: TRIP OCCURRED',
-        alarm_trip: 'TRIP: '
+        alarm_trip: 'TRIP: ',
+        rec_start: 'REC',
+        rec_stop: 'STOP',
+        rec_idle: 'LOG: IDLE',
+        rec_active: 'LOG: ',
+        rec_pts: ' samples',
+        rec_saved: 'SAVED: ',
+        csv_header: 'Time [s];Time;Mode;Voltage [V];Current [A];Power [W];Temp [C];Fan [%];Capacity [mAh];Energy [Wh]',
+        btn_csv: '📥 CSV / EXCEL',
+        btn_json: '📥 JSON',
+        btn_png: '📷 PNG PLOT',
+        btn_clear: '✕ CLEAR',
+        no_data: 'No data to export! Please run load or press REC first.',
+        confirm_clear: 'Do you really want to clear all recorded measurement data?'
       }
     };
 
@@ -755,6 +903,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       if (fsBtn) {
         fsBtn.innerText = document.fullscreenElement ? t.full_exit : t.full_enter;
       }
+      const lblRec = document.getElementById('lblRecBtn');
+      if (lblRec) lblRec.innerText = isRecording ? t.rec_stop : t.rec_start;
+      updateRecStatus();
       syncModeConfig(mode);
       if (isAlarm) {
         const ann = document.getElementById('stateAnn');
@@ -1175,6 +1326,25 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         setOutputVisuals(isOutput);
       }
 
+      if (isRecording && recordStartTime) {
+        const now = new Date();
+        const elapsed = ((now - recordStartTime) / 1000).toFixed(1);
+        const modes = ['CC', 'CP', 'CR', 'BATT'];
+        logData.push({
+          tSec: elapsed,
+          clock: now.toTimeString().split(' ')[0],
+          mode: modes[mode] || 'CC',
+          u: d.voltage.toFixed(2),
+          i: d.current.toFixed(3),
+          p: d.power.toFixed(1),
+          temp: d.temperature.toFixed(1),
+          fan: d.fan,
+          mah: Math.round(d.discharged_mAh),
+          wh: d.discharged_Wh.toFixed(2)
+        });
+        updateRecStatus();
+      }
+
       history.push({ u: d.voltage, i: d.current });
       if (history.length > LIMIT) history.shift();
       renderPlot();
@@ -1277,6 +1447,142 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           applyTelemetry(d);
         }
       } catch (err) {}
+    }
+
+    /* --- ZÁZNAM A EXPORT DAT (CSV, JSON, PNG) --- */
+    function toggleRecording() {
+      const t = I18N[currentLang] || I18N.cs;
+      const btn = document.getElementById('btnRec');
+      const lbl = document.getElementById('lblRecBtn');
+      isRecording = !isRecording;
+      if (isRecording) {
+        if (!recordStartTime || logData.length === 0) {
+          recordStartTime = new Date();
+        }
+        btn.classList.add('recording');
+        if (lbl) lbl.innerText = t.rec_stop;
+      } else {
+        btn.classList.remove('recording');
+        if (lbl) lbl.innerText = t.rec_start;
+      }
+      updateRecStatus();
+    }
+
+    function updateRecStatus() {
+      const t = I18N[currentLang] || I18N.cs;
+      const el = document.getElementById('recStatus');
+      if (!el) return;
+      if (isRecording && recordStartTime) {
+        const sec = Math.floor((new Date() - recordStartTime) / 1000);
+        const m = String(Math.floor(sec / 60)).padStart(2, '0');
+        const s = String(sec % 60).padStart(2, '0');
+        el.innerText = `${t.rec_active}${m}:${s} [ ${logData.length}${t.rec_pts} ]`;
+      } else if (logData.length > 0) {
+        el.innerText = `${t.rec_saved}${logData.length}${t.rec_pts}`;
+      } else {
+        el.innerText = t.rec_idle;
+      }
+    }
+
+    function clearLogData() {
+      const t = I18N[currentLang] || I18N.cs;
+      if (logData.length === 0) return;
+      if (confirm(t.confirm_clear)) {
+        logData.length = 0;
+        recordStartTime = null;
+        if (isRecording) toggleRecording();
+        updateRecStatus();
+      }
+    }
+
+    function getTimestampStr() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+    }
+
+    function downloadBlob(content, fileName, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 200);
+    }
+
+    function getExportRows() {
+      if (logData.length > 0) return logData;
+      if (history.length > 0) {
+        const modes = ['CC', 'CP', 'CR', 'BATT'];
+        const vT = document.getElementById('valT') ? document.getElementById('valT').innerText : '25.0';
+        const vFan = document.getElementById('valFan') ? document.getElementById('valFan').innerText : '0';
+        const vMah = document.getElementById('valMah') ? document.getElementById('valMah').innerText : '0';
+        const vWh = document.getElementById('valWh') ? document.getElementById('valWh').innerText : '0.00';
+        return history.map((pt, idx) => ({
+          tSec: (idx * 0.3).toFixed(1),
+          clock: '--:--:--',
+          mode: modes[mode] || 'CC',
+          u: pt.u.toFixed(2),
+          i: pt.i.toFixed(3),
+          p: (pt.u * pt.i).toFixed(1),
+          temp: vT,
+          fan: vFan,
+          mah: vMah,
+          wh: vWh
+        }));
+      }
+      return [];
+    }
+
+    function exportCSV() {
+      const t = I18N[currentLang] || I18N.cs;
+      const rows = getExportRows();
+      if (rows.length === 0) {
+        alert(t.no_data);
+        return;
+      }
+      const sep = ';';
+      let csv = '\uFEFF' + t.csv_header + '\r\n';
+      rows.forEach(r => {
+        csv += `${r.tSec}${sep}${r.clock}${sep}${r.mode}${sep}${r.u}${sep}${r.i}${sep}${r.p}${sep}${r.temp}${sep}${r.fan}${sep}${r.mah}${sep}${r.wh}\r\n`;
+      });
+      downloadBlob(csv, `zatez_mereni_${getTimestampStr()}.csv`, 'text/csv;charset=utf-8;');
+    }
+
+    function exportJSON() {
+      const t = I18N[currentLang] || I18N.cs;
+      const rows = getExportRows();
+      if (rows.length === 0) {
+        alert(t.no_data);
+        return;
+      }
+      const obj = {
+        device: 'DC Electronic Load 30V/5A',
+        exported_at: new Date().toISOString(),
+        active_mode: ['CC', 'CP', 'CR', 'BATT'][mode],
+        samples_count: rows.length,
+        samples: rows
+      };
+      downloadBlob(JSON.stringify(obj, null, 2), `zatez_mereni_${getTimestampStr()}.json`, 'application/json');
+    }
+
+    function exportPNG() {
+      try {
+        const url = cv.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `zatez_graf_${getTimestampStr()}.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => document.body.removeChild(a), 200);
+      } catch (err) {
+        console.error(err);
+      }
     }
   </script>
 </body>
