@@ -21,96 +21,117 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
   <title>DC ELECTRONIC LOAD 30V / 5A</title>
   <style>
     :root {
-      --bg: #000000;
-      --panel: #0a0a0a;
-      --panel-alt: #141414;
-      --border: #2a2a2a;
-      --border-focus: #555555;
-      --text: #ffffff;
-      --text-muted: #888888;
-      --text-dim: #b8b8b8;
-      --invert-bg: #ffffff;
-      --invert-text: #000000;
-      --alarm: #ff2a2a;
-      --accent: #22ff66;
-      --trace-u: #ffffff;
-      --trace-i: #aaaaaa;
-      --mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+      --bg: #0b0f17;
+      --panel: #131a26;
+      --panel-alt: #1a2333;
+      --border: #243044;
+      --border-focus: #3b82f6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #cbd5e1;
+      --invert-bg: #3b82f6;
+      --invert-text: #ffffff;
+      --alarm: #ef4444;
+      --accent: #22c55e;
+      --trace-u: #38bdf8;
+      --trace-i: #4ade80;
+      --val-u: #38bdf8;
+      --val-i: #4ade80;
+      --val-p: #fbbf24;
+      --val-t: #f87171;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
     }
 
     body.theme-amber {
-      --bg: #0a0600;
-      --panel: #140d02;
-      --panel-alt: #201404;
-      --border: #442a00;
-      --border-focus: #885500;
-      --text: #ffb400;
-      --text-muted: #996a00;
-      --text-dim: #c59835;
-      --invert-bg: #ffb400;
+      --bg: #0d0800;
+      --panel: #171003;
+      --panel-alt: #241905;
+      --border: #422d0c;
+      --border-focus: #ffb703;
+      --text: #ffb703;
+      --text-muted: #b37e02;
+      --text-dim: #ffcf54;
+      --invert-bg: #ffb703;
       --invert-text: #000000;
       --alarm: #ff3b00;
-      --accent: #ffb400;
-      --trace-u: #ffcc00;
-      --trace-i: #a67200;
+      --accent: #ffb703;
+      --trace-u: #ffe066;
+      --trace-i: #ff9f1c;
+      --val-u: #ffe066;
+      --val-i: #ffb703;
+      --val-p: #ff9f1c;
+      --val-t: #ff6b35;
     }
 
     body.theme-green {
-      --bg: #000a02;
-      --panel: #021706;
-      --panel-alt: #04240a;
-      --border: #004415;
-      --border-focus: #00882b;
-      --text: #2bff55;
-      --text-muted: #158832;
-      --text-dim: #44cc66;
-      --invert-bg: #2bff55;
+      --bg: #010e05;
+      --panel: #031c0a;
+      --panel-alt: #072a11;
+      --border: #0e4c20;
+      --border-focus: #22c55e;
+      --text: #4ade80;
+      --text-muted: #15803d;
+      --text-dim: #86efac;
+      --invert-bg: #22c55e;
       --invert-text: #000000;
-      --alarm: #ff2222;
-      --accent: #2bff55;
-      --trace-u: #55ff77;
-      --trace-i: #189e37;
+      --alarm: #ef4444;
+      --accent: #4ade80;
+      --trace-u: #86efac;
+      --trace-i: #22c55e;
+      --val-u: #86efac;
+      --val-i: #4ade80;
+      --val-p: #22c55e;
+      --val-t: #a7f3d0;
     }
 
     body.theme-cyan {
-      --bg: #010912;
-      --panel: #031526;
-      --panel-alt: #062038;
-      --border: #083c66;
-      --border-focus: #0f6bb3;
+      --bg: #030e1a;
+      --panel: #06192e;
+      --panel-alt: #0b2440;
+      --border: #133c66;
+      --border-focus: #00e5ff;
       --text: #00e5ff;
-      --text-muted: #007380;
-      --text-dim: #44c8d9;
+      --text-muted: #0d8299;
+      --text-dim: #67e8f9;
       --invert-bg: #00e5ff;
       --invert-text: #000000;
-      --alarm: #ff2255;
+      --alarm: #f43f5e;
       --accent: #00e5ff;
       --trace-u: #ffffff;
-      --trace-i: #0099cc;
+      --trace-i: #00e5ff;
+      --val-u: #ffffff;
+      --val-i: #00e5ff;
+      --val-p: #38bdf8;
+      --val-t: #67e8f9;
     }
 
     body.theme-light {
-      --bg: #e8ebef;
+      --bg: #f1f5f9;
       --panel: #ffffff;
-      --panel-alt: #f4f6f8;
-      --border: #c8d0d8;
-      --border-focus: #7a8898;
-      --text: #111822;
+      --panel-alt: #f8fafc;
+      --border: #cbd5e1;
+      --border-focus: #2563eb;
+      --text: #0f172a;
       --text-muted: #64748b;
-      --text-dim: #475569;
-      --invert-bg: #111822;
+      --text-dim: #334155;
+      --invert-bg: #0f172a;
       --invert-text: #ffffff;
-      --alarm: #e11d48;
+      --alarm: #dc2626;
       --accent: #0284c7;
       --trace-u: #0284c7;
-      --trace-i: #64748b;
+      --trace-i: #16a34a;
+      --val-u: #0284c7;
+      --val-i: #16a34a;
+      --val-p: #d97706;
+      --val-t: #dc2626;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: var(--mono);
+      font-family: var(--font-sans);
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -120,34 +141,35 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       min-height: 100vh;
       min-height: -webkit-fill-available;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       transition: background 0.2s, color 0.2s;
     }
 
     body {
       display: flex;
       justify-content: center;
-      padding: 16px;
+      padding: 18px 12px;
     }
 
     .frame {
       width: 100%;
-      max-width: 980px;
+      max-width: 1000px;
       display: flex;
       flex-direction: column;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      gap: 10px;
     }
 
     /* --- ZÁHLAVÍ (HEADER) --- */
     .header-bar {
       background: var(--panel);
-      padding: 12px 16px;
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .header-left {
@@ -156,17 +178,21 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     .header-title {
-      font-size: 11px;
-      letter-spacing: 0.15em;
+      font-size: 13px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      font-weight: 700;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .header-sub {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.02em;
       margin-top: 2px;
+      font-weight: 500;
     }
 
     .header-right {
@@ -176,84 +202,94 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     .link-indicator {
-      font-size: 10px;
-      letter-spacing: 0.1em;
+      font-size: 11px;
+      letter-spacing: 0.06em;
       font-weight: 700;
-      padding: 4px 8px;
+      padding: 5px 10px;
+      border-radius: 6px;
       border: 1px solid var(--border);
     }
-    .link-ok { color: #22ff66; border-color: #1a552a; background: #001a08; }
-    .link-err { color: #ff3333; border-color: #aa2222; background: #220000; }
+    .link-ok { color: #22c55e; border-color: rgba(34,197,94,0.3); background: rgba(34,197,94,0.12); }
+    .link-err { color: #ef4444; border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.12); }
 
     .fs-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border-focus);
-      padding: 4px 8px;
-      font-size: 10px;
+      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.04em;
       cursor: pointer;
       outline: none;
-      border-radius: 0;
-      transition: background 0.1s, color 0.1s;
+      transition: all 0.15s ease;
     }
     .fs-btn:hover {
       background: var(--border-focus);
-      color: var(--invert-text);
+      color: #ffffff;
+      border-color: var(--border-focus);
     }
 
     .annunciator {
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.12em;
-      padding: 4px 10px;
-      border: 1px solid #555555;
+      letter-spacing: 0.08em;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid transparent;
     }
 
-    .ann-on { background: #ffffff; color: #000000; border-color: #ffffff; }
-    .ann-off { background: #080808; color: #aaaaaa; border-color: #444444; }
-    .ann-alarm { background: #ff2222; color: #ffffff; border-color: #ff2222; animation: pulse 0.8s infinite alternate; }
+    .ann-on { background: #22c55e; color: #000000; font-weight: 800; box-shadow: 0 0 12px rgba(34,197,94,0.3); }
+    .ann-off { background: var(--panel-alt); color: var(--text-muted); border-color: var(--border); }
+    .ann-alarm { background: #ef4444; color: #ffffff; animation: pulse 0.8s infinite alternate; box-shadow: 0 0 14px rgba(239,68,68,0.4); }
 
     /* --- NAVIGAČNÍ ZÁLOŽKY (TABS) --- */
     .nav-bar {
       display: flex;
-      background: var(--panel-alt);
-      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 4px;
+      gap: 4px;
       overflow-x: auto;
       scrollbar-width: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
     .nav-bar::-webkit-scrollbar { display: none; }
 
     .nav-btn {
+      flex: 1;
       background: transparent;
       color: var(--text-muted);
       border: none;
-      border-right: 1px solid var(--border);
-      padding: 10px 18px;
-      font-size: 11px;
+      padding: 9px 14px;
+      border-radius: 7px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.03em;
       cursor: pointer;
       display: inline-flex;
+      justify-content: center;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       white-space: nowrap;
-      transition: background 0.1s, color 0.1s;
+      transition: all 0.15s ease;
     }
     .nav-btn:hover {
       color: var(--text);
-      background: var(--panel);
+      background: var(--panel-alt);
     }
     .nav-btn.active {
       color: var(--invert-text);
       background: var(--invert-bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
 
     .tab-content {
       display: none;
       flex-direction: column;
-      gap: 1px;
+      gap: 10px;
     }
     .tab-content.active {
       display: flex;
@@ -263,126 +299,161 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     .readouts {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
+      gap: 10px;
     }
 
     .readout-cell {
       background: var(--panel);
-      padding: 16px;
+      padding: 16px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 94px;
+      min-height: 110px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
     }
 
+    .readout-cell::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--border);
+    }
+    .readout-v::before { background: var(--val-u); }
+    .readout-i::before { background: var(--val-i); }
+    .readout-p::before { background: var(--val-p); }
+    .readout-t::before { background: var(--val-t); }
+
     .cell-tag {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-muted);
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
 
     .cell-num {
-      font-size: clamp(24px, 4vw, 36px);
-      font-weight: 800;
+      font-family: var(--font-mono);
+      font-size: clamp(28px, 4.2vw, 42px);
+      font-weight: 700;
       letter-spacing: -0.02em;
-      line-height: 1.1;
+      line-height: 1.15;
       margin: 8px 0 4px 0;
       color: var(--text);
       font-variant-numeric: tabular-nums;
     }
 
+    .readout-v .cell-num { color: var(--val-u); text-shadow: 0 0 20px rgba(56,189,248,0.25); }
+    .readout-i .cell-num { color: var(--val-i); text-shadow: 0 0 20px rgba(74,222,128,0.25); }
+    .readout-p .cell-num { color: var(--val-p); text-shadow: 0 0 20px rgba(251,191,36,0.25); }
+    .readout-t .cell-num { color: var(--val-t); text-shadow: 0 0 20px rgba(248,113,113,0.25); }
+
     .cell-unit {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-muted);
       font-weight: 600;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.03em;
     }
 
     /* --- OVLÁDACÍ PANEL (CONTROL DECK) --- */
     .control-deck {
       background: var(--panel);
-      padding: 16px 18px;
+      padding: 18px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .deck-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
     .btn-group {
       display: inline-flex;
       border: 1px solid var(--border);
-      gap: 1px;
-      background: var(--border);
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+      background: var(--panel-alt);
     }
 
     .mode-btn {
-      background: var(--panel);
+      background: transparent;
       color: var(--text-muted);
       border: none;
-      padding: 10px 16px;
-      font-size: 11px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.04em;
       cursor: pointer;
       outline: none;
-      border-radius: 0;
-      transition: background 0.1s, color 0.1s;
+      transition: all 0.15s ease;
     }
 
-    .mode-btn:hover { color: var(--text); }
+    .mode-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
     .mode-btn.active {
       background: var(--invert-bg);
       color: var(--invert-text);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     .power-btn {
-      background: transparent;
+      background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border-focus);
+      border: 1px solid var(--border);
       padding: 10px 24px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       cursor: pointer;
       outline: none;
-      border-radius: 0;
-      transition: background 0.1s, color 0.1s, transform 0.05s;
+      transition: all 0.15s ease;
     }
 
-    .power-btn:hover { border-color: var(--text); }
-    .power-btn:active { transform: scale(0.99); }
+    .power-btn:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-1px);
+    }
+    .power-btn:active { transform: translateY(1px); }
     .power-btn.engaged {
-      background: #ff2222;
+      background: #dc2626;
       color: #ffffff;
-      border-color: #ff2222;
+      border-color: #ef4444;
+      box-shadow: 0 0 16px rgba(220, 38, 38, 0.4);
     }
 
     /* POSUVNÍK + ČÍSELNÝ VSTUP */
     .slider-wrap {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .slider-legend {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 11px;
-      letter-spacing: 0.05em;
+      font-size: 12px;
+      font-weight: 600;
     }
 
     .scale-selector {
@@ -390,14 +461,15 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       align-items: center;
       gap: 4px;
       border: 1px solid var(--border);
-      padding: 2px 4px;
+      border-radius: 6px;
+      padding: 3px 6px;
       background: var(--panel-alt);
     }
 
     .scale-label {
-      font-size: 9px;
+      font-size: 10px;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       margin-right: 2px;
     }
 
@@ -405,10 +477,12 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       background: transparent;
       color: var(--text-muted);
       border: none;
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
-      padding: 2px 5px;
+      padding: 3px 7px;
+      border-radius: 4px;
       cursor: pointer;
+      transition: all 0.1s ease;
     }
     .scale-btn.active {
       background: var(--invert-bg);
@@ -418,52 +492,67 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     .sp-input-box {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .num-input {
-      background: #000000;
-      color: #ffffff;
+      font-family: var(--font-mono);
+      background: var(--panel-alt);
+      color: var(--text);
       border: 1px solid var(--border);
-      padding: 5px 8px;
-      font-size: 13px;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 14px;
       font-weight: 700;
-      width: 85px;
+      width: 95px;
       text-align: right;
       outline: none;
+      transition: border 0.15s;
     }
     .num-input:focus {
       border-color: var(--border-focus);
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
     }
 
     .sp-set-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border-focus);
-      padding: 5px 10px;
-      font-size: 10px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 7px 12px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
+      transition: all 0.15s ease;
     }
     .sp-set-btn:hover {
       background: var(--border-focus);
-      color: var(--invert-text);
+      color: #ffffff;
+      border-color: var(--border-focus);
     }
 
     input[type=range] {
       -webkit-appearance: none;
       width: 100%;
-      height: 6px;
-      background: var(--border);
+      height: 8px;
+      border-radius: 4px;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
       outline: none;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px;
+      width: 22px;
       height: 22px;
+      border-radius: 50%;
       background: var(--invert-bg);
       cursor: pointer;
-      border: 1px solid var(--border);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
     }
 
     /* PŘEDVOLBY */
@@ -475,9 +564,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     .preset-label {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       font-weight: 700;
     }
@@ -486,164 +575,162 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       background: var(--panel-alt);
       color: var(--text-dim);
       border: 1px solid var(--border);
-      padding: 6px 12px;
-      font-size: 11px;
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.1s, color 0.1s;
+      transition: all 0.15s ease;
     }
     .preset-btn:hover {
       background: var(--border);
       color: var(--text);
+      border-color: var(--border-focus);
+      transform: translateY(-1px);
     }
 
     /* --- GRAFICKÝ PANEL (OSCILLOSCOPE) --- */
-    .graph-panel {
+    .plot-deck {
       background: var(--panel);
-      padding: 14px 18px;
+      padding: 14px 18px 18px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .graph-header {
+    .plot-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 6px;
+    }
+
+    .plot-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .trace-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pill-u { color: var(--trace-u); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3); }
+    .pill-i { color: var(--trace-i); background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); }
+
+    .canvas-container {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
     }
 
     canvas {
-      width: 100%;
-      height: 190px;
       display: block;
-      background: #020202;
+      width: 100%;
+      height: 100%;
     }
 
-    /* --- EXPORTNÍ LIŠTA A ZÁZNAM DAT --- */
+    /* EXPORTNÍ LIŠTA */
     .export-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
       padding-top: 10px;
       border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-    }
-
-    .export-left {
-      display: flex;
-      align-items: center;
       gap: 10px;
-    }
-
-    .export-right {
-      display: flex;
-      align-items: center;
-      gap: 6px;
       flex-wrap: wrap;
     }
 
-    .rec-btn {
-      background: #141414;
-      color: #eeeeee;
-      border: 1px solid #444444;
-      padding: 6px 12px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      cursor: pointer;
+    .rec-indicator {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      border-radius: 0;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
-    }
-    .rec-btn:hover {
-      background: #222222;
-      border-color: #777777;
-    }
-    .rec-btn.recording {
-      background: #2a0000;
-      border-color: #ff3333;
-      color: #ff5555;
-    }
-
-    .rec-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #666666;
-      display: inline-block;
-    }
-    .rec-btn.recording .rec-dot {
-      background: #ff3333;
-      box-shadow: 0 0 6px #ff3333;
-      animation: pulse 1s infinite alternate;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
-
-    .rec-status {
-      font-size: 10px;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
       color: var(--text-muted);
-      letter-spacing: 0.08em;
-      font-variant-numeric: tabular-nums;
+    }
+    .rec-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #555555;
+    }
+    .rec-active .rec-dot {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+      animation: pulse 0.7s infinite alternate;
+    }
+    .rec-active {
+      color: #ef4444;
+    }
+
+    .export-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .exp-btn {
-      background: #0d0d0d;
-      color: #b0b0b0;
-      border: 1px solid #383838;
-      padding: 5px 10px;
-      font-size: 10px;
+      background: var(--panel-alt);
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.03em;
       cursor: pointer;
-      border-radius: 0;
-      transition: background 0.1s, color 0.1s, border-color 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
     }
     .exp-btn:hover {
-      background: #1c1c1c;
-      color: #ffffff;
-      border-color: #666666;
-    }
-    .exp-btn:active {
-      transform: scale(0.98);
-    }
-    .exp-clear:hover {
-      color: #ff5555;
-      border-color: #aa2222;
+      background: var(--border);
+      color: var(--text);
+      border-color: var(--border-focus);
     }
 
-    /* --- KARTY PRO NASTAVENÍ A TEST BATERIÍ --- */
+    /* KARTY V ZÁLOŽKÁCH NASTAVENÍ A BATERIE */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1px;
-      background: var(--border);
+      gap: 12px;
     }
 
     .info-card {
       background: var(--panel);
       padding: 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .card-title {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--text);
       display: flex;
@@ -654,138 +741,121 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     .card-badge {
-      font-size: 9px;
-      padding: 2px 6px;
-      border: 1px solid var(--border-focus);
-      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
     }
-    .badge-ok { color: #22ff66; border-color: #1a552a; background: #001a08; }
-    .badge-warn { color: #ffb400; border-color: #885500; background: #221500; }
+    .badge-ok {
+      background: rgba(34,197,94,0.15);
+      border-color: rgba(34,197,94,0.3);
+      color: #22c55e;
+    }
 
     .prop-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 11px;
-      padding: 3px 0;
+      font-size: 12px;
+      gap: 8px;
     }
+
     .prop-label {
       color: var(--text-muted);
+      font-weight: 500;
     }
+
     .prop-val {
+      font-family: var(--font-mono);
       font-weight: 700;
-      font-variant-numeric: tabular-nums;
       color: var(--text);
+      text-align: right;
     }
 
-    /* BATERIOVÁ SEKCE */
-    .batt-big-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--border);
-    }
-
-    .batt-box {
-      background: var(--panel);
-      padding: 16px;
+    /* TEST BATERIÍ */
+    .batt-big-stat {
+      background: var(--panel-alt);
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      min-height: 85px;
+      gap: 4px;
+    }
+    .batt-big-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .batt-big-num {
+      font-family: var(--font-mono);
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .batt-big-num span {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-left: 4px;
     }
 
-    /* TÉMATA (VZHLED) */
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .theme-card {
-      background: var(--panel-alt);
-      border: 1px solid var(--border);
-      padding: 12px;
-      cursor: pointer;
+    .alarm-bar {
+      background: rgba(239,68,68,0.15);
+      border: 1px solid #ef4444;
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
       display: flex;
+      justify-content: space-between;
       align-items: center;
       gap: 10px;
-      transition: border-color 0.15s, background 0.15s;
+      box-shadow: 0 0 16px rgba(239,68,68,0.25);
     }
-    .theme-card:hover {
-      border-color: var(--border-focus);
-    }
-    .theme-card.active {
-      border-color: var(--text);
-      background: var(--panel);
-    }
-
-    .theme-swatch {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    /* ALARM BANNER */
-    .alarm-banner {
-      display: none;
-      background: #110000;
-      border-bottom: 1px solid var(--alarm);
-      padding: 10px 18px;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--alarm);
+    .alarm-ack-btn {
+      background: #ef4444;
+      color: #ffffff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
       font-size: 11px;
-      letter-spacing: 0.08em;
-    }
-
-    .btn-reset {
-      background: transparent;
-      color: var(--alarm);
-      border: 1px solid var(--alarm);
-      padding: 6px 12px;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      font-weight: 700;
+      font-weight: 800;
       cursor: pointer;
-      border-radius: 0;
+      transition: background 0.15s;
     }
-    .btn-reset:hover {
-      background: var(--alarm);
-      color: #000000;
+    .alarm-ack-btn:hover {
+      background: #dc2626;
     }
 
-    /* RESPONSIVE DESIGN */
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
     @media (max-width: 680px) {
-      body { padding: 0; }
-      .frame { border: none; max-width: 100%; min-height: 100vh; }
-      .header-bar { padding: 10px 12px; }
-      .header-title { font-size: 10px; }
-      .header-sub { display: none; }
-      .readouts { grid-template-columns: repeat(2, 1fr); }
-      .readout-cell { padding: 12px; min-height: 80px; }
-      .cell-num { font-size: 24px; }
-      .batt-big-grid { grid-template-columns: repeat(2, 1fr); }
-      .control-deck { padding: 12px; gap: 12px; }
-      .deck-row { flex-direction: column; align-items: stretch; gap: 8px; }
-      .btn-group { display: flex; width: 100%; }
-      .mode-btn { flex: 1; padding: 12px 4px; text-align: center; font-size: 11px; }
-      .power-btn { width: 100%; padding: 14px; font-size: 12px; text-align: center; }
-      .slider-legend { flex-direction: column; align-items: flex-start; gap: 8px; }
-      .sp-input-box { width: 100%; justify-content: space-between; }
-      .num-input { flex: 1; font-size: 16px; padding: 8px 10px; }
-      .sp-set-btn { padding: 8px 16px; }
-      .presets-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
-      .preset-label { grid-column: 1 / -1; margin-bottom: 2px; }
-      .preset-btn { padding: 8px 2px; text-align: center; font-size: 10px; }
-      .graph-panel { padding: 12px; }
-      canvas { height: 160px; }
-      .export-bar { flex-direction: column; align-items: stretch; gap: 8px; }
-      .export-left { justify-content: space-between; }
-      .export-right { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
-      .exp-btn { text-align: center; padding: 8px 4px; }
+      .readouts {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .header-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .header-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .nav-bar {
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
@@ -1613,10 +1683,10 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       const w = cssW;
       const h = cssH;
 
-      const pL = 38;
-      const pR = w - 42;
-      const pT = 12;
-      const pB = h - 16;
+      const pL = 46;
+      const pR = w - 48;
+      const pT = 14;
+      const pB = h - 18;
       const plotW = pR - pL;
       const plotH = pB - pT;
 
@@ -1633,7 +1703,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       ctx.lineWidth = 1;
       ctx.strokeRect(pL, pT, plotW, plotH);
 
-      ctx.font = '600 11px ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace';
+      ctx.font = '700 12px ui-monospace, "SF Mono", "Roboto Mono", Cascadia Code, monospace';
       ctx.textBaseline = 'middle';
 
       if (plotScale === 'lin') {
