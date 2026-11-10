@@ -15,7 +15,7 @@ public:
   bool isConnected() const;
 
   /**
-   * @brief Nastaví referenční napětí pro analogový operační zesilovač
+   * @brief Nastaví referenční napětí pro analogový operační zesilovač s plynulým náběhem
    * @param targetAmps Požadovaný proud v ampérech (0.0 až LIMIT_MAX_CURRENT)
    */
   void setCurrent(float targetAmps);
@@ -28,6 +28,7 @@ public:
 private:
   bool _ready;
   uint16_t _lastCode;
+  float _currentRampAmps;
 };
 
 #endif // DAC_DRIVER_H

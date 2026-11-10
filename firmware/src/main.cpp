@@ -122,8 +122,9 @@ void setup() {
 void loop() {
   unsigned long now = millis();
 
-  // 0. Obsluha HTTP požadavků webového serveru
+  // 0. Obsluha HTTP požadavků webového serveru a asynchronní obsluha ADC
   s_webServer.handle();
+  s_adc.poll();
 
   // ===========================================================================
   // 1. OBSLUHA UŽIVATELSKÉHO VSTUPU (Rotační enkodér a tlačítko)
@@ -216,9 +217,9 @@ void loop() {
   }
 
   // ===========================================================================
-  // 3. ZOBRAZOVACÍ SMYČKA UI (10 Hz / perioda 100 ms)
+  // 3. ZOBRAZOVACÍ SMYČKA UI (6.6 Hz / perioda 150 ms - šetří I2C pásmo pro ADC/DAC)
   // ===========================================================================
-  if (now - s_lastUiLoop >= 100) {
+  if (now - s_lastUiLoop >= 150) {
     s_lastUiLoop = now;
     syncSystemState();
     s_ui.render(s_meas, s_state, s_regulator.getSetpoints(), s_regulator.getBatteryStats());

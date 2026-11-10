@@ -15,15 +15,28 @@ public:
   bool isConnected() const;
 
   /**
-   * @brief Přečte napětí a proud z převodníku s filtrací šumu
+   * @brief Ne-blokující obsluha stavového automatu ADC (volána v hlavní smyčce)
+   */
+  void poll();
+
+  /**
+   * @brief Okamžitě vrátí filtrované napětí a proud bez jakéhokoliv blokování I2C
    * @param[out] outVoltage Skutečné napětí na svorkách [V]
    * @param[out] outCurrent Skutečný proud bočníkem [A]
    */
   void read(float &outVoltage, float &outCurrent);
 
 private:
+  enum AdcState {
+    ADC_STATE_IDLE,
+    ADC_WAIT_VMON,
+    ADC_WAIT_IMON
+  };
+
   bool _ready;
   bool _firstSample;
+  AdcState _state;
+  unsigned long _convStartMs;
   float _filteredVoltage;
   float _filteredCurrent;
 };

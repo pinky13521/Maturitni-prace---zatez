@@ -36,6 +36,10 @@ private:
   int _cutoffLowSamples;
   Setpoint _setpoints;
   BatteryStats _battStats;
+  double _acc_mAh;
+  double _acc_Wh;
+  float _ocvVoltage;
+  bool _riCalculated;
 };
 
 #endif // LOAD_REGULATOR_H

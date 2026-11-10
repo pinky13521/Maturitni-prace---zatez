@@ -1093,6 +1093,14 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
             <span class="prop-val">ESP32 DevKit V1 (240 MHz)</span>
           </div>
           <div class="prop-row">
+            <span class="prop-label">Volná RAM (Heap):</span>
+            <span class="prop-val" id="diagHeap">-- KB</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-label">Doba běhu (Uptime):</span>
+            <span class="prop-val" id="diagUptime">--</span>
+          </div>
+          <div class="prop-row">
             <span class="prop-label" data-i18n="set_loop">Perioda regulační smyčky:</span>
             <span class="prop-val">20 ms (50 Hz)</span>
           </div>
@@ -1911,7 +1919,10 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       if (bWh) bWh.innerText = d.discharged_Wh.toFixed(2);
 
       // Výpočet orientačního vnitřního odporu (Ri)
-      if (!d.output && d.voltage > 0.5) {
+      if (typeof d.ri === 'number' && d.ri > 0) {
+        const riEl = document.getElementById('battRi');
+        if (riEl) riEl.innerText = Math.round(d.ri * 1000);
+      } else if (!d.output && d.voltage > 0.5) {
         lastVoltageUnloaded = d.voltage;
       } else if (d.output && d.current > 0.2 && lastVoltageUnloaded > d.voltage) {
         const deltaU = lastVoltageUnloaded - d.voltage;
@@ -1919,6 +1930,30 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         const riEl = document.getElementById('battRi');
         if (riEl && riMilliOhm > 0 && riMilliOhm < 9999) {
           riEl.innerText = riMilliOhm;
+        }
+      }
+
+      if (typeof d.duration === 'number' && mode === 3) {
+        const sec = d.duration;
+        const h = String(Math.floor(sec / 3600)).padStart(2, '0');
+        const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
+        const s = String(sec % 60).padStart(2, '0');
+        const bTimer = document.getElementById('battTimer');
+        if (bTimer) bTimer.innerText = `${h}:${m}:${s}`;
+      }
+
+      if (typeof d.heap === 'number') {
+        const elHeap = document.getElementById('diagHeap');
+        if (elHeap) elHeap.innerText = Math.round(d.heap / 1024) + ' KB';
+      }
+      if (typeof d.uptime === 'number') {
+        const elUp = document.getElementById('diagUptime');
+        if (elUp) {
+          const s = d.uptime;
+          const h = Math.floor(s / 3600);
+          const m = Math.floor((s % 3600) / 60);
+          const sc = s % 60;
+          elUp.innerText = `${h}h ${m}m ${sc}s`;
         }
       }
 

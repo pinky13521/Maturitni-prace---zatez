@@ -37,8 +37,9 @@ void EncoderDriver::begin() {
 
 void IRAM_ATTR EncoderDriver::handleClkInterrupt() {
   unsigned long nowUs = micros();
-  // Odfiltrování zákmitů kontaktů (debounce 1000 us = 1 ms)
-  if (nowUs - s_lastClkUs < 1000) {
+  unsigned long dtUs = nowUs - s_lastClkUs;
+  // Odfiltrování zákmitů kontaktů (debounce 1200 us)
+  if (dtUs < 1200) {
     return;
   }
   s_lastClkUs = nowUs;
@@ -46,11 +47,19 @@ void IRAM_ATTR EncoderDriver::handleClkInterrupt() {
   int clk = digitalRead(PIN_ENC_CLK);
   int dt = digitalRead(PIN_ENC_DT);
 
+  // Dynamická akcelerace: rychlé otáčení násobí krok pro plynulé procházení celého rozsahu
+  int mult = 1;
+  if (dtUs < 30000) {
+    mult = 3; // Rychlé točení
+  } else if (dtUs < 70000) {
+    mult = 2; // Středně rychlé točení
+  }
+
   portENTER_CRITICAL_ISR(&s_SubMux);
   if (clk != dt) {
-    s_delta = s_delta + 1;
+    s_delta += mult;
   } else {
-    s_delta = s_delta - 1;
+    s_delta -= mult;
   }
   portEXIT_CRITICAL_ISR(&s_SubMux);
 }

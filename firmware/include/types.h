@@ -56,6 +56,8 @@ struct BatteryStats {
   float discharged_mAh;
   float discharged_Wh;
   uint32_t testStartTime;
+  uint32_t durationSeconds;
+  float internalResistance; // [Ω] Odhad vnitřního odporu článku
   bool testCompleted;
 };
 

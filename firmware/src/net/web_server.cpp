@@ -44,11 +44,12 @@ void LoadWebServer::handleTelemetry() {
     activeSp = sp.resistance;
   }
 
-  char json[410];
+  char json[512];
   snprintf(json, sizeof(json),
     "{\"voltage\":%.2f,\"current\":%.3f,\"power\":%.1f,\"temperature\":%.1f,"
     "\"fan\":%d,\"output\":%s,\"alarm\":%d,\"alarmText\":\"%s\",\"mode\":%d,"
-    "\"setpoint\":%.3f,\"cutoff\":%.2f,\"discharged_mAh\":%.1f,\"discharged_Wh\":%.2f}",
+    "\"setpoint\":%.3f,\"cutoff\":%.2f,\"discharged_mAh\":%.1f,\"discharged_Wh\":%.2f,"
+    "\"duration\":%lu,\"ri\":%.3f,\"heap\":%lu,\"uptime\":%lu}",
     _meas.voltage, _meas.current, _meas.power, _meas.temperature,
     _state.fanDutyPercent,
     _regulator.isEnabled() ? "true" : "false",
@@ -57,7 +58,11 @@ void LoadWebServer::handleTelemetry() {
     (int)_regulator.getMode(),
     activeSp,
     sp.cutoffVoltage,
-    batt.discharged_mAh, batt.discharged_Wh
+    batt.discharged_mAh, batt.discharged_Wh,
+    (unsigned long)batt.durationSeconds,
+    batt.internalResistance,
+    (unsigned long)ESP.getFreeHeap(),
+    (unsigned long)(millis() / 1000)
   );
 
   _server.sendHeader("Connection", "close");
@@ -72,6 +77,20 @@ void LoadWebServer::handleControl() {
       _regulator.enable(true);
     } else {
       _regulator.enable(false);
+    }
+  }
+
+  // Příkaz pro test baterie (start, stop, reset)
+  if (_server.hasArg("batt")) {
+    String cmd = _server.arg("batt");
+    if (cmd == "start" && !_safety.isTripped()) {
+      _regulator.setMode(MODE_BATT);
+      _regulator.enable(true);
+    } else if (cmd == "stop") {
+      _regulator.enable(false);
+    } else if (cmd == "reset") {
+      _regulator.enable(false);
+      _regulator.resetBatteryStats();
     }
   }
 

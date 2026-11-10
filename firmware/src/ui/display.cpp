@@ -111,7 +111,14 @@ void DisplayUi::render(const Measurement& meas,
     s_display.setCursor(0, 54);
 
     if (state.mode == MODE_BATT) {
-      s_display.printf("%dmAh %4.1fWh", (int)batt.discharged_mAh, batt.discharged_Wh);
+      uint32_t sec = batt.durationSeconds;
+      uint32_t mm = sec / 60;
+      uint32_t ss = sec % 60;
+      if (mm > 99) {
+        s_display.printf("%dmAh %02dh%02d", (int)batt.discharged_mAh, (int)(mm / 60), (int)(mm % 60));
+      } else {
+        s_display.printf("%dmAh  %02d:%02d", (int)batt.discharged_mAh, (int)mm, (int)ss);
+      }
     } else {
       float targetVal = (state.mode == MODE_CC) ? setpoint.current :
                         ((state.mode == MODE_CP) ? setpoint.power : setpoint.resistance);

@@ -13,7 +13,7 @@ public:
   SafetySupervisor();
 
   /**
-   * @brief Zkontroluje mezní parametry. Při překročení okamžitě vybaví alarm.
+   * @brief Zkontroluje mezní parametry s potlačením falešných šumových špiček
    * @param meas Aktuální naměřené veličiny
    * @return true pokud je vše v normě, false při aktivaci ochrany
    */
@@ -36,6 +36,10 @@ public:
 private:
   AlarmType _alarm;
   const char* _reason;
+  uint8_t _ovpCount;
+  uint8_t _ocpCount;
+  uint8_t _oppCount;
+  uint8_t _otpCount;
 };
 
 #endif // SAFETY_H
