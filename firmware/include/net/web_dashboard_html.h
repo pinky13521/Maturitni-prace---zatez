@@ -1,8 +1,7 @@
 /**
  * @file web_dashboard_html.h
- * @brief Komplexní laboratorní rozhraní elektronické zátěže (DC Electronic Load HUD)
- *        Obsahuje vysouvací postranní panel (GitHub-style Drawer Menu ☰),
- *        záložky Měření, Test baterií, Bezpečnostní ochrany, Chlazení, Kalibrace, Diagnostika a Vzhled.
+ * @brief Čisté technické webové rozhraní elektronické zátěže (Industrial Minimalist HUD)
+ *        Obsahuje vysouvací postranní menu (☰) pro přepínání sekcí a nastavení.
  */
 
 #ifndef WEB_DASHBOARD_HTML_H
@@ -18,126 +17,83 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#0b0f17">
-  <title>DC ELEKTRONICKÁ ZÁTĚŽ 30V / 5A</title>
+  <meta name="theme-color" content="#000000">
+  <title>DC ELEKTRONICKÁ ZÁTĚŽ // 30V 5A</title>
   <style>
     :root {
-      --bg: #0b0f17;
-      --panel: #131a26;
-      --panel-alt: #1a2333;
-      --panel-hover: #212c40;
-      --border: #263349;
-      --border-focus: #3b82f6;
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #cbd5e1;
-      --invert-bg: #3b82f6;
-      --invert-text: #ffffff;
-      --alarm: #ef4444;
-      --accent: #22c55e;
-      --trace-u: #38bdf8;
-      --trace-i: #4ade80;
-      --val-u: #38bdf8;
-      --val-i: #4ade80;
-      --val-p: #fbbf24;
-      --val-t: #f87171;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
+      --bg: #050505;
+      --panel: #0c0c0c;
+      --panel-alt: #151515;
+      --border: #2c2c2c;
+      --border-focus: #6e6e6e;
+      --text: #ffffff;
+      --text-muted: #9e9e9e;
+      --text-dim: #cccccc;
+      --invert-bg: #ffffff;
+      --invert-text: #000000;
+      --alarm: #ff2a2a;
+      --ok: #22ff66;
+      --trace-u: #ffffff;
+      --trace-i: #8c8c8c;
+      --mono: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, monospace;
     }
 
     body.theme-amber {
-      --bg: #0d0800;
-      --panel: #171003;
-      --panel-alt: #241905;
-      --panel-hover: #302208;
-      --border: #422d0c;
-      --border-focus: #ffb703;
-      --text: #ffb703;
-      --text-muted: #b37e02;
-      --text-dim: #ffcf54;
-      --invert-bg: #ffb703;
+      --bg: #080500;
+      --panel: #110b01;
+      --panel-alt: #1c1203;
+      --border: #442b00;
+      --border-focus: #996300;
+      --text: #ffb400;
+      --text-muted: #b37e00;
+      --text-dim: #e0a000;
+      --invert-bg: #ffb400;
       --invert-text: #000000;
       --alarm: #ff3b00;
-      --accent: #ffb703;
-      --trace-u: #ffe066;
-      --trace-i: #ff9f1c;
-      --val-u: #ffe066;
-      --val-i: #ffb703;
-      --val-p: #ff9f1c;
-      --val-t: #ff6b35;
+      --ok: #ffb400;
+      --trace-u: #ffb400;
+      --trace-i: #8c6200;
     }
 
     body.theme-green {
-      --bg: #010e05;
-      --panel: #031c0a;
-      --panel-alt: #072a11;
-      --panel-hover: #0c3818;
-      --border: #0e4c20;
-      --border-focus: #22c55e;
-      --text: #4ade80;
-      --text-muted: #15803d;
-      --text-dim: #86efac;
-      --invert-bg: #22c55e;
+      --bg: #000802;
+      --panel: #021205;
+      --panel-alt: #041d09;
+      --border: #004414;
+      --border-focus: #00882a;
+      --text: #2bff55;
+      --text-muted: #1ca638;
+      --text-dim: #55ff77;
+      --invert-bg: #2bff55;
       --invert-text: #000000;
-      --alarm: #ef4444;
-      --accent: #4ade80;
-      --trace-u: #86efac;
-      --trace-i: #22c55e;
-      --val-u: #86efac;
-      --val-i: #4ade80;
-      --val-p: #22c55e;
-      --val-t: #a7f3d0;
-    }
-
-    body.theme-cyan {
-      --bg: #030e1a;
-      --panel: #06192e;
-      --panel-alt: #0b2440;
-      --panel-hover: #103054;
-      --border: #133c66;
-      --border-focus: #00e5ff;
-      --text: #00e5ff;
-      --text-muted: #0d8299;
-      --text-dim: #67e8f9;
-      --invert-bg: #00e5ff;
-      --invert-text: #000000;
-      --alarm: #f43f5e;
-      --accent: #00e5ff;
-      --trace-u: #ffffff;
-      --trace-i: #00e5ff;
-      --val-u: #ffffff;
-      --val-i: #00e5ff;
-      --val-p: #38bdf8;
-      --val-t: #67e8f9;
+      --alarm: #ff2222;
+      --ok: #2bff55;
+      --trace-u: #2bff55;
+      --trace-i: #147a28;
     }
 
     body.theme-light {
-      --bg: #f1f5f9;
+      --bg: #e4e7ec;
       --panel: #ffffff;
-      --panel-alt: #f8fafc;
-      --panel-hover: #e2e8f0;
-      --border: #cbd5e1;
-      --border-focus: #2563eb;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --text-dim: #334155;
-      --invert-bg: #0f172a;
+      --panel-alt: #f2f4f7;
+      --border: #c0c6d0;
+      --border-focus: #556070;
+      --text: #111111;
+      --text-muted: #555e6d;
+      --text-dim: #333b48;
+      --invert-bg: #111111;
       --invert-text: #ffffff;
-      --alarm: #dc2626;
-      --accent: #0284c7;
-      --trace-u: #0284c7;
-      --trace-i: #16a34a;
-      --val-u: #0284c7;
-      --val-i: #16a34a;
-      --val-p: #d97706;
-      --val-t: #dc2626;
+      --alarm: #d91b1b;
+      --ok: #15803d;
+      --trace-u: #111111;
+      --trace-i: #737b8c;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: var(--font-sans);
+      font-family: var(--mono);
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -145,39 +101,37 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      min-height: -webkit-fill-available;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transition: background 0.2s, color 0.2s;
     }
 
     body {
       display: flex;
       justify-content: center;
-      padding: 16px 12px;
+      padding: 14px;
     }
 
+    /* HLAVNÍ RÁMEC PŘÍSTROJE (1px mřížka jako v původním návrhu) */
     .frame {
       width: 100%;
-      max-width: 1020px;
+      max-width: 980px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
     }
 
     /* ================================================================= */
-    /* GITHUB-STYLE SLIDE-OUT SIDEBAR DRAWER (☰)                         */
+    /* VYSOUVACÍ POSTRANNÍ PANEL (☰ SIDEBAR)                             */
     /* ================================================================= */
     .sidebar-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(3px);
-      -webkit-backdrop-filter: blur(3px);
+      background: rgba(0, 0, 0, 0.7);
       z-index: 998;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.25s ease;
+      transition: opacity 0.2s ease;
     }
     .sidebar-backdrop.open {
       opacity: 1;
@@ -189,23 +143,22 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       top: 0;
       left: 0;
       bottom: 0;
-      width: 320px;
-      max-width: 86vw;
+      width: 300px;
+      max-width: 85vw;
       background: var(--panel);
-      border-right: 1px solid var(--border);
-      box-shadow: 8px 0 32px rgba(0, 0, 0, 0.5);
+      border-right: 1px solid var(--border-focus);
       z-index: 999;
       display: flex;
       flex-direction: column;
-      transform: translateX(-104%);
-      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateX(-102%);
+      transition: transform 0.22s ease-out;
     }
     .sidebar-drawer.open {
       transform: translateX(0);
     }
 
     .drawer-header {
-      padding: 16px 18px;
+      padding: 14px 16px;
       border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
@@ -213,236 +166,147 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       background: var(--panel-alt);
     }
 
-    .drawer-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    .drawer-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
-    .drawer-logo {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: var(--invert-bg);
-      color: var(--invert-text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 15px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-    }
-
-    .drawer-brand-text {
-      display: flex;
-      flex-direction: column;
-    }
-    .drawer-brand-title {
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      color: var(--text);
-    }
-    .drawer-brand-sub {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .drawer-close-btn {
+    .drawer-close {
       background: transparent;
       color: var(--text-muted);
-      border: 1px solid transparent;
-      width: 32px;
-      height: 32px;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 1px solid var(--border);
+      padding: 4px 8px;
+      font-size: 11px;
+      font-weight: 700;
       cursor: pointer;
-      font-size: 16px;
-      transition: all 0.15s;
     }
-    .drawer-close-btn:hover {
-      background: var(--panel-hover);
+    .drawer-close:hover {
       color: var(--text);
-      border-color: var(--border);
+      border-color: var(--text);
     }
 
-    /* Mini živý stavový pás v menu */
-    .drawer-live-strip {
+    /* Mini stavový řádek v postranním panelu */
+    .drawer-status {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 4px;
-      padding: 10px 14px;
-      background: var(--bg);
+      gap: 1px;
+      background: var(--border);
       border-bottom: 1px solid var(--border);
-      font-family: var(--font-mono);
-      font-size: 11px;
     }
-    .strip-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 4px 2px;
-      border-radius: 5px;
+    .ds-cell {
       background: var(--panel);
-      border: 1px solid var(--border);
+      padding: 8px 6px;
+      text-align: center;
     }
-    .strip-lbl {
+    .ds-lbl {
       font-size: 9px;
       color: var(--text-muted);
-      font-weight: 700;
+      display: block;
     }
-    .strip-val {
+    .ds-val {
+      font-size: 12px;
       font-weight: 700;
-      font-size: 11px;
-      margin-top: 1px;
+      margin-top: 2px;
+      display: block;
     }
 
     .drawer-body {
       flex: 1;
       overflow-y: auto;
-      padding: 12px 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      padding: 12px 0;
     }
 
-    .drawer-section {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .drawer-section-title {
+    .drawer-sec-label {
       font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      font-weight: 700;
       color: var(--text-muted);
-      padding: 4px 10px 6px 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 10px 16px 6px 16px;
     }
 
     .drawer-item {
+      width: 100%;
       background: transparent;
       color: var(--text-dim);
-      border: 1px solid transparent;
-      border-radius: 7px;
-      padding: 9px 12px;
-      font-size: 13px;
+      border: none;
+      border-left: 3px solid transparent;
+      padding: 10px 16px;
+      font-size: 12px;
       font-weight: 600;
+      letter-spacing: 0.04em;
+      text-align: left;
       cursor: pointer;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      text-align: left;
-      transition: all 0.12s ease;
-    }
-    .drawer-item-left {
-      display: flex;
       align-items: center;
-      gap: 10px;
-    }
-    .drawer-icon {
-      font-size: 15px;
-      width: 20px;
-      text-align: center;
+      transition: background 0.1s, color 0.1s;
     }
     .drawer-item:hover {
       background: var(--panel-alt);
       color: var(--text);
     }
     .drawer-item.active {
-      background: rgba(59, 130, 246, 0.14);
+      background: var(--panel-alt);
       color: var(--text);
-      border-color: rgba(59, 130, 246, 0.35);
+      border-left-color: var(--text);
       font-weight: 700;
-    }
-    .drawer-item.active::before {
-      content: '';
-      width: 4px;
-      height: 18px;
-      background: var(--invert-bg);
-      border-radius: 2px;
-      margin-right: -4px;
     }
 
-    .drawer-badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-      background: var(--panel-alt);
-      border: 1px solid var(--border);
+    .drawer-num {
       color: var(--text-muted);
+      font-size: 11px;
+      margin-right: 10px;
+    }
+
+    .drawer-tag {
+      font-size: 10px;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 1px 5px;
     }
 
     .drawer-footer {
-      padding: 14px 16px;
+      padding: 12px 16px;
       border-top: 1px solid var(--border);
       background: var(--panel-alt);
       display: flex;
       flex-direction: column;
-      gap: 10px;
-    }
-
-    .drawer-theme-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .drawer-theme-dots {
-      display: flex;
       gap: 8px;
     }
-    .theme-dot {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid var(--border);
-      transition: transform 0.15s, border-color 0.15s;
-    }
-    .theme-dot:hover {
-      transform: scale(1.15);
-      border-color: var(--text);
-    }
 
-    .drawer-quick-actions {
+    .drawer-footer-row {
       display: flex;
       gap: 6px;
     }
-    .drawer-qbtn {
+    .drawer-fbtn {
       flex: 1;
       background: var(--panel);
       color: var(--text-dim);
       border: 1px solid var(--border);
-      border-radius: 6px;
       padding: 6px 8px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       cursor: pointer;
       text-align: center;
-      transition: all 0.15s;
     }
-    .drawer-qbtn:hover {
+    .drawer-fbtn:hover {
       border-color: var(--border-focus);
       color: var(--text);
     }
 
-    /* --- ZÁHLAVÍ (HEADER) --- */
+    /* ================================================================= */
+    /* HORNÍ LIŠTA (HEADER)                                              */
+    /* ================================================================= */
     .header-bar {
       background: var(--panel);
       padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .header-left-wrap {
@@ -451,65 +315,36 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       gap: 12px;
     }
 
-    /* Tlačítko 3 čárky (GitHub Hamburger Button) */
-    .hamburger-btn {
+    /* Tlačítko 3 čárky (☰) v čistém hranatém stylu */
+    .menu-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border);
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
+      border: 1px solid var(--border-focus);
+      width: 34px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.15s ease;
-      flex-shrink: 0;
+      outline: none;
     }
-    .hamburger-btn:hover {
-      background: var(--panel-hover);
-      border-color: var(--border-focus);
-      transform: translateY(-1px);
-    }
-    .hamburger-btn:active {
-      transform: translateY(0);
-    }
-
-    .header-left {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header-title-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
+    .menu-btn:hover {
+      background: var(--invert-bg);
+      color: var(--invert-text);
     }
 
     .header-title {
-      font-size: 14px;
-      letter-spacing: 0.05em;
+      font-size: 13px;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      font-weight: 800;
-    }
-
-    .breadcrumb-pill {
-      font-size: 11px;
       font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 5px;
-      background: var(--panel-alt);
-      border: 1px solid var(--border);
-      color: var(--val-u);
     }
 
     .header-sub {
       font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.06em;
       margin-top: 2px;
-      font-weight: 500;
     }
 
     .header-right {
@@ -521,245 +356,189 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 
     .link-indicator {
       font-size: 11px;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       font-weight: 700;
-      padding: 6px 10px;
-      border-radius: 6px;
+      padding: 5px 9px;
       border: 1px solid var(--border);
     }
-    .link-ok { color: #22c55e; border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.12); }
-    .link-err { color: #ef4444; border-color: rgba(239,68,68,0.35); background: rgba(239,68,68,0.12); }
+    .link-ok { color: var(--ok); border-color: #1f5c30; background: #031c0a; }
+    .link-err { color: var(--alarm); border-color: #882222; background: #220505; }
 
     .fs-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border);
-      padding: 6px 10px;
-      border-radius: 6px;
+      border: 1px solid var(--border-focus);
+      padding: 5px 9px;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       cursor: pointer;
       outline: none;
-      transition: all 0.15s ease;
     }
     .fs-btn:hover {
-      background: var(--border-focus);
-      color: #ffffff;
-      border-color: var(--border-focus);
+      background: var(--invert-bg);
+      color: var(--invert-text);
     }
 
     .annunciator {
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.08em;
-      padding: 6px 12px;
-      border-radius: 6px;
-      border: 1px solid transparent;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      border: 1px solid var(--border-focus);
     }
+    .ann-on { background: var(--invert-bg); color: var(--invert-text); border-color: var(--invert-bg); }
+    .ann-off { background: var(--panel); color: var(--text-muted); border-color: var(--border); }
+    .ann-alarm { background: var(--alarm); color: #ffffff; border-color: var(--alarm); animation: pulse 0.8s infinite alternate; }
 
-    .ann-on { background: #22c55e; color: #000000; font-weight: 800; box-shadow: 0 0 12px rgba(34,197,94,0.3); }
-    .ann-off { background: var(--panel-alt); color: var(--text-muted); border-color: var(--border); }
-    .ann-alarm { background: #ef4444; color: #ffffff; animation: pulse 0.8s infinite alternate; box-shadow: 0 0 14px rgba(239,68,68,0.4); }
-
-    /* --- RYCHLÁ NAVIGAČNÍ LIŠTA (TABS) --- */
-    .nav-bar {
-      display: flex;
-      background: var(--panel);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      padding: 4px;
-      gap: 4px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    .nav-bar::-webkit-scrollbar { display: none; }
-
-    .nav-btn {
-      flex: 1;
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      padding: 9px 14px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      cursor: pointer;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-      transition: all 0.15s ease;
-    }
-    .nav-btn:hover {
-      color: var(--text);
-      background: var(--panel-alt);
-    }
-    .nav-btn.active {
-      color: var(--invert-text);
-      background: var(--invert-bg);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    }
-
+    /* ================================================================= */
+    /* OBSAHOVÉ SEKCE                                                    */
+    /* ================================================================= */
     .tab-content {
       display: none;
       flex-direction: column;
-      gap: 12px;
+      gap: 1px;
+      background: var(--border);
     }
     .tab-content.active {
       display: flex;
     }
 
-    /* --- MĚŘENÉ HODNOTY (READOUTS) --- */
+    /* Sekční lišta pro podstránky (když není otevřen hlavní dashboard) */
+    .subpage-bar {
+      background: var(--panel-alt);
+      padding: 10px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .back-btn {
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border-focus);
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .back-btn:hover {
+      background: var(--invert-bg);
+      color: var(--invert-text);
+    }
+
+    /* --- 4 DIGITÁLNÍ MĚŘIDLA (READOUTS) --- */
     .readouts {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      gap: 1px;
+      background: var(--border);
     }
 
     .readout-cell {
       background: var(--panel);
       padding: 16px 18px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 112px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      position: relative;
-      overflow: hidden;
+      min-height: 105px;
     }
-
-    .readout-cell::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: var(--border);
-    }
-    .readout-v::before { background: var(--val-u); }
-    .readout-i::before { background: var(--val-i); }
-    .readout-p::before { background: var(--val-p); }
-    .readout-t::before { background: var(--val-t); }
 
     .cell-tag {
       font-size: 11px;
       color: var(--text-muted);
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       display: flex;
       justify-content: space-between;
-      align-items: center;
     }
 
     .cell-num {
-      font-family: var(--font-mono);
-      font-size: clamp(28px, 4.2vw, 42px);
-      font-weight: 700;
+      font-size: clamp(28px, 4.2vw, 40px);
+      font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.15;
-      margin: 8px 0 4px 0;
+      line-height: 1.1;
+      margin: 10px 0 6px 0;
       color: var(--text);
       font-variant-numeric: tabular-nums;
     }
 
-    .readout-v .cell-num { color: var(--val-u); text-shadow: 0 0 20px rgba(56,189,248,0.2); }
-    .readout-i .cell-num { color: var(--val-i); text-shadow: 0 0 20px rgba(74,222,128,0.2); }
-    .readout-p .cell-num { color: var(--val-p); text-shadow: 0 0 20px rgba(251,191,36,0.2); }
-    .readout-t .cell-num { color: var(--val-t); text-shadow: 0 0 20px rgba(248,113,113,0.2); }
-
     .cell-unit {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      font-weight: 600;
-      letter-spacing: 0.03em;
+      font-weight: 700;
+      letter-spacing: 0.06em;
     }
 
     /* --- OVLÁDACÍ PANEL (CONTROL DECK) --- */
     .control-deck {
       background: var(--panel);
-      padding: 18px 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
+      padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .deck-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .btn-group {
       display: inline-flex;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 3px;
-      gap: 3px;
-      background: var(--panel-alt);
+      border: 1px solid var(--border-focus);
+      gap: 1px;
+      background: var(--border-focus);
     }
 
     .mode-btn {
-      background: transparent;
-      color: var(--text-muted);
+      background: var(--panel);
+      color: var(--text-dim);
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 9px 18px;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.1em;
       cursor: pointer;
       outline: none;
-      transition: all 0.15s ease;
     }
-
-    .mode-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .mode-btn:hover {
+      color: var(--text);
+      background: var(--panel-alt);
+    }
     .mode-btn.active {
       background: var(--invert-bg);
       color: var(--invert-text);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     .power-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border);
-      padding: 10px 24px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
+      border: 1px solid var(--border-focus);
+      padding: 9px 24px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
       outline: none;
-      transition: all 0.15s ease;
     }
-
     .power-btn:hover {
-      border-color: var(--border-focus);
-      transform: translateY(-1px);
+      border-color: var(--text);
     }
-    .power-btn:active { transform: translateY(1px); }
     .power-btn.engaged {
-      background: #dc2626;
+      background: var(--alarm);
       color: #ffffff;
-      border-color: #ef4444;
-      box-shadow: 0 0 16px rgba(220, 38, 38, 0.45);
+      border-color: var(--alarm);
     }
 
-    /* POSUVNÍK + ČÍSELNÝ VSTUP */
+    /* POSUVNÍK A ČÍSELNÉ ZADÁNÍ */
     .slider-wrap {
       display: flex;
       flex-direction: column;
@@ -771,7 +550,8 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       justify-content: space-between;
       align-items: center;
       font-size: 12px;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.05em;
       flex-wrap: wrap;
       gap: 8px;
     }
@@ -779,30 +559,26 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     .scale-selector {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 3px 6px;
       background: var(--panel-alt);
     }
 
     .scale-label {
       font-size: 10px;
       color: var(--text-muted);
-      letter-spacing: 0.05em;
-      margin-right: 2px;
+      letter-spacing: 0.08em;
+      padding: 0 8px;
     }
 
     .scale-btn {
       background: transparent;
       color: var(--text-muted);
       border: none;
+      border-left: 1px solid var(--border);
       font-size: 10px;
       font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 4px;
+      padding: 4px 8px;
       cursor: pointer;
-      transition: all 0.1s ease;
     }
     .scale-btn.active {
       background: var(--invert-bg);
@@ -816,63 +592,49 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     .num-input {
-      font-family: var(--font-mono);
-      background: var(--panel-alt);
+      background: var(--bg);
       color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 7px 10px;
+      border: 1px solid var(--border-focus);
+      padding: 6px 10px;
       font-size: 14px;
       font-weight: 700;
-      width: 95px;
+      width: 92px;
       text-align: right;
       outline: none;
-      transition: border 0.15s;
     }
     .num-input:focus {
-      border-color: var(--border-focus);
-      box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+      border-color: var(--text);
     }
 
     .sp-set-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      padding: 7px 12px;
+      border: 1px solid var(--border-focus);
+      padding: 6px 12px;
       font-size: 11px;
       font-weight: 700;
+      letter-spacing: 0.08em;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
     .sp-set-btn:hover {
-      background: var(--border-focus);
-      color: #ffffff;
-      border-color: var(--border-focus);
+      background: var(--invert-bg);
+      color: var(--invert-text);
     }
 
     input[type=range] {
       -webkit-appearance: none;
       width: 100%;
-      height: 8px;
-      border-radius: 4px;
-      background: var(--panel-alt);
-      border: 1px solid var(--border);
+      height: 6px;
+      background: var(--border);
       outline: none;
     }
     input[type=range]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
+      width: 16px;
+      height: 24px;
       background: var(--invert-bg);
       cursor: pointer;
-      border: 2px solid #ffffff;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.35);
-      transition: transform 0.1s ease;
-    }
-    input[type=range]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
+      border: 1px solid var(--bg);
     }
 
     /* PŘEDVOLBY */
@@ -886,7 +648,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     .preset-label {
       font-size: 11px;
       color: var(--text-muted);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       font-weight: 700;
     }
@@ -895,35 +657,23 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       background: var(--panel-alt);
       color: var(--text-dim);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-size: 12px;
+      padding: 6px 12px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
     .preset-btn:hover {
-      background: var(--border);
-      color: var(--text);
       border-color: var(--border-focus);
-      transform: translateY(-1px);
+      color: var(--text);
     }
 
-    /* --- GRAFICKÝ PANEL (OSCILLOSCOPE) --- */
+    /* --- OSCILOSKOP (GRAPH PANEL) --- */
     .graph-panel {
       background: var(--panel);
       padding: 16px 18px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: box-shadow 0.3s, border-color 0.3s;
-    }
-    .graph-panel.highlight-pulse, .info-card.highlight-pulse {
-      border-color: var(--border-focus);
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.35);
     }
 
     .graph-header {
@@ -932,16 +682,17 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
     }
 
     canvas {
       display: block;
       width: 100%;
-      height: 230px;
-      background: rgba(0, 0, 0, 0.22);
-      border-radius: 8px;
+      height: 220px;
+      background: var(--bg);
       border: 1px solid var(--border);
     }
 
@@ -950,7 +701,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-top: 12px;
+      padding-top: 10px;
       border-top: 1px solid var(--border);
       gap: 10px;
       flex-wrap: wrap;
@@ -959,151 +710,82 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     .export-left, .export-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .rec-btn {
       background: var(--panel-alt);
       color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 14px;
+      border: 1px solid var(--border-focus);
+      padding: 5px 12px;
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      transition: all 0.15s;
-    }
-    .rec-btn:hover {
-      border-color: #ef4444;
+      gap: 6px;
     }
     .rec-btn.recording {
-      background: rgba(239, 68, 68, 0.18);
-      border-color: #ef4444;
-      color: #ef4444;
+      background: var(--alarm);
+      border-color: var(--alarm);
+      color: #ffffff;
     }
 
     .rec-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #ef4444;
+      width: 8px;
+      height: 8px;
+      background: var(--alarm);
       display: inline-block;
     }
     .rec-btn.recording .rec-dot {
-      box-shadow: 0 0 8px #ef4444;
+      background: #ffffff;
       animation: pulse 0.6s infinite alternate;
     }
 
     .rec-status {
-      font-family: var(--font-mono);
       font-size: 11px;
       color: var(--text-muted);
-      font-weight: 600;
+      font-weight: 700;
+      margin-left: 4px;
     }
 
     .exp-btn {
       background: var(--panel-alt);
       color: var(--text-dim);
       border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 7px 12px;
+      padding: 5px 10px;
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: all 0.15s ease;
     }
     .exp-btn:hover {
-      background: var(--border);
-      color: var(--text);
       border-color: var(--border-focus);
-      transform: translateY(-1px);
-    }
-    .exp-clear:hover {
-      border-color: #ef4444;
-      color: #ef4444;
-    }
-
-    /* --- TEST BATERIÍ --- */
-    .batt-big-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-
-    .batt-box {
-      background: var(--panel);
-      padding: 16px 18px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 108px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
-    /* --- KARTY NASTAVENÍ A SYSTÉMU --- */
-    .settings-filter-bar {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      background: var(--panel);
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      align-items: center;
-    }
-    .filter-chip {
-      background: var(--panel-alt);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .filter-chip:hover {
       color: var(--text);
-      border-color: var(--border-focus);
-    }
-    .filter-chip.active {
-      background: var(--invert-bg);
-      color: var(--invert-text);
-      border-color: var(--invert-bg);
     }
 
+    /* --- KARTY NASTAVENÍ A BATERIÍ --- */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 12px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
     }
 
     .info-card {
       background: var(--panel);
-      padding: 18px 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
+      padding: 18px;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     .card-title {
       font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.05em;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text);
       display: flex;
@@ -1116,118 +798,100 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     .card-badge {
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      padding: 3px 8px;
-      border-radius: 5px;
-      background: var(--panel-alt);
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
       border: 1px solid var(--border);
-      color: var(--text-dim);
-    }
-    .badge-ok {
-      background: rgba(34,197,94,0.15);
-      border-color: rgba(34,197,94,0.35);
-      color: #22c55e;
+      color: var(--text-muted);
     }
 
     .prop-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 13px;
-      gap: 8px;
-      padding: 2px 0;
+      font-size: 12px;
+      padding: 3px 0;
     }
 
     .prop-label {
       color: var(--text-muted);
-      font-weight: 500;
     }
 
     .prop-val {
-      font-family: var(--font-mono);
       font-weight: 700;
       color: var(--text);
-      text-align: right;
     }
 
-    /* --- BAREVNÉ MOTIVY (THEME CARDS) --- */
+    /* VÝBĚR MOTIVU */
     .theme-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
     }
 
     .theme-card {
       background: var(--panel-alt);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
+      padding: 10px 12px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
-      transition: all 0.15s ease;
     }
     .theme-card:hover {
       border-color: var(--border-focus);
-      transform: translateY(-1px);
     }
     .theme-card.active {
-      border-color: var(--invert-bg);
-      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+      border-color: var(--text);
+      background: var(--bg);
     }
 
     .theme-swatch {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      border: 2px solid rgba(255,255,255,0.2);
+      width: 18px;
+      height: 18px;
+      border: 1px solid var(--border-focus);
       flex-shrink: 0;
     }
 
     /* --- ALARM BANNER --- */
     .alarm-banner {
       display: none;
-      background: rgba(239, 68, 68, 0.16);
-      border: 1px solid #ef4444;
-      border-radius: 10px;
-      padding: 12px 18px;
+      background: var(--alarm);
+      padding: 10px 16px;
       color: #ffffff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
+      letter-spacing: 0.08em;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
     }
     .btn-reset {
-      background: #ef4444;
+      background: #000000;
       color: #ffffff;
-      border: none;
-      padding: 7px 14px;
-      border-radius: 6px;
+      border: 1px solid #ffffff;
+      padding: 5px 12px;
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
-    }
-    .btn-reset:hover {
-      background: #dc2626;
     }
 
     @keyframes pulse {
-      0% { opacity: 0.55; }
+      0% { opacity: 0.5; }
       100% { opacity: 1; }
     }
 
     @media (max-width: 720px) {
-      .readouts, .batt-big-grid {
+      .readouts, .card-grid, .theme-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
       }
       .header-bar {
         flex-direction: column;
-        align-items: stretch;
+        align-items: flex-start;
       }
       .header-right {
+        width: 100%;
         justify-content: space-between;
       }
     }
@@ -1236,110 +900,83 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
 <body class="theme-dark">
 
   <!-- =================================================================== -->
-  <!-- VYSOUVACÍ POSTRANNÍ PANEL (GITHUB-STYLE DRAWER MENU ☰)              -->
+  <!-- VYSOUVACÍ POSTRANNÍ PANEL (☰)                                       -->
   <!-- =================================================================== -->
   <div id="sidebarBackdrop" class="sidebar-backdrop" onclick="closeSidebar()"></div>
 
-  <aside id="sidebarDrawer" class="sidebar-drawer" aria-label="Hlavní navigace a nastavení">
+  <aside id="sidebarDrawer" class="sidebar-drawer">
     <div class="drawer-header">
-      <div class="drawer-brand">
-        <div class="drawer-logo">⚡</div>
-        <div class="drawer-brand-text">
-          <span class="drawer-brand-title" data-i18n="drawer_title">ELEKTRONICKÁ ZÁTĚŽ</span>
-          <span class="drawer-brand-sub">30V / 5A / 65W &bull; FW v2.5</span>
-        </div>
-      </div>
-      <button class="drawer-close-btn" onclick="closeSidebar()" title="Zavřít panel (Esc)">✕</button>
+      <span class="drawer-title" data-i18n="drawer_title">NABÍDKA SYSTÉMU</span>
+      <button class="drawer-close" onclick="closeSidebar()">[ ✕ ]</button>
     </div>
 
-    <!-- Živý stavový přehled přímo v postranním panelu -->
-    <div class="drawer-live-strip">
-      <div class="strip-item">
-        <span class="strip-lbl">U [V]</span>
-        <span class="strip-val" style="color:var(--val-u);" id="sideV">0.00</span>
+    <div class="drawer-status">
+      <div class="ds-cell">
+        <span class="ds-lbl">U [V]</span>
+        <span class="ds-val" id="sideV">0.00</span>
       </div>
-      <div class="strip-item">
-        <span class="strip-lbl">I [A]</span>
-        <span class="strip-val" style="color:var(--val-i);" id="sideI">0.000</span>
+      <div class="ds-cell">
+        <span class="ds-lbl">I [A]</span>
+        <span class="ds-val" id="sideI">0.000</span>
       </div>
-      <div class="strip-item">
-        <span class="strip-lbl">P [W]</span>
-        <span class="strip-val" style="color:var(--val-p);" id="sideP">0.0</span>
+      <div class="ds-cell">
+        <span class="ds-lbl">P [W]</span>
+        <span class="ds-val" id="sideP">0.0</span>
       </div>
-      <div class="strip-item">
-        <span class="strip-lbl">T [°C]</span>
-        <span class="strip-val" style="color:var(--val-t);" id="sideT">25.0</span>
+      <div class="ds-cell">
+        <span class="ds-lbl">T [°C]</span>
+        <span class="ds-val" id="sideT">25.0</span>
       </div>
     </div>
 
     <div class="drawer-body">
-      <!-- Sekce 1: Měření a provoz -->
-      <div class="drawer-section">
-        <div class="drawer-section-title" data-i18n="nav_sec_ops">Provoz a měření</div>
-        <button class="drawer-item active" id="navMain" onclick="navigateFromDrawer('main')">
-          <span class="drawer-item-left"><span class="drawer-icon">📊</span> <span data-i18n="nav_dashboard">Hlavní měřicí panel</span></span>
-          <span class="drawer-badge">HUD</span>
-        </button>
-        <button class="drawer-item" id="navBatt" onclick="navigateFromDrawer('batt')">
-          <span class="drawer-item-left"><span class="drawer-icon">🔋</span> <span data-i18n="nav_battery">Test kapacity baterií</span></span>
-          <span class="drawer-badge">mAh / Ri</span>
-        </button>
-        <button class="drawer-item" id="navExport" onclick="navigateFromDrawer('export')">
-          <span class="drawer-item-left"><span class="drawer-icon">📥</span> <span data-i18n="nav_export">Záznam a export dat</span></span>
-          <span class="drawer-badge">CSV / PNG</span>
-        </button>
-      </div>
+      <div class="drawer-sec-label" data-i18n="nav_sec_ops">PROVOZ A MĚŘENÍ</div>
+      <button class="drawer-item active" id="navMain" onclick="navigateFromDrawer('main')">
+        <span><span class="drawer-num">01</span><span data-i18n="nav_dashboard">HLAVNÍ PANEL MĚŘENÍ</span></span>
+        <span class="drawer-tag">HUD</span>
+      </button>
+      <button class="drawer-item" id="navBatt" onclick="navigateFromDrawer('batt')">
+        <span><span class="drawer-num">02</span><span data-i18n="nav_battery">TEST KAPACITY BATERIÍ</span></span>
+        <span class="drawer-tag">BATT</span>
+      </button>
+      <button class="drawer-item" id="navExport" onclick="navigateFromDrawer('export')">
+        <span><span class="drawer-num">03</span><span data-i18n="nav_export">ZÁZNAM A EXPORT DAT</span></span>
+        <span class="drawer-tag">CSV</span>
+      </button>
 
-      <!-- Sekce 2: Nastavení, ochrany a hardware -->
-      <div class="drawer-section">
-        <div class="drawer-section-title" data-i18n="nav_sec_cfg">Konfigurace a systém</div>
-        <button class="drawer-item" id="navSafety" onclick="navigateFromDrawer('safety')">
-          <span class="drawer-item-left"><span class="drawer-icon">🛡️</span> <span data-i18n="nav_safety">Bezpečnostní ochrany</span></span>
-          <span class="drawer-badge">OVP/OCP</span>
-        </button>
-        <button class="drawer-item" id="navCooling" onclick="navigateFromDrawer('cooling')">
-          <span class="drawer-item-left"><span class="drawer-icon">❄️</span> <span data-i18n="nav_cooling">Chlazení a ventilátor</span></span>
-          <span class="drawer-badge">25 kHz</span>
-        </button>
-        <button class="drawer-item" id="navHw" onclick="navigateFromDrawer('hw')">
-          <span class="drawer-item-left"><span class="drawer-icon">🔧</span> <span data-i18n="nav_hw">Kalibrace a hardware</span></span>
-          <span class="drawer-badge">0.100 Ω</span>
-        </button>
-        <button class="drawer-item" id="navMcu" onclick="navigateFromDrawer('mcu')">
-          <span class="drawer-item-left"><span class="drawer-icon">💻</span> <span data-i18n="nav_mcu">Diagnostika ESP32</span></span>
-          <span class="drawer-badge">50 Hz</span>
-        </button>
-        <button class="drawer-item" id="navSettingsAll" onclick="navigateFromDrawer('settings')">
-          <span class="drawer-item-left"><span class="drawer-icon">⚙️</span> <span data-i18n="nav_all_settings">Všechna nastavení</span></span>
-          <span class="drawer-badge">4 KARTY</span>
-        </button>
-      </div>
+      <div class="drawer-sec-label" data-i18n="nav_sec_cfg">NASTAVENÍ A SYSTÉM</div>
+      <button class="drawer-item" id="navSafety" onclick="navigateFromDrawer('safety')">
+        <span><span class="drawer-num">04</span><span data-i18n="nav_safety">BEZPEČNOSTNÍ OCHRANY</span></span>
+        <span class="drawer-tag">LIM</span>
+      </button>
+      <button class="drawer-item" id="navCooling" onclick="navigateFromDrawer('cooling')">
+        <span><span class="drawer-num">05</span><span data-i18n="nav_cooling">CHLAZENÍ A VENTILÁTOR</span></span>
+        <span class="drawer-tag">PWM</span>
+      </button>
+      <button class="drawer-item" id="navHw" onclick="navigateFromDrawer('hw')">
+        <span><span class="drawer-num">06</span><span data-i18n="nav_hw">KALIBRACE A HARDWARE</span></span>
+        <span class="drawer-tag">HW</span>
+      </button>
+      <button class="drawer-item" id="navMcu" onclick="navigateFromDrawer('mcu')">
+        <span><span class="drawer-num">07</span><span data-i18n="nav_mcu">DIAGNOSTIKA ESP32</span></span>
+        <span class="drawer-tag">MCU</span>
+      </button>
+      <button class="drawer-item" id="navSettingsAll" onclick="navigateFromDrawer('settings')">
+        <span><span class="drawer-num">08</span><span data-i18n="nav_all_settings">PŘEHLED VŠECH NASTAVENÍ</span></span>
+        <span class="drawer-tag">VŠE</span>
+      </button>
 
-      <!-- Sekce 3: Vzhled a přizpůsobení -->
-      <div class="drawer-section">
-        <div class="drawer-section-title" data-i18n="nav_sec_ui">Vzhled a rozhraní</div>
-        <button class="drawer-item" id="navTheme" onclick="navigateFromDrawer('theme')">
-          <span class="drawer-item-left"><span class="drawer-icon">🎨</span> <span data-i18n="nav_themes">Barevné motivy a zvuk</span></span>
-          <span class="drawer-badge">5 TÉMAT</span>
-        </button>
-      </div>
+      <div class="drawer-sec-label" data-i18n="nav_sec_ui">ROZHRANÍ</div>
+      <button class="drawer-item" id="navTheme" onclick="navigateFromDrawer('theme')">
+        <span><span class="drawer-num">09</span><span data-i18n="nav_themes">NASTAVENÍ VZHLEDU A UI</span></span>
+        <span class="drawer-tag">UI</span>
+      </button>
     </div>
 
-    <!-- Patička postranního panelu s rychlou volbou témat -->
     <div class="drawer-footer">
-      <div class="drawer-theme-row">
-        <span style="font-size:11px;font-weight:700;color:var(--text-muted);" data-i18n="drawer_quick_theme">RYCHLÝ MOTIV:</span>
-        <div class="drawer-theme-dots">
-          <span class="theme-dot" style="background:#131a26;border-color:#38bdf8;" title="Cyber Dark" onclick="applyTheme('dark')"></span>
-          <span class="theme-dot" style="background:#ffb703;" title="Keithley Amber" onclick="applyTheme('amber')"></span>
-          <span class="theme-dot" style="background:#22c55e;" title="CRT Green" onclick="applyTheme('green')"></span>
-          <span class="theme-dot" style="background:#00e5ff;" title="Neon Cyan" onclick="applyTheme('cyan')"></span>
-          <span class="theme-dot" style="background:#ffffff;border-color:#64748b;" title="Clean Light" onclick="applyTheme('light')"></span>
-        </div>
-      </div>
-      <div class="drawer-quick-actions">
-        <button class="drawer-qbtn" onclick="toggleAudioFeedback()" id="drawerAudioBtn">🔊 ZVUK: ZAP</button>
-        <button class="drawer-qbtn" onclick="toggleLanguage()" id="drawerLangBtn">🌐 CZ / EN</button>
+      <div class="drawer-footer-row">
+        <button class="drawer-fbtn" onclick="toggleAudioFeedback()" id="drawerAudioBtn">[ ZVUK: ZAP ]</button>
+        <button class="drawer-fbtn" onclick="toggleLanguage()">[ CZ / EN ]</button>
       </div>
     </div>
   </aside>
@@ -1351,72 +988,53 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       <button class="btn-reset" onclick="ackAlarm()" data-i18n="btn_ack">[ POTVRDIT / RESET ]</button>
     </div>
 
-    <!-- Hlavní horní lišta s tlačítkem 3 čárky (☰) -->
+    <!-- Hlavní horní lišta s tlačítkem 3 čárky [ ☰ ] -->
     <div class="header-bar">
       <div class="header-left-wrap">
-        <button class="hamburger-btn" id="menuBtn" onclick="toggleSidebar()" title="Otevřít postranní panel (Menu)">
-          <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
+        <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()" title="Menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M1 2.75h14v1.5H1v-1.5zm0 4.5h14v1.5H1v-1.5zm0 4.5h14v1.5H1v-1.5z"/>
           </svg>
         </button>
-        <div class="header-left">
-          <div class="header-title-row">
-            <span class="header-title" data-i18n="header_title">DC ELEKTRONICKÁ ZÁTĚŽ // 30V 5A</span>
-            <span class="breadcrumb-pill" id="breadcrumbBadge">📊 MĚŘENÍ</span>
-          </div>
+        <div>
+          <div class="header-title" data-i18n="header_title">DC ELEKTRONICKÁ ZÁTĚŽ // 30V 5A</div>
           <div class="header-sub" data-i18n="header_sub">DIGITÁLNÍ REGULACE &bull; 50 HZ SMYČKA</div>
         </div>
       </div>
       <div class="header-right">
         <span id="linkStatus" class="link-indicator link-ok">● ŽIVĚ</span>
-        <button id="langBtn" class="fs-btn" onclick="toggleLanguage()" title="Přepnout jazyk / Toggle language">[ EN ]</button>
-        <button id="fsBtn" class="fs-btn" onclick="toggleFullscreen()" title="Fullscreen">[ ⛶ FULL ]</button>
+        <button id="langBtn" class="fs-btn" onclick="toggleLanguage()">[ EN ]</button>
+        <button id="fsBtn" class="fs-btn" onclick="toggleFullscreen()">[ ⛶ FULL ]</button>
         <span id="stateAnn" class="annunciator ann-off">[ VYP ]</span>
       </div>
     </div>
 
-    <!-- RYCHLÁ TABOVÁ NAVIGACE -->
-    <nav class="nav-bar">
-      <button class="nav-btn active" id="btnTabMain" onclick="switchTab('main')">
-        <span>📊</span> <span data-i18n="tab_main">MĚŘENÍ</span>
-      </button>
-      <button class="nav-btn" id="btnTabBatt" onclick="switchTab('batt')">
-        <span>🔋</span> <span data-i18n="tab_batt">TEST BATERIÍ</span>
-      </button>
-      <button class="nav-btn" id="btnTabSettings" onclick="switchTab('settings')">
-        <span>⚙️</span> <span data-i18n="tab_settings">NASTAVENÍ &amp; SYSTÉM</span>
-      </button>
-      <button class="nav-btn" id="btnTabTheme" onclick="switchTab('theme')">
-        <span>🎨</span> <span data-i18n="tab_theme">VZHLED &amp; MOTIVY</span>
-      </button>
-    </nav>
-
     <!-- ================================================================= -->
-    <!-- ZÁLOŽKA 1: HLAVNÍ MĚŘENÍ A REGULACE (DASHBOARD)                   -->
+    <!-- SEKCE 1: HLAVNÍ MĚŘENÍ A REGULACE (DASHBOARD)                     -->
     <!-- ================================================================= -->
     <div id="tabMain" class="tab-content active">
-      <!-- 4 barevně odlišené digitální měřáky -->
+      <!-- 4 digitální měřáky -->
       <div class="readouts">
-        <div class="readout-cell readout-v">
-          <div class="cell-tag"><span data-i18n="lbl_v">NAPĚTÍ</span> <span class="cell-unit" data-i18n="lbl_v_max">MAX 32V</span></div>
-          <div class="cell-num"><span id="valV">00.00</span></div>
+        <div class="readout-cell">
+          <div class="cell-tag"><span data-i18n="lbl_v">NAPĚTÍ</span> <span data-i18n="lbl_v_max">MAX 32V</span></div>
+          <div class="cell-num"><span id="valV">0.00</span></div>
           <div class="cell-unit" data-i18n="unit_v">VOLTY DC</div>
         </div>
 
-        <div class="readout-cell readout-i">
-          <div class="cell-tag"><span data-i18n="lbl_i">PROUD</span> <span class="cell-unit" data-i18n="lbl_i_max">MAX 5.2A</span></div>
+        <div class="readout-cell">
+          <div class="cell-tag"><span data-i18n="lbl_i">PROUD</span> <span data-i18n="lbl_i_max">MAX 5.2A</span></div>
           <div class="cell-num"><span id="valI">0.000</span></div>
           <div class="cell-unit" data-i18n="unit_i">AMPÉRY</div>
         </div>
 
-        <div class="readout-cell readout-p">
-          <div class="cell-tag"><span data-i18n="lbl_p">VÝKON</span> <span class="cell-unit" data-i18n="lbl_p_max">MAX 65W</span></div>
-          <div class="cell-num"><span id="valP">00.0</span></div>
+        <div class="readout-cell">
+          <div class="cell-tag"><span data-i18n="lbl_p">VÝKON</span> <span data-i18n="lbl_p_max">MAX 65W</span></div>
+          <div class="cell-num"><span id="valP">0.0</span></div>
           <div class="cell-unit" data-i18n="unit_p">WATTY</div>
         </div>
 
-        <div class="readout-cell readout-t">
-          <div class="cell-tag"><span data-i18n="lbl_t">TEPLOTA</span> <span class="cell-unit" data-i18n="lbl_t_max">OTP 75°C</span></div>
+        <div class="readout-cell">
+          <div class="cell-tag"><span data-i18n="lbl_t">TEPLOTA</span> <span data-i18n="lbl_t_max">OTP 75°C</span></div>
           <div class="cell-num"><span id="valT">25.0</span></div>
           <div class="cell-unit">&deg;C // <span data-i18n="lbl_fan">VENT.</span> <span id="valFan">20</span>%</div>
         </div>
@@ -1434,10 +1052,10 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           <button id="pwrBtn" class="power-btn" onclick="togglePower()">VÝSTUP: VYP</button>
         </div>
 
-        <!-- Nastavení žádané hodnoty (posuvník + číslo + přepínač LIN/LOG) -->
+        <!-- Nastavení žádané hodnoty -->
         <div class="slider-wrap">
           <div class="slider-legend">
-            <div style="display:flex; align-items:center; gap:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
               <span id="lblSp" style="color:var(--text-muted);">ŽÁDANÝ PROUD:</span>
               <div class="scale-selector">
                 <span class="scale-label" data-i18n="lbl_curve">PRŮBĚH:</span>
@@ -1472,13 +1090,12 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         </div>
       </div>
 
-      <!-- Osciloskopický graticule log s přepínačem LIN/LOG stupnice a exportem -->
+      <!-- Osciloskopický záznam -->
       <div class="graph-panel" id="exportPanelCard">
         <div class="graph-header">
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span data-i18n="lbl_graph">OSCILOSKOPICKÝ ZÁZNAM</span>
-            <span style="color:var(--trace-u);">● U [V]</span>
-            <span style="color:var(--trace-i);">● I [A]</span>
+          <div>
+            <span data-i18n="lbl_graph">OSCILOSKOPICKÝ ZÁZNAM [ 50 BODŮ ]</span>
+            <span data-i18n="lbl_graph_sub">&bull; U [BÍLÁ] &bull; I [ŠEDÁ]</span>
           </div>
           <div class="scale-selector">
             <span class="scale-label" data-i18n="lbl_yscale">MĚŘÍTKO Y:</span>
@@ -1488,7 +1105,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         </div>
         <canvas id="cv"></canvas>
 
-        <!-- Panel záznamu měření a exportu dat (Excel CSV, JSON, PNG graf) -->
+        <!-- Panel záznamu měření a exportu dat -->
         <div class="export-bar">
           <div class="export-left">
             <button id="btnRec" class="rec-btn" onclick="toggleRecording()">
@@ -1497,98 +1114,101 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
             <span id="recStatus" class="rec-status" data-i18n="rec_idle">ZÁZNAM: NEAKTIVNÍ</span>
           </div>
           <div class="export-right">
-            <button class="exp-btn" onclick="exportCSV()" title="Exportovat data do Excelu (.csv)" data-i18n="btn_csv">📥 CSV / EXCEL</button>
-            <button class="exp-btn" onclick="exportJSON()" title="Exportovat surová data (.json)" data-i18n="btn_json">📥 JSON</button>
-            <button class="exp-btn" onclick="exportPNG()" title="Uložit snímek grafu jako obrázek (.png)" data-i18n="btn_png">📷 PNG GRAF</button>
-            <button class="exp-btn exp-clear" onclick="clearLogData()" title="Smazat zaznamenaná data" data-i18n="btn_clear">✕ SMAZAT</button>
+            <button class="exp-btn" onclick="exportCSV()" data-i18n="btn_csv">[ CSV / EXCEL ]</button>
+            <button class="exp-btn" onclick="exportJSON()" data-i18n="btn_json">[ JSON ]</button>
+            <button class="exp-btn" onclick="exportPNG()" data-i18n="btn_png">[ PNG GRAF ]</button>
+            <button class="exp-btn" onclick="clearLogData()" data-i18n="btn_clear">[ SMAZAT ]</button>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ================================================================= -->
-    <!-- ZÁLOŽKA 2: TESTOVÁNÍ BATERIÍ (BATT ANALYZER)                     -->
+    <!-- SEKCE 2: TESTOVÁNÍ BATERIÍ                                        -->
     <!-- ================================================================= -->
     <div id="tabBatt" class="tab-content">
-      <div class="batt-big-grid">
-        <div class="batt-box">
+      <div class="subpage-bar">
+        <span data-i18n="nav_battery">02 // TEST KAPACITY BATERIÍ</span>
+        <button class="back-btn" onclick="navigateFromDrawer('main')" data-i18n="btn_back">[ ← ZPĚT NA MĚŘENÍ ]</button>
+      </div>
+
+      <div class="readouts">
+        <div class="readout-cell">
           <div class="cell-tag" data-i18n="batt_cap">KAPACITA</div>
-          <div class="cell-num" style="color:var(--val-i);"><span id="battBigMah">0</span> <span style="font-size:14px;color:var(--text-muted);">mAh</span></div>
-          <div class="cell-unit"><span id="battBigAh">0.000</span> Ah</div>
+          <div class="cell-num"><span id="battBigMah">0</span></div>
+          <div class="cell-unit">mAh // <span id="battBigAh">0.000</span> Ah</div>
         </div>
-        <div class="batt-box">
+        <div class="readout-cell">
           <div class="cell-tag" data-i18n="batt_energy">ENERGIE</div>
-          <div class="cell-num" style="color:var(--val-p);"><span id="battBigWh">0.00</span> <span style="font-size:14px;color:var(--text-muted);">Wh</span></div>
-          <div class="cell-unit" data-i18n="batt_integral">INTEGRÁL U &bull; I &bull; dt</div>
+          <div class="cell-num"><span id="battBigWh">0.00</span></div>
+          <div class="cell-unit" data-i18n="batt_integral">Wh (U &bull; I &bull; dt)</div>
         </div>
-        <div class="batt-box">
+        <div class="readout-cell">
           <div class="cell-tag" data-i18n="batt_time">DOBA TESTU</div>
-          <div class="cell-num" style="color:var(--val-u);"><span id="battTimer">00:00:00</span></div>
+          <div class="cell-num"><span id="battTimer">00:00:00</span></div>
           <div class="cell-unit" data-i18n="batt_elapsed">ČAS OD STARTU</div>
         </div>
-        <div class="batt-box">
+        <div class="readout-cell">
           <div class="cell-tag" data-i18n="batt_ri">VNITŘNÍ ODPOR (Ri)</div>
-          <div class="cell-num" style="color:var(--val-t);"><span id="battRi">--</span> <span style="font-size:14px;color:var(--text-muted);">mΩ</span></div>
-          <div class="cell-unit" data-i18n="batt_ri_calc">&Delta;U / &Delta;I ODHAD</div>
+          <div class="cell-num"><span id="battRi">--</span></div>
+          <div class="cell-unit" data-i18n="batt_ri_calc">mΩ (&Delta;U / &Delta;I)</div>
         </div>
       </div>
 
       <div class="control-deck">
         <div class="card-title">
-          <span data-i18n="batt_cfg_title">KONFIGURACE TESTU VYBÍJENÍ AKUMULÁTORU</span>
-          <span class="card-badge badge-ok" id="battStatusBadge" data-i18n="batt_ready">PŘIPRAVENO</span>
+          <span data-i18n="batt_cfg_title">PARAMETRY VYBÍJECÍHO TESTU</span>
+          <span class="card-badge" id="battStatusBadge" data-i18n="batt_ready">PŘIPRAVENO</span>
         </div>
 
-        <div class="presets-row" style="margin-top:4px;">
-          <span class="preset-label" data-i18n="batt_chem">CHEMIE ČLÁNKU:</span>
+        <div class="presets-row">
+          <span class="preset-label" data-i18n="batt_chem">PŘEDVOLBY:</span>
           <button class="preset-btn" onclick="applyBattPreset(3.0, 1.0)">Li-Ion / LiPo (3.0V)</button>
           <button class="preset-btn" onclick="applyBattPreset(2.5, 1.0)">LiFePO4 (2.5V)</button>
           <button class="preset-btn" onclick="applyBattPreset(1.0, 0.5)">NiMH / NiCd (1.0V)</button>
           <button class="preset-btn" onclick="applyBattPreset(10.5, 1.0)">Pb 12V (10.5V)</button>
         </div>
 
-        <div class="deck-row" style="margin-top:8px;">
-          <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
-            <div style="display:flex; align-items:center; gap:6px;">
+        <div class="deck-row">
+          <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:8px;">
               <span class="prop-label" data-i18n="batt_discharge_curr">VYBÍJECÍ PROUD:</span>
               <input type="number" id="battInputCurr" class="num-input" value="1.000" step="0.1" min="0.05" max="5.2">
               <span class="prop-val">A</span>
             </div>
-            <div style="display:flex; align-items:center; gap:6px;">
+            <div style="display:flex; align-items:center; gap:8px;">
               <span class="prop-label" data-i18n="batt_cutoff_volt">MEZNÍ VYPNUTÍ (CUTOFF):</span>
               <input type="number" id="battInputCut" class="num-input" value="3.00" step="0.1" min="0.5" max="30">
               <span class="prop-val">V</span>
             </div>
           </div>
-          <button id="battTestBtn" class="power-btn" onclick="toggleBatteryTest()" data-i18n="batt_start_btn">▶ SPUSTIT TEST</button>
+          <button id="battTestBtn" class="power-btn" onclick="toggleBatteryTest()" data-i18n="batt_start_btn">[ SPUSTIT TEST ]</button>
         </div>
       </div>
     </div>
 
     <!-- ================================================================= -->
-    <!-- ZÁLOŽKA 3: NASTAVENÍ A BEZPEČNOST (SETTINGS & SYSTEM)             -->
+    <!-- SEKCE 3: NASTAVENÍ A SYSTÉM                                       -->
     <!-- ================================================================= -->
     <div id="tabSettings" class="tab-content">
-      <!-- Filtrovací lišta sekcí nastavení -->
-      <div class="settings-filter-bar">
-        <span style="font-size:11px;font-weight:800;color:var(--text-muted);margin-right:4px;">SEKCE:</span>
-        <button class="filter-chip active" id="fltAll" onclick="filterSettings('all')">⚙️ Všechny karty</button>
-        <button class="filter-chip" id="fltSafety" onclick="filterSettings('safety')">🛡️ Bezpečnostní ochrany</button>
-        <button class="filter-chip" id="fltCooling" onclick="filterSettings('cooling')">❄️ Chlazení &amp; PWM</button>
-        <button class="filter-chip" id="fltHw" onclick="filterSettings('hw')">🔧 Kalibrace &amp; HW</button>
-        <button class="filter-chip" id="fltMcu" onclick="filterSettings('mcu')">💻 Diagnostika ESP32</button>
+      <div class="subpage-bar">
+        <span id="settingsHeaderTitle">NASTAVENÍ A KONFIGURACE SYSTÉMU</span>
+        <div style="display:flex; gap:6px;">
+          <button class="back-btn" id="btnShowAllSettings" onclick="filterSettings('all')" style="display:none;">[ ZOBRAZIT VŠE ]</button>
+          <button class="back-btn" onclick="navigateFromDrawer('main')" data-i18n="btn_back">[ ← ZPĚT NA MĚŘENÍ ]</button>
+        </div>
       </div>
 
-      <div class="card-grid">
+      <div class="card-grid" id="settingsGrid">
         <!-- Karta 1: Bezpečnostní dohled -->
         <div class="info-card" id="cardSafety">
           <div class="card-title">
-            <span data-i18n="set_safety_title">🛡️ BEZPEČNOSTNÍ DOHLED (SUPERVISOR)</span>
-            <span class="card-badge badge-ok">AKTIVNÍ</span>
+            <span data-i18n="set_safety_title">BEZPEČNOSTNÍ DOHLED (SUPERVISOR)</span>
+            <span class="card-badge">AKTIVNÍ</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_ovp">Přepěťová ochrana (OVP):</span>
-            <span class="prop-val">32.0 V (Kritická 34.0 V)</span>
+            <span class="prop-val">32.0 V</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_ocp">Nadproudová ochrana (OCP):</span>
@@ -1611,12 +1231,12 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         <!-- Karta 2: Chlazení a ventilátor -->
         <div class="info-card" id="cardCooling">
           <div class="card-title">
-            <span data-i18n="set_fan_title">❄️ CHLAZENÍ A VENTILÁTOR</span>
-            <span class="card-badge badge-ok" id="setFanModeBadge">PWM AUTO</span>
+            <span data-i18n="set_fan_title">CHLAZENÍ A VENTILÁTOR</span>
+            <span class="card-badge" id="setFanModeBadge">PWM AUTO</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_fan_freq">Frekvence PWM:</span>
-            <span class="prop-val">25 kHz (Standard 4-pin PC)</span>
+            <span class="prop-val">25 kHz (4-pin PC)</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_fan_min">Náběh chlazení (20%):</span>
@@ -1627,7 +1247,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
             <span class="prop-val">60.0 °C</span>
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="set_fan_duty">Aktuální střída ventilátoru:</span>
+            <span class="prop-label" data-i18n="set_fan_duty">Aktuální výkon ventilátoru:</span>
             <span class="prop-val"><span id="setFanLive">20</span> %</span>
           </div>
         </div>
@@ -1635,12 +1255,12 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         <!-- Karta 3: Hardwarové konstanty -->
         <div class="info-card" id="cardHw">
           <div class="card-title">
-            <span data-i18n="set_hw_title">🔧 HARDWAROVÉ KONSTANTY</span>
+            <span data-i18n="set_hw_title">HARDWAROVÉ KONSTANTY</span>
             <span class="card-badge">KALIBROVÁNO</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_shunt">Proudový bočník R_shunt:</span>
-            <span class="prop-val">0.100 Ω (10W Kelvin 4-wire)</span>
+            <span class="prop-val">0.100 Ω (10W Kelvin)</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_divider">Napěťový dělič vstupu:</span>
@@ -1648,18 +1268,18 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_adc">A/D Převodník:</span>
-            <span class="prop-val">ADS1115 (16-bit I2C 0x48)</span>
+            <span class="prop-val">ADS1115 (16-bit 0x48)</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_dac">D/A Převodník:</span>
-            <span class="prop-val">MCP4725 (12-bit I2C 0x60)</span>
+            <span class="prop-val">MCP4725 (12-bit 0x60)</span>
           </div>
         </div>
 
         <!-- Karta 4: Systém a mikrokontrolér -->
         <div class="info-card" id="cardMcu">
           <div class="card-title">
-            <span data-i18n="set_mcu_title">💻 SYSTÉM &amp; MIKROKONTROLÉR</span>
+            <span data-i18n="set_mcu_title">SYSTÉM &amp; MIKROKONTROLÉR</span>
             <span class="card-badge">ESP32</span>
           </div>
           <div class="prop-row">
@@ -1667,7 +1287,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
             <span class="prop-val">ESP32 DevKit V1 (240 MHz)</span>
           </div>
           <div class="prop-row">
-            <span class="prop-label">Volná RAM (Heap):</span>
+            <span class="prop-label">Volná paměť RAM (Heap):</span>
             <span class="prop-val" id="diagHeap">-- KB</span>
           </div>
           <div class="prop-row">
@@ -1679,67 +1299,60 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
             <span class="prop-val">20 ms (50 Hz)</span>
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="set_api">Telemetrické rozhraní:</span>
-            <span class="prop-val">JSON HTTP REST (300 ms)</span>
-          </div>
-          <div class="prop-row">
             <span class="prop-label">Firmware:</span>
-            <span class="prop-val">v2.5 Optimized Pro</span>
+            <span class="prop-val">v2.5</span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- ================================================================= -->
-    <!-- ZÁLOŽKA 4: VZHLED, MOTIVY A ZVUK (THEMES & CUSTOMIZATION)         -->
+    <!-- SEKCE 4: VZHLED A NASTAVENÍ ROZHRANÍ                              -->
     <!-- ================================================================= -->
     <div id="tabTheme" class="tab-content">
+      <div class="subpage-bar">
+        <span data-i18n="nav_themes">09 // NASTAVENÍ VZHLEDU A ROZHRANÍ</span>
+        <button class="back-btn" onclick="navigateFromDrawer('main')" data-i18n="btn_back">[ ← ZPĚT NA MĚŘENÍ ]</button>
+      </div>
+
       <div class="card-grid">
         <!-- Karta motivů -->
         <div class="info-card">
           <div class="card-title">
-            <span data-i18n="theme_select_title">🎨 BAREVNÝ MOTIV ROZHRANÍ (COLOR THEMES)</span>
-            <span class="card-badge" id="themeActiveBadge">CYBER DARK</span>
+            <span data-i18n="theme_select_title">BAREVNÝ MOTIV ROZHRANÍ</span>
+            <span class="card-badge" id="themeActiveBadge">MONOCHROME DARK</span>
           </div>
 
           <div class="theme-grid">
             <div class="theme-card active" id="thCardDark" onclick="applyTheme('dark')">
-              <span class="theme-swatch" style="background:#131a26;border-color:#38bdf8;"></span>
+              <span class="theme-swatch" style="background:#000000;border-color:#ffffff;"></span>
               <div>
-                <strong style="font-size:12px;">Cyber Dark</strong>
-                <div style="font-size:10px;color:var(--text-muted);">Moderní laboratorní HUD</div>
+                <strong style="font-size:11px;">Monochrome Dark</strong>
+                <div style="font-size:10px;color:var(--text-muted);">Černobílý přístrojový</div>
               </div>
             </div>
 
             <div class="theme-card" id="thCardAmber" onclick="applyTheme('amber')">
               <span class="theme-swatch" style="background:#ffb400;"></span>
               <div>
-                <strong style="font-size:12px;">Keithley Amber</strong>
-                <div style="font-size:10px;color:var(--text-muted);">Klasický jantarový displej</div>
+                <strong style="font-size:11px;">Keithley Amber</strong>
+                <div style="font-size:10px;color:var(--text-muted);">Jantarový displej</div>
               </div>
             </div>
 
             <div class="theme-card" id="thCardGreen" onclick="applyTheme('green')">
               <span class="theme-swatch" style="background:#2bff55;"></span>
               <div>
-                <strong style="font-size:12px;">CRT Phosphor</strong>
+                <strong style="font-size:11px;">CRT Phosphor</strong>
                 <div style="font-size:10px;color:var(--text-muted);">Zelený osciloskop</div>
-              </div>
-            </div>
-
-            <div class="theme-card" id="thCardCyan" onclick="applyTheme('cyan')">
-              <span class="theme-swatch" style="background:#00e5ff;"></span>
-              <div>
-                <strong style="font-size:12px;">Neon Cyan</strong>
-                <div style="font-size:10px;color:var(--text-muted);">Kybernetická modrá</div>
               </div>
             </div>
 
             <div class="theme-card" id="thCardLight" onclick="applyTheme('light')">
               <span class="theme-swatch" style="background:#ffffff;border-color:#333333;"></span>
               <div>
-                <strong style="font-size:12px;">Clean Paper</strong>
-                <div style="font-size:10px;color:var(--text-muted);">Světlý tiskový protokol</div>
+                <strong style="font-size:11px;">Clean Paper</strong>
+                <div style="font-size:10px;color:var(--text-muted);">Světlý režim pro tisk</div>
               </div>
             </div>
           </div>
@@ -1748,15 +1361,15 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         <!-- Karta chování a zvuku -->
         <div class="info-card">
           <div class="card-title">
-            <span data-i18n="theme_opts_title">🔊 PŘIZPŮSOBENÍ ROZHRANÍ A ZVUKU</span>
-            <span class="card-badge">WEB AUDIO</span>
+            <span data-i18n="theme_opts_title">PARAMETRY ROZHRANÍ</span>
+            <span class="card-badge">KONFIGURACE</span>
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="theme_sound">Zvuková odezva (Pípnutí / Beeper):</span>
+            <span class="prop-label" data-i18n="theme_sound">Zvuková odezva (Pípnutí):</span>
             <button class="sp-set-btn" id="btnAudioToggle" onclick="toggleAudioFeedback()">ZAPNUTO</button>
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="theme_trace_pts">Délka osciloskopické paměti:</span>
+            <span class="prop-label" data-i18n="theme_trace_pts">Délka historie grafu:</span>
             <div class="scale-selector">
               <button class="scale-btn active" id="btnPts50" onclick="setPlotLimit(50)">50</button>
               <button class="scale-btn" id="btnPts100" onclick="setPlotLimit(100)">100</button>
@@ -1787,15 +1400,13 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     let soundEnabled = (localStorage.getItem('load_sound') !== 'false');
     let isRecording = false;
     let recordStartTime = null;
-    let battTestStartTime = null;
     let lastVoltageUnloaded = 0.0;
     const logData = [];
     const history = [];
     let LIMIT = 50;
 
-    // Inicializace Web Audio pro laboratorní pípnutí
     const audioCtx = (window.AudioContext || window.webkitAudioContext) ? new (window.AudioContext || window.webkitAudioContext)() : null;
-    function playBeep(freq = 880, dur = 0.12, type = 'sine') {
+    function playBeep(freq = 880, dur = 0.08, type = 'sine') {
       if (!soundEnabled || !audioCtx) return;
       try {
         if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -1803,7 +1414,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         const g = audioCtx.createGain();
         osc.type = type;
         osc.frequency.value = freq;
-        g.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        g.gain.setValueAtTime(0.03, audioCtx.currentTime);
         g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + dur);
         osc.connect(g);
         g.connect(audioCtx.destination);
@@ -1813,7 +1424,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     /* ================================================================= */
-    /* OVLÁDÁNÍ POSTRANNÍHO PANELU (SIDEBAR DRAWER)                      */
+    /* OVLÁDÁNÍ POSTRANNÍHO PANELU (☰ SIDEBAR)                           */
     /* ================================================================= */
     function toggleSidebar() {
       const dr = document.getElementById('sidebarDrawer');
@@ -1843,7 +1454,8 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     function filterSettings(sec) {
-      document.querySelectorAll('.filter-chip').forEach(el => el.classList.remove('active'));
+      const grid = document.getElementById('settingsGrid');
+      const btnAll = document.getElementById('btnShowAllSettings');
       const cards = {
         safety: document.getElementById('cardSafety'),
         cooling: document.getElementById('cardCooling'),
@@ -1852,99 +1464,96 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       };
 
       if (sec === 'all') {
-        document.getElementById('fltAll').classList.add('active');
+        grid.style.gridTemplateColumns = '';
+        if (btnAll) btnAll.style.display = 'none';
         Object.values(cards).forEach(c => { if (c) c.style.display = 'flex'; });
       } else {
-        const chipMap = { safety: 'fltSafety', cooling: 'fltCooling', hw: 'fltHw', mcu: 'fltMcu' };
-        const ch = document.getElementById(chipMap[sec]);
-        if (ch) ch.classList.add('active');
+        grid.style.gridTemplateColumns = '1fr';
+        if (btnAll) btnAll.style.display = 'inline-block';
         Object.entries(cards).forEach(([k, c]) => {
           if (c) c.style.display = (k === sec) ? 'flex' : 'none';
         });
       }
     }
 
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      if (tabId === 'main') {
+        document.getElementById('tabMain').classList.add('active');
+        setTimeout(resize, 50);
+      } else if (tabId === 'batt') {
+        document.getElementById('tabBatt').classList.add('active');
+      } else if (tabId === 'settings') {
+        document.getElementById('tabSettings').classList.add('active');
+      } else if (tabId === 'theme') {
+        document.getElementById('tabTheme').classList.add('active');
+      }
+    }
+
     function navigateFromDrawer(dest) {
+      playBeep(720, 0.04);
       closeSidebar();
-      const bc = document.getElementById('breadcrumbBadge');
 
       if (dest === 'main') {
         switchTab('main');
         setActiveDrawerItem('navMain');
-        if (bc) bc.innerText = '📊 MĚŘENÍ';
       } else if (dest === 'batt') {
         switchTab('batt');
         setActiveDrawerItem('navBatt');
-        if (bc) bc.innerText = '🔋 TEST BATERIÍ';
       } else if (dest === 'export') {
         switchTab('main');
         setActiveDrawerItem('navExport');
-        if (bc) bc.innerText = '📥 EXPORT DAT';
         const expCard = document.getElementById('exportPanelCard');
-        if (expCard) {
-          expCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          expCard.classList.add('highlight-pulse');
-          setTimeout(() => expCard.classList.remove('highlight-pulse'), 1600);
-        }
+        if (expCard) expCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else if (dest === 'safety') {
         switchTab('settings');
         filterSettings('safety');
         setActiveDrawerItem('navSafety');
-        if (bc) bc.innerText = '🛡️ OCHRANY';
       } else if (dest === 'cooling') {
         switchTab('settings');
         filterSettings('cooling');
         setActiveDrawerItem('navCooling');
-        if (bc) bc.innerText = '❄️ CHLAZENÍ';
       } else if (dest === 'hw') {
         switchTab('settings');
         filterSettings('hw');
         setActiveDrawerItem('navHw');
-        if (bc) bc.innerText = '🔧 KALIBRACE';
       } else if (dest === 'mcu') {
         switchTab('settings');
         filterSettings('mcu');
         setActiveDrawerItem('navMcu');
-        if (bc) bc.innerText = '💻 DIAGNOSTIKA';
       } else if (dest === 'settings') {
         switchTab('settings');
         filterSettings('all');
         setActiveDrawerItem('navSettingsAll');
-        if (bc) bc.innerText = '⚙️ NASTAVENÍ';
       } else if (dest === 'theme') {
         switchTab('theme');
         setActiveDrawerItem('navTheme');
-        if (bc) bc.innerText = '🎨 VZHLED';
       }
     }
 
     const I18N = {
       cs: {
         lang_btn: '[ EN ]',
-        drawer_title: 'ELEKTRONICKÁ ZÁTĚŽ',
-        nav_sec_ops: 'Provoz a měření',
-        nav_dashboard: 'Hlavní měřicí panel',
-        nav_battery: 'Test kapacity baterií',
-        nav_export: 'Záznam a export dat',
-        nav_sec_cfg: 'Konfigurace a systém',
-        nav_safety: 'Bezpečnostní ochrany',
-        nav_cooling: 'Chlazení a ventilátor',
-        nav_hw: 'Kalibrace a hardware',
-        nav_mcu: 'Diagnostika ESP32',
-        nav_all_settings: 'Všechna nastavení',
-        nav_sec_ui: 'Vzhled a rozhraní',
-        nav_themes: 'Barevné motivy a zvuk',
-        drawer_quick_theme: 'RYCHLÝ MOTIV:',
+        drawer_title: 'NABÍDKA SYSTÉMU',
+        nav_sec_ops: 'PROVOZ A MĚŘENÍ',
+        nav_dashboard: 'HLAVNÍ PANEL MĚŘENÍ',
+        nav_battery: 'TEST KAPACITY BATERIÍ',
+        nav_export: 'ZÁZNAM A EXPORT DAT',
+        nav_sec_cfg: 'NASTAVENÍ A SYSTÉM',
+        nav_safety: 'BEZPEČNOSTNÍ OCHRANY',
+        nav_cooling: 'CHLAZENÍ A VENTILÁTOR',
+        nav_hw: 'KALIBRACE A HARDWARE',
+        nav_mcu: 'DIAGNOSTIKA ESP32',
+        nav_all_settings: 'PŘEHLED VŠECH NASTAVENÍ',
+        nav_sec_ui: 'ROZHRANÍ',
+        nav_themes: 'NASTAVENÍ VZHLEDU A UI',
+        btn_back: '[ ← ZPĚT NA MĚŘENÍ ]',
         header_title: 'DC ELEKTRONICKÁ ZÁTĚŽ // 30V 5A',
         header_sub: 'DIGITÁLNÍ REGULACE • 50 HZ SMYČKA',
         live: '● ŽIVĚ',
         offline: '○ ODPOJENO',
         full_enter: '[ ⛶ FULL ]',
         full_exit: '[ ✕ ZAVŘÍT ]',
-        tab_main: 'MĚŘENÍ',
-        tab_batt: 'TEST BATERIÍ',
-        tab_settings: 'NASTAVENÍ & SYSTÉM',
-        tab_theme: 'VZHLED & MOTIVY',
         lbl_v: 'NAPĚTÍ',
         lbl_v_max: 'MAX 32V',
         unit_v: 'VOLTY DC',
@@ -1971,7 +1580,8 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         lbl_presets: 'PŘEDVOLBY:',
         lbl_discharged: 'VYBITO:',
         lbl_cutoff: 'MEZNÍ NAPĚTÍ:',
-        lbl_graph: 'OSCILOSKOPICKÝ ZÁZNAM',
+        lbl_graph: 'OSCILOSKOPICKÝ ZÁZNAM [ 50 BODŮ ]',
+        lbl_graph_sub: '• U [BÍLÁ] • I [ŠEDÁ]',
         lbl_yscale: 'MĚŘÍTKO Y:',
         alarm_default: 'SYSTÉMOVÝ ALARM: VYBAVENÍ OCHRANY',
         alarm_trip: 'OCHRANA VYBAVENA: ',
@@ -1982,78 +1592,73 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         rec_recording: 'ZÁZNAM BĚŽÍ: ',
         rec_stopped: 'ULOŽENO VZORKŮ: ',
         rec_pts: ' vzorků',
-        btn_csv: '📥 CSV / EXCEL',
-        btn_json: '📥 JSON',
-        btn_png: '📷 PNG GRAF',
-        btn_clear: '✕ SMAZAT',
+        btn_csv: '[ CSV / EXCEL ]',
+        btn_json: '[ JSON ]',
+        btn_png: '[ PNG GRAF ]',
+        btn_clear: '[ SMAZAT ]',
         batt_cap: 'KAPACITA',
         batt_energy: 'ENERGIE',
-        batt_integral: 'INTEGRÁL U • I • dt',
+        batt_integral: 'Wh (U • I • dt)',
         batt_time: 'DOBA TESTU',
         batt_elapsed: 'ČAS OD STARTU',
         batt_ri: 'VNITŘNÍ ODPOR (Ri)',
-        batt_ri_calc: 'ΔU / ΔI ODHAD',
-        batt_cfg_title: 'KONFIGURACE TESTU VYBÍJENÍ AKUMULÁTORU',
+        batt_ri_calc: 'mΩ (ΔU / ΔI)',
+        batt_cfg_title: 'PARAMETRY VYBÍJECÍHO TESTU',
         batt_ready: 'PŘIPRAVENO',
         batt_running: 'PROBÍHÁ VYBÍJENÍ',
-        batt_chem: 'CHEMIE ČLÁNKU:',
+        batt_chem: 'PŘEDVOLBY:',
         batt_discharge_curr: 'VYBÍJECÍ PROUD:',
         batt_cutoff_volt: 'MEZNÍ VYPNUTÍ (CUTOFF):',
-        batt_start_btn: '▶ SPUSTIT TEST',
-        batt_stop_btn: '⏹ ZASTAVIT TEST',
-        set_safety_title: '🛡️ BEZPEČNOSTNÍ DOHLED (SUPERVISOR)',
+        batt_start_btn: '[ SPUSTIT TEST ]',
+        batt_stop_btn: '[ ZASTAVIT TEST ]',
+        set_safety_title: 'BEZPEČNOSTNÍ DOHLED (SUPERVISOR)',
         set_ovp: 'Přepěťová ochrana (OVP):',
         set_ocp: 'Nadproudová ochrana (OCP):',
         set_opp: 'Výkonová ochrana (OPP):',
         set_otp: 'Tepelná ochrana (OTP):',
         set_otp_warn: 'Výstraha ventilátoru (100%):',
-        set_fan_title: '❄️ CHLAZENÍ A VENTILÁTOR',
+        set_fan_title: 'CHLAZENÍ A VENTILÁTOR',
         set_fan_freq: 'Frekvence PWM:',
         set_fan_min: 'Náběh chlazení (20%):',
         set_fan_max: 'Plné otáčky (100%):',
-        set_fan_duty: 'Aktuální střída ventilátoru:',
-        set_hw_title: '🔧 HARDWAROVÉ KONSTANTY',
+        set_fan_duty: 'Aktuální výkon ventilátoru:',
+        set_hw_title: 'HARDWAROVÉ KONSTANTY',
         set_shunt: 'Proudový bočník R_shunt:',
         set_divider: 'Napěťový dělič vstupu:',
         set_adc: 'A/D Převodník:',
         set_dac: 'D/A Převodník:',
-        set_mcu_title: '💻 SYSTÉM & MIKROKONTROLÉR',
+        set_mcu_title: 'SYSTÉM & MIKROKONTROLÉR',
         set_loop: 'Perioda regulační smyčky:',
-        set_api: 'Telemetrické rozhraní:',
-        theme_select_title: '🎨 BAREVNÝ MOTIV ROZHRANÍ (COLOR THEMES)',
-        theme_opts_title: '🔊 PŘIZPŮSOBENÍ ROZHRANÍ A ZVUKU',
-        theme_sound: 'Zvuková odezva (Pípnutí / Beeper):',
-        theme_trace_pts: 'Délka osciloskopické paměti:',
+        theme_select_title: 'BAREVNÝ MOTIV ROZHRANÍ',
+        theme_opts_title: 'PARAMETRY ROZHRANÍ',
+        theme_sound: 'Zvuková odezva (Pípnutí):',
+        theme_trace_pts: 'Délka historie grafu:',
         theme_lang: 'Jazyk rozhraní:',
         sound_on: 'ZAPNUTO',
         sound_off: 'VYPNUTO'
       },
       en: {
         lang_btn: '[ CZ ]',
-        drawer_title: 'ELECTRONIC LOAD',
-        nav_sec_ops: 'Operation & Measurement',
-        nav_dashboard: 'Main Dashboard',
-        nav_battery: 'Battery Capacity Test',
-        nav_export: 'Data Logger & Export',
-        nav_sec_cfg: 'Configuration & System',
-        nav_safety: 'Safety Protections',
-        nav_cooling: 'Cooling & PWM Fan',
-        nav_hw: 'Hardware & Calibration',
-        nav_mcu: 'ESP32 Diagnostics',
-        nav_all_settings: 'All Settings Overview',
-        nav_sec_ui: 'Appearance & UI',
-        nav_themes: 'Color Themes & Audio',
-        drawer_quick_theme: 'QUICK THEME:',
+        drawer_title: 'SYSTEM MENU',
+        nav_sec_ops: 'OPERATION & MEASUREMENT',
+        nav_dashboard: 'MAIN MEASUREMENT PANEL',
+        nav_battery: 'BATTERY CAPACITY TEST',
+        nav_export: 'DATA LOGGER & EXPORT',
+        nav_sec_cfg: 'CONFIGURATION & SYSTEM',
+        nav_safety: 'SAFETY PROTECTIONS',
+        nav_cooling: 'COOLING & PWM FAN',
+        nav_hw: 'HARDWARE & CALIBRATION',
+        nav_mcu: 'ESP32 DIAGNOSTICS',
+        nav_all_settings: 'ALL SETTINGS OVERVIEW',
+        nav_sec_ui: 'INTERFACE',
+        nav_themes: 'APPEARANCE & UI SETTINGS',
+        btn_back: '[ ← BACK TO DASHBOARD ]',
         header_title: 'DC ELECTRONIC LOAD // 30V 5A',
         header_sub: 'DIGITAL CONTROL • 50 HZ LOOP',
         live: '● LIVE',
         offline: '○ OFFLINE',
         full_enter: '[ ⛶ FULL ]',
         full_exit: '[ ✕ EXIT ]',
-        tab_main: 'DASHBOARD',
-        tab_batt: 'BATTERY TEST',
-        tab_settings: 'SETTINGS & SYSTEM',
-        tab_theme: 'APPEARANCE',
         lbl_v: 'VOLTAGE',
         lbl_v_max: 'MAX 32V',
         unit_v: 'VOLTS DC',
@@ -2080,7 +1685,8 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         lbl_presets: 'PRESETS:',
         lbl_discharged: 'DISCHARGED:',
         lbl_cutoff: 'CUT-OFF:',
-        lbl_graph: 'OSCILLOSCOPE TRACE',
+        lbl_graph: 'OSCILLOSCOPE TRACE [ 50 PTS ]',
+        lbl_graph_sub: '• U [WHITE] • I [GREY]',
         lbl_yscale: 'Y-SCALE:',
         alarm_default: 'SYSTEM ALARM: PROTECTION TRIPPED',
         alarm_trip: 'PROTECTION TRIPPED: ',
@@ -2091,46 +1697,45 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         rec_recording: 'RECORDING: ',
         rec_stopped: 'SAVED SAMPLES: ',
         rec_pts: ' samples',
-        btn_csv: '📥 CSV / EXCEL',
-        btn_json: '📥 JSON',
-        btn_png: '📷 PNG CHART',
-        btn_clear: '✕ CLEAR',
+        btn_csv: '[ CSV / EXCEL ]',
+        btn_json: '[ JSON ]',
+        btn_png: '[ PNG CHART ]',
+        btn_clear: '[ CLEAR ]',
         batt_cap: 'CAPACITY',
         batt_energy: 'ENERGY',
-        batt_integral: 'INTEGRAL U • I • dt',
+        batt_integral: 'Wh (U • I • dt)',
         batt_time: 'TEST TIME',
         batt_elapsed: 'ELAPSED TIME',
         batt_ri: 'INTERNAL RES. (Ri)',
-        batt_ri_calc: 'ΔU / ΔI ESTIMATE',
-        batt_cfg_title: 'BATTERY DISCHARGE TEST CONFIGURATION',
+        batt_ri_calc: 'mΩ (ΔU / ΔI)',
+        batt_cfg_title: 'DISCHARGE TEST PARAMETERS',
         batt_ready: 'READY',
         batt_running: 'DISCHARGING',
-        batt_chem: 'CELL CHEMISTRY:',
+        batt_chem: 'PRESETS:',
         batt_discharge_curr: 'DISCHARGE CURRENT:',
         batt_cutoff_volt: 'CUT-OFF VOLTAGE:',
-        batt_start_btn: '▶ START TEST',
-        batt_stop_btn: '⏹ STOP TEST',
-        set_safety_title: '🛡️ SAFETY SUPERVISOR',
+        batt_start_btn: '[ START TEST ]',
+        batt_stop_btn: '[ STOP TEST ]',
+        set_safety_title: 'SAFETY SUPERVISOR',
         set_ovp: 'Over-Voltage Protection (OVP):',
         set_ocp: 'Over-Current Protection (OCP):',
         set_opp: 'Over-Power Protection (OPP):',
         set_otp: 'Over-Temperature Protection (OTP):',
         set_otp_warn: 'Fan 100% Warning Threshold:',
-        set_fan_title: '❄️ COOLING & FAN CONTROL',
+        set_fan_title: 'COOLING & FAN CONTROL',
         set_fan_freq: 'PWM Frequency:',
         set_fan_min: 'Cooling Start (20%):',
         set_fan_max: 'Full Speed (100%):',
         set_fan_duty: 'Current Fan Duty:',
-        set_hw_title: '🔧 HARDWARE CONSTANTS',
+        set_hw_title: 'HARDWARE CONSTANTS',
         set_shunt: 'Current Sense Shunt R_shunt:',
         set_divider: 'Input Voltage Divider:',
         set_adc: 'A/D Converter:',
         set_dac: 'D/A Converter:',
-        set_mcu_title: '💻 SYSTEM & MICROCONTROLLER',
+        set_mcu_title: 'SYSTEM & MICROCONTROLLER',
         set_loop: 'Control Loop Period:',
-        set_api: 'Telemetry Interface:',
-        theme_select_title: '🎨 INTERFACE COLOR THEMES',
-        theme_opts_title: '🔊 UI & AUDIO CUSTOMIZATION',
+        theme_select_title: 'INTERFACE COLOR THEME',
+        theme_opts_title: 'INTERFACE PARAMETERS',
         theme_sound: 'Audio Feedback (Beeper):',
         theme_trace_pts: 'Oscilloscope Buffer Length:',
         theme_lang: 'Interface Language:',
@@ -2167,59 +1772,26 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       ]
     };
 
-    /* PŘEPÍNÁNÍ HLAVNÍCH ZÁLOŽEK */
-    function switchTab(tabId) {
-      playBeep(720, 0.05);
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      const bc = document.getElementById('breadcrumbBadge');
-
-      if (tabId === 'main') {
-        document.getElementById('btnTabMain').classList.add('active');
-        document.getElementById('tabMain').classList.add('active');
-        setActiveDrawerItem('navMain');
-        if (bc) bc.innerText = '📊 MĚŘENÍ';
-        setTimeout(resize, 60);
-      } else if (tabId === 'batt') {
-        document.getElementById('btnTabBatt').classList.add('active');
-        document.getElementById('tabBatt').classList.add('active');
-        setActiveDrawerItem('navBatt');
-        if (bc) bc.innerText = '🔋 TEST BATERIÍ';
-      } else if (tabId === 'settings') {
-        document.getElementById('btnTabSettings').classList.add('active');
-        document.getElementById('tabSettings').classList.add('active');
-        filterSettings('all');
-        setActiveDrawerItem('navSettingsAll');
-        if (bc) bc.innerText = '⚙️ NASTAVENÍ';
-      } else if (tabId === 'theme') {
-        document.getElementById('btnTabTheme').classList.add('active');
-        document.getElementById('tabTheme').classList.add('active');
-        setActiveDrawerItem('navTheme');
-        if (bc) bc.innerText = '🎨 VZHLED';
-      }
-    }
-
-    /* BAREVNÉ MOTIVY */
     function applyTheme(th) {
-      playBeep(900, 0.08);
+      playBeep(900, 0.06);
       currentTheme = th;
       localStorage.setItem('load_theme', th);
       document.body.className = 'theme-' + th;
 
       document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('active'));
-      const mapId = { dark: 'thCardDark', amber: 'thCardAmber', green: 'thCardGreen', cyan: 'thCardCyan', light: 'thCardLight' };
-      const names = { dark: 'CYBER DARK', amber: 'KEITHLEY AMBER', green: 'CRT PHOSPHOR', cyan: 'NEON CYAN', light: 'CLEAN PAPER' };
+      const mapId = { dark: 'thCardDark', amber: 'thCardAmber', green: 'thCardGreen', light: 'thCardLight' };
+      const names = { dark: 'MONOCHROME DARK', amber: 'KEITHLEY AMBER', green: 'CRT PHOSPHOR', light: 'CLEAN PAPER' };
       const el = document.getElementById(mapId[th] || 'thCardDark');
       if (el) el.classList.add('active');
       const bdg = document.getElementById('themeActiveBadge');
-      if (bdg) bdg.innerText = names[th] || 'CYBER DARK';
+      if (bdg) bdg.innerText = names[th] || 'MONOCHROME DARK';
       renderPlot();
     }
 
     function toggleAudioFeedback() {
       soundEnabled = !soundEnabled;
       localStorage.setItem('load_sound', soundEnabled ? 'true' : 'false');
-      if (soundEnabled) playBeep(1040, 0.1);
+      if (soundEnabled) playBeep(1040, 0.08);
       updateAudioBtnText();
     }
 
@@ -2228,7 +1800,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       const btn = document.getElementById('btnAudioToggle');
       if (btn) btn.innerText = soundEnabled ? t.sound_on : t.sound_off;
       const dBtn = document.getElementById('drawerAudioBtn');
-      if (dBtn) dBtn.innerText = soundEnabled ? '🔊 ZVUK: ZAP' : '🔇 ZVUK: VYP';
+      if (dBtn) dBtn.innerText = soundEnabled ? '[ ZVUK: ZAP ]' : '[ ZVUK: VYP ]';
     }
 
     function setPlotLimit(pts) {
@@ -2242,7 +1814,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     function applyBattPreset(cutV, currA) {
-      playBeep(960, 0.08);
+      playBeep(960, 0.06);
       document.getElementById('battInputCut').value = cutV.toFixed(2);
       document.getElementById('battInputCurr').value = currA.toFixed(3);
       pushSetpointAndCut(currA, cutV);
@@ -2269,7 +1841,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     function toggleLanguage() {
-      playBeep(840, 0.06);
+      playBeep(840, 0.05);
       currentLang = (currentLang === 'cs') ? 'en' : 'cs';
       localStorage.setItem('load_lang', currentLang);
       applyLanguage();
@@ -2300,7 +1872,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     const cv = document.getElementById('cv');
     const ctx = cv.getContext('2d');
     let cssW = 800;
-    let cssH = 230;
+    let cssH = 220;
     let dpr = 1;
 
     function resize() {
@@ -2348,34 +1920,33 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       }
     }
 
-    /* --- VYKRESLOVÁNÍ GRAFU (LIN / LOG) S PODPOROU MOTIVŮ --- */
+    /* --- VYKRESLOVÁNÍ GRAFU (OSTRÉ ČÍSLICE, ČISTÝ RASTROVÝ STYL) --- */
     function renderPlot() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, cssW, cssH);
       const w = cssW;
       const h = cssH;
 
-      const pL = 46;
-      const pR = w - 48;
+      const pL = 44;
+      const pR = w - 46;
       const pT = 14;
-      const pB = h - 18;
+      const pB = h - 16;
       const plotW = pR - pL;
       const plotH = pB - pT;
 
       const styles = getComputedStyle(document.body);
-      const colBorder = styles.getPropertyValue('--border-focus').trim() || '#3b82f6';
-      const colGrid = styles.getPropertyValue('--border').trim() || '#263349';
-      const colText = styles.getPropertyValue('--text').trim() || '#f8fafc';
-      const colMuted = styles.getPropertyValue('--text-muted').trim() || '#94a3b8';
-      const colTraceU = styles.getPropertyValue('--trace-u').trim() || '#38bdf8';
-      const colTraceI = styles.getPropertyValue('--trace-i').trim() || '#4ade80';
+      const colBorder = styles.getPropertyValue('--border-focus').trim() || '#555555';
+      const colGrid = styles.getPropertyValue('--border').trim() || '#262626';
+      const colText = styles.getPropertyValue('--text').trim() || '#ffffff';
+      const colMuted = styles.getPropertyValue('--text-muted').trim() || '#9e9e9e';
+      const colTraceU = styles.getPropertyValue('--trace-u').trim() || '#ffffff';
+      const colTraceI = styles.getPropertyValue('--trace-i').trim() || '#888888';
 
-      // Ohraničení rastru
-      ctx.strokeStyle = colGrid;
+      ctx.strokeStyle = colBorder;
       ctx.lineWidth = 1;
       ctx.strokeRect(pL, pT, plotW, plotH);
 
-      ctx.font = '700 12px ui-monospace, "SF Mono", "Roboto Mono", Cascadia Code, monospace';
+      ctx.font = '700 12px ui-monospace, "SF Mono", "Roboto Mono", Consolas, monospace';
       ctx.textBaseline = 'middle';
 
       if (plotScale === 'lin') {
@@ -2387,12 +1958,12 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
             ctx.beginPath(); ctx.moveTo(pL, y); ctx.lineTo(pR, y); ctx.stroke();
           }
           const vVal = (i / divs) * 32.0;
-          ctx.fillStyle = colTraceU;
+          ctx.fillStyle = colText;
           ctx.textAlign = 'right';
           ctx.fillText(vVal.toFixed(0) + 'V', pL - 7, y);
 
           const iVal = (i / divs) * 5.2;
-          ctx.fillStyle = colTraceI;
+          ctx.fillStyle = colMuted;
           ctx.textAlign = 'left';
           ctx.fillText(iVal.toFixed(1) + 'A', pR + 7, y);
         }
@@ -2417,7 +1988,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           ctx.beginPath(); ctx.moveTo(pL, y); ctx.lineTo(pR, y); ctx.stroke();
 
           if (t.label) {
-            ctx.fillStyle = colTraceU;
+            ctx.fillStyle = colText;
             ctx.textAlign = 'right';
             ctx.fillText(t.label, pL - 7, y);
           }
@@ -2436,13 +2007,12 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         iTicks.forEach(t => {
           const norm = (Math.log10(t.val) - logImin) / (logImax - logImin);
           const y = pB - norm * plotH;
-          ctx.fillStyle = colTraceI;
+          ctx.fillStyle = colMuted;
           ctx.textAlign = 'left';
           ctx.fillText(t.label, pR + 7, y);
         });
       }
 
-      // Vertikální mřížka
       const xDivs = 8;
       for (let j = 1; j < xDivs; j++) {
         const x = pL + (plotW / xDivs) * j;
@@ -2489,11 +2059,11 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       }
 
       if (plotScale === 'lin') {
-        plotTrace('u', false, 0, 32.0, colTraceU, 2.2);
-        plotTrace('i', false, 0, 5.2, colTraceI, 2.0);
+        plotTrace('u', false, 0, 32.0, colTraceU, 2.0);
+        plotTrace('i', false, 0, 5.2, colTraceI, 1.8);
       } else {
-        plotTrace('u', true, 0.1, 32.0, colTraceU, 2.2);
-        plotTrace('i', true, 0.001, 5.2, colTraceI, 2.0);
+        plotTrace('u', true, 0.1, 32.0, colTraceU, 2.0);
+        plotTrace('i', true, 0.001, 5.2, colTraceI, 1.8);
       }
 
       ctx.restore();
@@ -2608,7 +2178,6 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       document.getElementById('valT').innerText = tStr;
       document.getElementById('valFan').innerText = d.fan;
 
-      // Aktualizace mini přehledu v postranním panelu
       const sV = document.getElementById('sideV'); if (sV) sV.innerText = vStr;
       const sI = document.getElementById('sideI'); if (sI) sI.innerText = iStr;
       const sP = document.getElementById('sideP'); if (sP) sP.innerText = pStr;
@@ -2617,7 +2186,6 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       const setFan = document.getElementById('setFanLive');
       if (setFan) setFan.innerText = d.fan;
 
-      // Statistiky baterie
       const mah = Math.round(d.discharged_mAh);
       document.getElementById('valMah').innerText = mah;
       document.getElementById('valWh').innerText = d.discharged_Wh.toFixed(2);
@@ -2628,7 +2196,6 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       const bWh = document.getElementById('battBigWh');
       if (bWh) bWh.innerText = d.discharged_Wh.toFixed(2);
 
-      // Vnitřní odpor (Ri)
       if (typeof d.ri === 'number' && d.ri > 0) {
         const riEl = document.getElementById('battRi');
         if (riEl) riEl.innerText = Math.round(d.ri * 1000);
@@ -2643,7 +2210,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         }
       }
 
-      if (typeof d.duration === 'number' && mode === 3) {
+      if (typeof d.duration === 'number') {
         const sec = d.duration;
         const h = String(Math.floor(sec / 3600)).padStart(2, '0');
         const m = String(Math.floor((sec % 3600) / 60)).padStart(2, '0');
@@ -2689,7 +2256,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       isAlarm = (d.alarm !== 0);
 
       if (isAlarm && !wasOutput) {
-        playBeep(440, 0.4, 'sawtooth');
+        playBeep(440, 0.3, 'sawtooth');
       }
 
       const ann = document.getElementById('stateAnn');
@@ -2760,7 +2327,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     setInterval(poll, 300);
 
     async function selectMode(m) {
-      playBeep(950, 0.05);
+      playBeep(950, 0.04);
       syncModeConfig(m);
       try {
         const r = await fetch(`/api/control?mode=${m}`, { cache: 'no-store' });
@@ -2807,7 +2374,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     async function togglePower() {
       if (isAlarm) return;
       const next = !isOutput;
-      playBeep(next ? 1200 : 600, 0.08);
+      playBeep(next ? 1200 : 600, 0.06);
       setOutputVisuals(next);
       try {
         const r = await fetch(`/api/control?out=${next ? 1 : 0}`, { cache: 'no-store' });
@@ -2831,7 +2398,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     async function ackAlarm() {
-      playBeep(1000, 0.1);
+      playBeep(1000, 0.08);
       try {
         const r = await fetch('/api/control?resetAlarm=1', { cache: 'no-store' });
         if (r.ok) {
@@ -2861,9 +2428,6 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
       } catch (err) {}
     }
 
-    /* ================================================================= */
-    /* ZÁZNAM MĚŘENÍ A EXPORT DO SOUBORŮ (CSV/EXCEL, JSON, PNG GRAF)     */
-    /* ================================================================= */
     function updateRecordUI() {
       const t = I18N[currentLang] || I18N.cs;
       const btn = document.getElementById('btnRec');
@@ -2886,11 +2450,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     function toggleRecording() {
-      playBeep(isRecording ? 660 : 1100, 0.08);
+      playBeep(isRecording ? 660 : 1100, 0.06);
       if (!isRecording) {
-        if (logData.length === 0) {
-          recordStartTime = new Date();
-        } else if (!recordStartTime) {
+        if (logData.length === 0 || !recordStartTime) {
           recordStartTime = new Date();
         }
         isRecording = true;
@@ -2993,7 +2555,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         exportCanvas.width = cv.width;
         exportCanvas.height = cv.height;
         const eCtx = exportCanvas.getContext('2d');
-        const bgCol = getComputedStyle(document.body).getPropertyValue('--panel').trim() || '#131a26';
+        const bgCol = getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#050505';
         eCtx.fillStyle = bgCol;
         eCtx.fillRect(0, 0, exportCanvas.width, exportCanvas.height);
         eCtx.drawImage(cv, 0, 0);
