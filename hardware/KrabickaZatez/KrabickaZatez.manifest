@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion",
+	"type":	"script",
+	"author":	"Ondrej Pinkas",
+	"description":	{
+		"":	"Vygeneruje zaklad krabicky pro elektronickou zatez s distancnimi sloupky pro M3 heat-set vlozky a prostorem pro chladic."
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}

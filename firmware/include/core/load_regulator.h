@@ -30,12 +30,24 @@ public:
   const BatteryStats& getBatteryStats() const;
   void resetBatteryStats();
 
+  // Automatický test V-A charakteristiky a proudového limitu (OCP) zdroje
+  void startSweep();
+  void stopSweep();
+  const SweepStats& getSweepStats() const;
+
+  // Aktuální hodnota digitální PI kompenzace ofsetu LM358 [A]
+  float getPiTrimAmps() const;
+
 private:
   LoadMode _mode;
   bool _enabled;
   int _cutoffLowSamples;
   Setpoint _setpoints;
   BatteryStats _battStats;
+  SweepStats _sweepStats;
+  unsigned long _lastSweepStepMs;
+  float _sweepCurrentAmps;
+  float _piTrimAmps;
   double _acc_mAh;
   double _acc_Wh;
   float _ocvVoltage;

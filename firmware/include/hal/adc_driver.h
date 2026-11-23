@@ -7,12 +7,14 @@
 #define ADC_DRIVER_H
 
 #include <Arduino.h>
+#include "types.h"
 
 class AdcDriver {
 public:
   AdcDriver();
   bool begin();
   bool isConnected() const;
+  void setCalibration(const CalibrationData& cal);
 
   /**
    * @brief Ne-blokující obsluha stavového automatu ADC (volána v hlavní smyčce)
@@ -37,8 +39,10 @@ private:
   bool _firstSample;
   AdcState _state;
   unsigned long _convStartMs;
+  unsigned long _convStartUs;
   float _filteredVoltage;
   float _filteredCurrent;
+  CalibrationData _cal;
 };
 
 #endif // ADC_DRIVER_H

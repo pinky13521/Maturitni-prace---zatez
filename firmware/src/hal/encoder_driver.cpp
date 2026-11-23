@@ -32,7 +32,8 @@ void EncoderDriver::begin() {
   pinMode(PIN_ENC_DT, INPUT_PULLUP);
   pinMode(PIN_ENC_SW, INPUT_PULLUP);
 
-  attachInterrupt(digitalPinToInterrupt(PIN_ENC_CLK), isrClk, CHANGE);
+  // FALLING hrana dává přesně 1 pulz na 1 mechanický klik (detent) enkodéru KY-040
+  attachInterrupt(digitalPinToInterrupt(PIN_ENC_CLK), isrClk, FALLING);
 }
 
 void IRAM_ATTR EncoderDriver::handleClkInterrupt() {

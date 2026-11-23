@@ -10,9 +10,8 @@
 
 static OneWire s_oneWire(PIN_ONE_WIRE);
 static DallasTemperature s_sensors(&s_oneWire);
-static int s_failCount = 0;
 
-TempDriver::TempDriver() : _ready(false), _lastValidTemp(25.0f) {}
+TempDriver::TempDriver() : _ready(false), _lastValidTemp(25.0f), _failCount(0) {}
 
 bool TempDriver::begin() {
   s_sensors.begin();
@@ -41,12 +40,12 @@ float TempDriver::read() {
   // Platné teplotní rozmezí čidla DS18B20 (-55 °C až +125 °C, chyba odpojení vrací -127 °C)
   if (t > -50.0f && t < 125.0f) {
     _lastValidTemp = t;
-    s_failCount = 0;
+    _failCount = 0;
   } else {
-    s_failCount++;
+    if (_failCount < 255) _failCount++;
     // Pokud čidlo 5x za sebou neodpoví (5 sekund výpadku),
     // vrátíme havarijní teplotu nad limit OTP (85 °C) pro okamžité bezpečné odstavení zátěže.
-    if (s_failCount >= 5) {
+    if (_failCount >= 5) {
       _lastValidTemp = 85.0f;
     }
   }

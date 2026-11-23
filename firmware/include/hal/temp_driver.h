@@ -27,6 +27,7 @@ public:
 private:
   bool _ready;
   float _lastValidTemp;
+  uint8_t _failCount;
 };
 
 #endif // TEMP_DRIVER_H

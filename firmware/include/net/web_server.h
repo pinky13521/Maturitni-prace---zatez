@@ -11,13 +11,20 @@
 #include "types.h"
 #include "core/load_regulator.h"
 #include "core/safety.h"
+#include "core/storage.h"
+#include "hal/adc_driver.h"
+#include "hal/dac_driver.h"
 
 class LoadWebServer {
 public:
   LoadWebServer(const Measurement& meas, 
                 const SystemState& state, 
                 LoadRegulator& regulator, 
-                SafetySupervisor& safety);
+                SafetySupervisor& safety,
+                CalibrationData& cal,
+                NvsStorage& storage,
+                AdcDriver& adc,
+                DacDriver& dac);
 
   void begin();
   void handle();
@@ -28,6 +35,10 @@ private:
   const SystemState& _state;
   LoadRegulator& _regulator;
   SafetySupervisor& _safety;
+  CalibrationData& _cal;
+  NvsStorage& _storage;
+  AdcDriver& _adc;
+  DacDriver& _dac;
 
   void handleRoot();
   void handleTelemetry();

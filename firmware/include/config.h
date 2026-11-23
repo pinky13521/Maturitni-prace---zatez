@@ -103,4 +103,18 @@
 // Lokální mDNS adresa - V prohlížeči otevřete přímo: http://zatez.local
 #define MDNS_HOSTNAME "zatez"
 
+// =============================================================================
+// 5. MQTT PROPOJENÍ S LOKÁLNÍM SERVEREM (VOLITELNÉ)
+// =============================================================================
+// Přepněte na 1, jakmile rozchodíte Mosquitto broker na vašem serveru.
+// Při 0 běží pouze vestavěný lokální webový server na ESP32.
+#define MQTT_ENABLED             0
+#define MQTT_BROKER_IP           "192.168.31.251"
+#define MQTT_BROKER_PORT         1883
+#define MQTT_CLIENT_ID           "esp32-zatez"
+#define MQTT_PUBLISH_INTERVAL_MS 200
+#define MQTT_TOPIC_TELEMETRY     "zatez/telemetry"
+#define MQTT_TOPIC_CONTROL       "zatez/control"
+#define MQTT_TOPIC_STATUS        "zatez/status"
+
 #endif // CONFIG_H

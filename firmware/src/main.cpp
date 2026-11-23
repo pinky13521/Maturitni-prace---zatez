@@ -11,6 +11,8 @@
 
 #include <Arduino.h>
 #include <Wire.h>
+#include <esp_task_wdt.h>
+#include <esp_arduino_version.h>
 
 #include "config.h"
 #include "types.h"
@@ -21,9 +23,15 @@
 #include "hal/temp_driver.h"
 #include "core/safety.h"
 #include "core/load_regulator.h"
+#include "core/storage.h"
 #include "ui/display.h"
 #include "net/wifi_manager.h"
 #include "net/web_server.h"
+#if MQTT_ENABLED
+#include "net/mqtt_bridge.h"
+#endif
+
+#define WDT_TIMEOUT_SECONDS 3
 
 // Instance periferií a řídicích modulů
 static AdcDriver        s_adc;
@@ -33,12 +41,14 @@ static EncoderDriver    s_encoder;
 static TempDriver       s_temp;
 static SafetySupervisor s_safety;
 static LoadRegulator    s_regulator;
+static NvsStorage       s_storage;
 static DisplayUi        s_ui;
 static WifiManager      s_wifi;
 
-// Globální měřené veličiny a stav
-static Measurement s_meas = { 0.0f, 0.0f, 0.0f, 25.0f };
-static SystemState s_state = {
+// Globální měřené veličiny, kalibrace a stav
+static Measurement     s_meas = { 0.0f, 0.0f, 0.0f, 25.0f };
+static CalibrationData s_cal  = { 1.0f, 1.0f, 1.0f, 0.0f };
+static SystemState     s_state = {
   .mode = MODE_CC,
   .outputEnabled = false,
   .alarm = ALARM_NONE,
@@ -46,7 +56,25 @@ static SystemState s_state = {
   .fanDutyPercent = 20
 };
 
-static LoadWebServer    s_webServer(s_meas, s_state, s_regulator, s_safety);
+static LoadWebServer    s_webServer(s_meas, s_state, s_regulator, s_safety, s_cal, s_storage, s_adc, s_dac);
+#if MQTT_ENABLED
+static MqttBridge       s_mqtt(s_meas, s_state, s_regulator, s_safety);
+#endif
+
+/**
+ * @brief Vyhrazená síťová úloha na jádru Core 0 (FreeRTOS)
+ * Odděluje zpracování HTTP/MQTT od deterministické 50Hz regulační smyčky a I2C sběrnice na Core 1.
+ */
+static void networkTask(void* pvParameters) {
+  (void)pvParameters;
+  for (;;) {
+    s_webServer.handle();
+#if MQTT_ENABLED
+    s_mqtt.loop();
+#endif
+    vTaskDelay(pdMS_TO_TICKS(2));
+  }
+}
 
 // Časovače smyček (Deterministický cooperative scheduler)
 static unsigned long s_lastFastLoop = 0;
@@ -73,6 +101,13 @@ void setup() {
   Serial.println("  Maturitni projekt - Ondrej Pinkas");
   Serial.println("==================================================");
 #endif
+
+  // 0. Načtení kalibračních koeficientů a žádaných hodnot z NVS paměti ESP32
+  s_storage.load(s_cal, s_regulator.getSetpoints());
+  s_adc.setCalibration(s_cal);
+  s_dac.setDacScale(s_cal.dacScale);
+  LOG_PRINTF("[NVS] Kalibrace nactena (vScale=%.4f, iScale=%.4f, dacScale=%.4f, iOffset=%.4f)\n",
+             s_cal.vScale, s_cal.iScale, s_cal.dacScale, s_cal.iOffset);
 
   // 1. Inicializace I2C sběrnice na pinech navržených v KiCadu
   Wire.begin(PIN_I2C_SDA, PIN_I2C_SCL, I2C_FREQ);
@@ -110,9 +145,32 @@ void setup() {
 
     s_ui.showNetworkInfo(s_wifi.getIpStr().c_str(), s_wifi.isAp());
     s_webServer.begin();
+#if MQTT_ENABLED
+    if (!s_wifi.isAp()) {
+      s_mqtt.begin();
+      LOG_PRINTF("[MQTT] Klient pripraven pro broker %s:%d\n", MQTT_BROKER_IP, MQTT_BROKER_PORT);
+    }
+#endif
+    // Spuštění síťové obsluhy na jádru Core 0 (regulační smyčka a I2C běží nerušeně na Core 1)
+    xTaskCreatePinnedToCore(networkTask, "NetTask", 6144, nullptr, 1, nullptr, 0);
+    LOG_PRINTLN("[RTOS] Sitova uloha spustena na Core 0 (Regulace bezi na Core 1).");
   } else {
     LOG_PRINTLN("[NET] CHYBA: Spusteni Wi-Fi selhalo!");
   }
+
+  // 4. Aktivace hardwarového Task Watchdog Timeru (3 s) pro bezpečnostní restart při zamrznutí
+#if defined(ESP_ARDUINO_VERSION_MAJOR) && (ESP_ARDUINO_VERSION_MAJOR >= 3)
+  esp_task_wdt_config_t wdt_cfg = {
+    .timeout_ms = WDT_TIMEOUT_SECONDS * 1000,
+    .idle_core_mask = 0,
+    .trigger_panic = true
+  };
+  esp_task_wdt_reconfigure(&wdt_cfg);
+#else
+  esp_task_wdt_init(WDT_TIMEOUT_SECONDS, true);
+#endif
+  esp_task_wdt_add(NULL);
+  LOG_PRINTF("[SAFETY] Hardwarovy Watchdog (WDT %d s): AKTIVNI\n", WDT_TIMEOUT_SECONDS);
 
   LOG_PRINTLN("--------------------------------------------------");
   LOG_PRINTLN("System inicializovan. Bezi v bezpecnem stavu (Vystup OFF).");
@@ -122,8 +180,7 @@ void setup() {
 void loop() {
   unsigned long now = millis();
 
-  // 0. Obsluha HTTP požadavků webového serveru a asynchronní obsluha ADC
-  s_webServer.handle();
+  // 0. Asynchronní obsluha ADC na Core 1 (HTTP a MQTT běží paralelně na Core 0)
   s_adc.poll();
 
   // ===========================================================================
@@ -173,6 +230,7 @@ void loop() {
       LOG_PRINTF("[LOAD] Vystup zateze: %s\n", newState ? "ZAPNUTO" : "VYPNUTO");
     }
     syncSystemState();
+    esp_task_wdt_reset();
   }
 
   // Dlouhý stisk tlačítka (>= 600 ms): Cyklické přepnutí provozního režimu (CC -> CP -> CR -> BATT)
@@ -214,6 +272,7 @@ void loop() {
     }
 
     syncSystemState();
+    esp_task_wdt_reset();
   }
 
   // ===========================================================================

@@ -13,6 +13,7 @@ public:
   DacDriver();
   bool begin();
   bool isConnected() const;
+  void setDacScale(float scale);
 
   /**
    * @brief Nastaví referenční napětí pro analogový operační zesilovač s plynulým náběhem
@@ -29,6 +30,7 @@ private:
   bool _ready;
   uint16_t _lastCode;
   float _currentRampAmps;
+  float _dacScale;
 };
 
 #endif // DAC_DRIVER_H

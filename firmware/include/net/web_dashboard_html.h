@@ -1084,6 +1084,21 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           <div id="presetsBox" style="display:contents;"></div>
         </div>
 
+        <!-- Automatický V-A test zdroje & detekce OCP -->
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-top:1px solid var(--border); padding-top:10px; font-size:11px; color:var(--text-dim);">
+          <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+            <strong style="color:var(--text);">V-A TEST ZDROJE (OCP):</strong>
+            <span>U₀: <strong id="swU0" style="color:var(--text);">--</strong> V</span>
+            <span>I_max: <strong id="swMaxI" style="color:var(--text);">--</strong> A</span>
+            <span>P_max: <strong id="swMaxP" style="color:var(--text);">--</strong> W</span>
+            <span>R_out: <strong id="swRout" style="color:var(--text);">--</strong> Ω</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <button class="sp-set-btn" id="btnSweep" onclick="toggleSweep()">[ ▶ SPUSTIT V-A SWEEP ]</button>
+            <button class="sp-set-btn" onclick="saveSetpointsNvs()" title="Uložit aktuální žádané hodnoty do NVS">[ ULOŽIT SETPOINT ]</button>
+          </div>
+        </div>
+
         <!-- Rychlý přehled pro režim baterie -->
         <div id="battRow" style="display:none; font-size:12px; color:var(--text-dim); border-top:1px solid var(--border); padding-top:10px;">
           <span data-i18n="lbl_discharged">VYBITO:</span> <strong id="valMah" style="color:var(--text);">0</strong> mAh &bull; <strong id="valWh" style="color:var(--text);">0.00</strong> Wh &bull; <span data-i18n="lbl_cutoff">MEZNÍ NAPĚTÍ:</span> <strong id="valCut" style="color:var(--text);">3.00</strong> V
@@ -1252,27 +1267,39 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           </div>
         </div>
 
-        <!-- Karta 3: Hardwarové konstanty -->
+        <!-- Karta 3: Hardwarové konstanty & NVS Kalibrace -->
         <div class="info-card" id="cardHw">
           <div class="card-title">
-            <span data-i18n="set_hw_title">HARDWAROVÉ KONSTANTY</span>
-            <span class="card-badge">KALIBROVÁNO</span>
+            <span data-i18n="set_hw_title">HARDWAROVÉ KONSTANTY &amp; NVS KALIBRACE</span>
+            <span class="card-badge">NVS FLASH</span>
           </div>
           <div class="prop-row">
             <span class="prop-label" data-i18n="set_shunt">Proudový bočník R_shunt:</span>
             <span class="prop-val">0.100 Ω (10W Kelvin)</span>
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="set_divider">Napěťový dělič vstupu:</span>
-            <span class="prop-val">1:11.00 (100k / 10k)</span>
+            <span class="prop-label">PI kompenzace ofsetu LM358:</span>
+            <span class="prop-val"><span id="diagPiTrim">0.0</span> mA</span>
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="set_adc">A/D Převodník:</span>
-            <span class="prop-val">ADS1115 (16-bit 0x48)</span>
+            <span class="prop-label">Koeficient napětí (vScale):</span>
+            <input type="number" id="calInputV" class="num-input" style="width:90px;" step="0.001" min="0.80" max="1.20" value="1.0000">
           </div>
           <div class="prop-row">
-            <span class="prop-label" data-i18n="set_dac">D/A Převodník:</span>
-            <span class="prop-val">MCP4725 (12-bit 0x60)</span>
+            <span class="prop-label">Koeficient proudu (iScale):</span>
+            <input type="number" id="calInputI" class="num-input" style="width:90px;" step="0.001" min="0.80" max="1.20" value="1.0000">
+          </div>
+          <div class="prop-row">
+            <span class="prop-label">Koeficient buzení (dacScale):</span>
+            <input type="number" id="calInputDac" class="num-input" style="width:90px;" step="0.001" min="0.80" max="1.20" value="1.0000">
+          </div>
+          <div class="prop-row">
+            <span class="prop-label">Nulový ofset proudu [A]:</span>
+            <input type="number" id="calInputOff" class="num-input" style="width:90px;" step="0.001" min="-0.20" max="0.20" value="0.0000">
+          </div>
+          <div style="display:flex; gap:8px; margin-top:8px;">
+            <button class="sp-set-btn" onclick="saveCalibrationNvs()">[ ULOŽIT DO NVS ]</button>
+            <button class="sp-set-btn" onclick="resetCalibrationNvs()">[ RESET 1.000 ]</button>
           </div>
         </div>
 
@@ -1280,11 +1307,19 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         <div class="info-card" id="cardMcu">
           <div class="card-title">
             <span data-i18n="set_mcu_title">SYSTÉM &amp; MIKROKONTROLÉR</span>
-            <span class="card-badge">ESP32</span>
+            <span class="card-badge">DUAL-CORE + WDT</span>
           </div>
           <div class="prop-row">
             <span class="prop-label">MCU:</span>
             <span class="prop-val">ESP32 DevKit V1 (240 MHz)</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-label">FreeRTOS Architektura:</span>
+            <span class="prop-val">Core 0: Síť | Core 1: 50Hz Regulace</span>
+          </div>
+          <div class="prop-row">
+            <span class="prop-label">Hardwarový Watchdog (WDT):</span>
+            <span class="prop-val">AKTIVNÍ (Timeout 3.0 s)</span>
           </div>
           <div class="prop-row">
             <span class="prop-label">Volná paměť RAM (Heap):</span>
@@ -1300,7 +1335,7 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
           </div>
           <div class="prop-row">
             <span class="prop-label">Firmware:</span>
-            <span class="prop-val">v2.5</span>
+            <span class="prop-val">v3.0</span>
           </div>
         </div>
       </div>
@@ -1391,6 +1426,9 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     let isAlarm = false;
     let inFlight = false;
     let isDragging = false;
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    window.addEventListener('touchend', () => { isDragging = false; });
+    window.addEventListener('touchcancel', () => { isDragging = false; });
     let plotScale = 'lin';
     let sliderCurve = 'lin';
     let currentSetpointVal = 0.500;
@@ -2239,6 +2277,34 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         if (cutEl) cutEl.innerText = d.cutoff.toFixed(2);
       }
 
+      if (typeof d.piTrim === 'number') {
+        const elPi = document.getElementById('diagPiTrim');
+        if (elPi) elPi.innerText = (d.piTrim * 1000.0).toFixed(1);
+      }
+
+      if (typeof d.sweepActive === 'boolean') {
+        window.isSweepActive = d.sweepActive;
+        const btnSw = document.getElementById('btnSweep');
+        if (btnSw) {
+          btnSw.innerText = d.sweepActive ? '[ ■ ZASTAVIT SWEEP ]' : '[ ▶ SPUSTIT V-A SWEEP ]';
+        }
+        if (d.sweepActive || d.sweepDone) {
+          const elU0 = document.getElementById('swU0'); if (elU0) elU0.innerText = (d.sweepU0 || 0).toFixed(2);
+          const elMI = document.getElementById('swMaxI'); if (elMI) elMI.innerText = (d.sweepMaxI || 0).toFixed(3);
+          const elMP = document.getElementById('swMaxP'); if (elMP) elMP.innerText = (d.sweepMaxP || 0).toFixed(1);
+          const elRO = document.getElementById('swRout'); if (elRO) elRO.innerText = (d.sweepR || 0).toFixed(3);
+        }
+      }
+
+      const cV = document.getElementById('calInputV');
+      if (cV && typeof d.calV === 'number' && document.activeElement !== cV) cV.value = d.calV.toFixed(4);
+      const cI = document.getElementById('calInputI');
+      if (cI && typeof d.calI === 'number' && document.activeElement !== cI) cI.value = d.calI.toFixed(4);
+      const cD = document.getElementById('calInputDac');
+      if (cD && typeof d.calDac === 'number' && document.activeElement !== cD) cD.value = d.calDac.toFixed(4);
+      const cO = document.getElementById('calInputOff');
+      if (cO && typeof d.calOff === 'number' && document.activeElement !== cO) cO.value = d.calOff.toFixed(4);
+
       if (typeof d.mode === 'number' && d.mode !== mode) {
         syncModeConfig(d.mode);
       }
@@ -2251,11 +2317,11 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
         document.getElementById('spSlider').value = valueToSliderPos(d.setpoint);
       }
 
-      const wasOutput = isOutput;
+      const wasAlarm = isAlarm;
       isOutput = d.output;
       isAlarm = (d.alarm !== 0);
 
-      if (isAlarm && !wasOutput) {
+      if (isAlarm && !wasAlarm) {
         playBeep(440, 0.3, 'sawtooth');
       }
 
@@ -2386,15 +2452,23 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     }
 
     async function toggleBatteryTest() {
-      if (mode !== 3) {
-        await selectMode(3);
-      }
+      if (isAlarm) return;
+      const next = (mode !== 3) ? true : !isOutput;
       const cut = parseFloat(document.getElementById('battInputCut').value);
       const curr = parseFloat(document.getElementById('battInputCurr').value);
-      if (!isNaN(cut) && !isNaN(curr)) {
-        await pushSetpointAndCut(curr, cut);
-      }
-      await togglePower();
+      let url = `/api/control?mode=3&out=${next ? 1 : 0}`;
+      if (!isNaN(curr)) url += `&setpoint=${curr}`;
+      if (!isNaN(cut)) url += `&cut=${cut}`;
+      playBeep(next ? 1200 : 600, 0.06);
+      syncModeConfig(3);
+      setOutputVisuals(next);
+      try {
+        const r = await fetch(url, { cache: 'no-store' });
+        if (r.ok) {
+          const d = await r.json();
+          applyTelemetry(d);
+        }
+      } catch (err) {}
     }
 
     async function ackAlarm() {
@@ -2411,6 +2485,56 @@ const char DASHBOARD_HTML[] PROGMEM = R"rawliteral(
     async function pushSetpoint(val) {
       try {
         const r = await fetch(`/api/control?mode=${mode}&setpoint=${val}`, { cache: 'no-store' });
+        if (r.ok) {
+          const d = await r.json();
+          applyTelemetry(d);
+        }
+      } catch (err) {}
+    }
+
+    async function toggleSweep() {
+      if (isAlarm) return;
+      const cmd = window.isSweepActive ? 'stop' : 'start';
+      playBeep(cmd === 'start' ? 1100 : 600, 0.06);
+      try {
+        const r = await fetch(`/api/control?sweep=${cmd}`, { cache: 'no-store' });
+        if (r.ok) {
+          const d = await r.json();
+          applyTelemetry(d);
+        }
+      } catch (err) {}
+    }
+
+    async function saveSetpointsNvs() {
+      playBeep(1000, 0.05);
+      try {
+        const r = await fetch('/api/control?saveSp=1', { cache: 'no-store' });
+        if (r.ok) {
+          const d = await r.json();
+          applyTelemetry(d);
+        }
+      } catch (err) {}
+    }
+
+    async function saveCalibrationNvs() {
+      playBeep(1050, 0.06);
+      const v = parseFloat(document.getElementById('calInputV').value) || 1.0;
+      const i = parseFloat(document.getElementById('calInputI').value) || 1.0;
+      const dac = parseFloat(document.getElementById('calInputDac').value) || 1.0;
+      const off = parseFloat(document.getElementById('calInputOff').value) || 0.0;
+      try {
+        const r = await fetch(`/api/control?calV=${v}&calI=${i}&calDac=${dac}&calOff=${off}`, { cache: 'no-store' });
+        if (r.ok) {
+          const d = await r.json();
+          applyTelemetry(d);
+        }
+      } catch (err) {}
+    }
+
+    async function resetCalibrationNvs() {
+      playBeep(700, 0.06);
+      try {
+        const r = await fetch('/api/control?resetCal=1', { cache: 'no-store' });
         if (r.ok) {
           const d = await r.json();
           applyTelemetry(d);

@@ -16,7 +16,11 @@ static constexpr float FACTOR_AMPS_TO_CODE = (SHUNT_RESISTANCE_OHM / DAC_VREF_VO
 // Zabraňuje tvrdým proudovým rázům a indukovaným špičkám na vodičích
 static constexpr float MAX_RAMP_STEP_AMPS = 0.35f;
 
-DacDriver::DacDriver() : _ready(false), _lastCode(0), _currentRampAmps(0.0f) {}
+DacDriver::DacDriver() : _ready(false), _lastCode(0), _currentRampAmps(0.0f), _dacScale(1.000f) {}
+
+void DacDriver::setDacScale(float scale) {
+  _dacScale = constrain(scale, 0.80f, 1.20f);
+}
 
 bool DacDriver::begin() {
   _ready = dac.begin(I2C_ADDR_MCP4725);
@@ -56,8 +60,8 @@ void DacDriver::setCurrent(float targetAmps) {
     _currentRampAmps = targetAmps;
   }
 
-  // Rychlý přepočet proudu na 12-bitový kód DAC
-  int code = (int)(_currentRampAmps * FACTOR_AMPS_TO_CODE);
+  // Rychlý přepočet proudu na 12-bitový kód DAC se zaokrouhlením a kalibrací
+  int code = (int)lroundf(_currentRampAmps * FACTOR_AMPS_TO_CODE * _dacScale);
   code = constrain(code, 0, DAC_MAX_VALUE);
 
   if (code != _lastCode) {

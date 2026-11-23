@@ -62,6 +62,28 @@ struct BatteryStats {
 };
 
 /**
+ * @brief Kalibrační koeficienty uložené v NVS paměti ESP32
+ */
+struct CalibrationData {
+  float vScale;   // Korekce měření napětí (výchozí 1.000)
+  float iScale;   // Korekce měření proudu (výchozí 1.000)
+  float dacScale; // Korekce buzení DAC    (výchozí 1.000)
+  float iOffset;  // Nulový ofset proudu [A] (výchozí 0.000)
+};
+
+/**
+ * @brief Výsledky automatického testu V-A charakteristiky a OCP limitu zdroje
+ */
+struct SweepStats {
+  bool active;
+  bool completed;
+  float openCircuitVoltage; // [V] Napětí zdroje naprázdno (U0)
+  float maxCurrent;         // [A] Zjištěný maximální proud zdroje (OCP)
+  float maxPower;           // [W] Zjištěný maximální výkon zdroje
+  float sourceResistance;   // [Ω] Vypočtený vnitřní odpor zdroje
+};
+
+/**
  * @brief Celkový stav systému
  */
 struct SystemState {
