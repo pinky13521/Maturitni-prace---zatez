@@ -89,9 +89,14 @@
 // =============================================================================
 
 // Režim Klienta (STA) - ESP32 se připojí k vaší domácí / školní Wi-Fi síti nebo
-// hotspotu:
-#define WIFI_STA_SSID "Vase-WiFi-Nazev"       // Zadejte název své Wi-Fi sítě
-#define WIFI_STA_PASS "Vase-WiFi-Heslo" // Zadejte heslo k Wi-Fi
+// hotspotu. Skutečné údaje uložte do souboru include/secrets.h (viz secrets.h.example),
+// který je v .gitignore a nenahrává se na GitHub:
+#if __has_include("secrets.h")
+  #include "secrets.h"
+#else
+  #define WIFI_STA_SSID "Vase-WiFi-Nazev"  // Zadejte název své Wi-Fi sítě
+  #define WIFI_STA_PASS "Vase-WiFi-Heslo"  // Zadejte heslo k Wi-Fi
+#endif
 #define WIFI_STA_TIMEOUT_MS 9000 // Časový limit pro připojení k routeru [ms]
 
 // Záložní režim Access Point (AP) - Spustí se automaticky, pokud se nepodaří
